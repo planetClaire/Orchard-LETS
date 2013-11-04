@@ -1,0 +1,31 @@
+﻿@using LETS.Helpers
+@using LETS.ViewModels
+@{
+    Layout.Title = T("New Notice").ToString();
+    var noticeCategoryVM = (NoticeCategoryViewModel)Model.NoticeCategoryViewModel;
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
+}
+@using (Html.BeginFormAntiForgeryPost())
+{
+    Html.ValidationSummary();
+
+    <div id="createNotice">
+        
+        <header class="page-header">
+            <h1>@T("Add a Notice")</h1>
+        </header>
+
+        <div class="control-group">
+            <label class="control-label required">@T("Category")</label>
+            <div class="controls">
+                @Html.DropDownGroupListFor(m => noticeCategoryVM.IdCategory, noticeCategoryVM.Categories, "Choose a category...", new { autofocus = "autofocus"})
+                @Html.ValidationMessageFor(m => noticeCategoryVM.IdCategory)
+            </div>
+        </div>
+
+        @Display(Model)
+        
+    </div>
+
+}

@@ -1,0 +1,92 @@
+﻿@using System.Globalization
+@using LETS.Models
+@using Orchard.ContentManagement;
+@using System.Web.Mvc.Html;
+@using Orchard.ArchiveLater.ViewModels
+@{
+    var archiveLater = (ArchiveLaterViewModel) Model.Model;
+    var maxDays = WorkContext.CurrentSite.As<LETSSettingsPart>().MaximumNoticeAgeDays;
+    var cultureInfo = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+    var shortDateFormat = cultureInfo.DateTimeFormat.ShortDatePattern;
+    var twoDays = DateTime.Now.AddDays(2).ToString(shortDateFormat);
+    var sevenDays = DateTime.Now.AddDays(7).ToString(shortDateFormat);
+    var maxDate = DateTime.Now.AddDays(maxDays).ToString(shortDateFormat);
+    // default value
+    if (archiveLater.ScheduledArchiveUtc == null) {
+        archiveLater.ScheduledArchiveDate = maxDate;
+    }
+}
+<div class="control-group">
+    <input type="hidden" value="true" name="ArchiveLater.ArchiveLater">
+    <label class="required control-label" for="@Html.FieldIdFor(m => archiveLater.ScheduledArchiveDate)">@T("Expires")</label>
+    <div class="controls">
+            <div class="input-append">
+                @Html.TextBoxFor(m => archiveLater.ScheduledArchiveDate, new { @class = "input-small appendedPrependedInput date" })
+            </div>
+            <div id="archiveQuickPick" class="help-inline btn-group" data-toggle="buttons-radio">
+                <a class="btn" href="#" id="aTwoDays">
+                    <input type="hidden" value="2" />
+                    <i class="icon-time"></i>
+                    2 @T("days")
+                </a>
+                <a class="btn" href="#" id="aSevenDays">
+                    <input type="hidden" value="7" />
+                    <i class="icon-time"></i>
+                    1 @T("week")
+                </a>
+                <a class="btn" href="#" id="aMaxDays">
+                    <input type="hidden" value="@maxDays" />
+                    <i class="icon-time"></i>
+                    @maxDays @T(" days")
+                </a>
+            </div>
+        <input type="hidden" name="ArchiveLater.ScheduledArchiveTime" value="12:00 AM" />
+    </div>  
+</div>
+
+@using (Script.Foot())
+{
+    @* generates the localization script *@
+    @Display.DatePickerLocalization()
+
+    <script type="text/javascript">    
+    //<![CDATA[
+        $(function () {
+            
+            // need this for unobtrusive date validation to work in chrome http://stackoverflow.com/questions/6906725/unobtrusive-validation-in-chrome-wont-validate-with-dd-mm-yyyy
+            jQuery.validator.methods["date"] = function (value, element) { return true; }
+            
+            // activate the datepicker
+            var txtArchiveDate = $('#@Html.FieldIdFor(m => archiveLater.ScheduledArchiveDate)');
+            txtArchiveDate.datepicker({ showAnim: "", minDate: 0, maxDate: @maxDays, showOn: "both", buttonImageOnly: false });
+            // ensure the default value is sent if the user has manually wiped out the expiry date
+            // obviously this won't work if js is disabled but this might not be a huge issue
+            // also, the user could manually type a date out of range
+            // probably just something to monitor
+            // todo may be a better way to do this but don't want to duplicate ArchiveLater code
+            $("button:submit").click(function() {
+                if (txtArchiveDate.val() === '') {
+                    txtArchiveDate.val('@archiveLater.ScheduledArchiveDate');
+                }
+            });
+            // quick pick, if bootstrap-button.js is present
+            if ($().button) {
+                if (txtArchiveDate.val() === '@maxDate') {
+                    $("#aMaxDays").button('toggle');
+                } 
+                else if (txtArchiveDate.val() === '@twoDays') {
+                    $("#aTwoDays").button('toggle');
+                } 
+                else if (txtArchiveDate.val() === '@sevenDays') {
+                    $("#aSevenDays").button('toggle');
+                }
+            }
+            $("#archiveQuickPick a.btn").click(function(event) {
+                event.preventDefault();
+                var days = $(this).children("input:hidden").val();
+                txtArchiveDate.datepicker( "setDate" , "+" + days);
+            });
+        })
+    //]]>
+</script>
+}

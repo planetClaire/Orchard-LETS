@@ -1,0 +1,13 @@
+﻿@model LETS.ViewModels.LocalityNoticesMembersViewModel
+
+<h2>@T("Members in ") @Model.Locality.Title</h2>
+@foreach(var member in Model.Members) {
+    @Display(member)
+}
+
+
+<h1>@T("Notices in ") @Model.Locality.Title</h1>
+
+@foreach(var notice in Model.Notices) {
+    @Display(notice)
+}

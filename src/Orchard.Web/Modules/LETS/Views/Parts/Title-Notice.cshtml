@@ -1,0 +1,6 @@
+﻿@using LETS.Services
+@{
+    var noticeTypeTitle = WorkContext.Resolve<INoticeService>().GetNoticeTypeTitle(Model.ContentPart.Id);
+}
+<h2>@noticeTypeTitle - @Model.Title</h2>
+@Display.NoticeOwnerLinks(Model.ContentPart)

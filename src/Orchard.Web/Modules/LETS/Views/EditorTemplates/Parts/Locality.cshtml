@@ -1,0 +1,8 @@
+﻿@model LETS.Models.LocalityPart
+<fieldset>
+    <div class="editor-label">@Html.LabelFor(model => model.Postcode)</div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Postcode)
+        @*@Html.ValidationMessageFor(model => model.Postcode)*@
+    </div>
+</fieldset>

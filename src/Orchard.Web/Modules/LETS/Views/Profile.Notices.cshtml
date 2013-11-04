@@ -1,0 +1,10 @@
+﻿<h2>@Model.Member.FirstName's notices</h2>
+<ul>
+    @foreach (var notice in Model.Notices)
+    {
+        <li>
+            @Display(notice)
+        </li>
+    }
+</ul>
+

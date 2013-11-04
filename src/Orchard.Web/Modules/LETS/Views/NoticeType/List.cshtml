@@ -1,0 +1,6 @@
+﻿@model LETS.ViewModels.NoticeTypeNoticesViewModel
+<h1>@string.Format("{0} {1}s", @T("All"), @Model.NoticeTypeTitle)</h1>
+@foreach(var notice in Model.Notices) {
+    @Display(notice)
+}
+@Display(Model.Pager)

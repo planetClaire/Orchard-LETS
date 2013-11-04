@@ -1,0 +1,11 @@
+syntax: glob
+_ReSharper.LETS/
+bin/
+LETS.Tests/
+*/WS_FTP.LOG
+.hgignore
+NhProf.cs
+obj/
+WS_FTP.LOG
+*.rej
+LETS.csproj.DotSettings.user

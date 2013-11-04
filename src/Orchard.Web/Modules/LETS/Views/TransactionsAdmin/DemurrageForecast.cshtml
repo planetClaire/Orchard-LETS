@@ -1,0 +1,108 @@
+﻿@model List<LETS.ViewModels.DemurrageTransactionsViewModel>
+@{
+    Script.Require("jQuery");
+    Script.Include("bootstrap-accordion.min.js");
+    Style.Include("bootstrap-accordion.min.css");
+}
+
+<header class="page-header">
+    <h1>@T("Demurrage forecast") <small>(If no trading...)</small></h1>
+</header>
+
+<div id="accordion2" class="accordion"> </div>
+<table class="items table table-bordered" id="tableDemurrageForecast">
+    <thead>
+        <tr>
+            <th scope="col">@T("Date")</th>
+            <th scope="col">@T("Original date")</th>
+            <th scope="col">@T("Seller")</th>
+            <th scope="col">@T("Description")</th>
+            <th scope="col">@T("Buyer")</th>
+            <th scope="col">@T("Value")</th>
+            <th scope="col">@T("Remaining")</th>
+            <th scope="col">@T("Deduction")</th>
+        </tr>
+    </thead> 
+    @foreach (var demurrageTransactionsVM in Model)
+    {
+        if (demurrageTransactionsVM.DemurrageTransactions.Count > 1)
+        {
+            var collapseId = string.Format("collapse{0}", demurrageTransactionsVM.DemurrageDate.Ticks);
+            <tr >
+                <td class="nowrap date">@demurrageTransactionsVM.DemurrageDate.ToString("dd MMM yyyy")</td>
+                <td colspan="4"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href='#@collapseId'>Multiple deductions</a></td>
+                <td class="currency ">@demurrageTransactionsVM.TradeValue</td>
+                <td class="currency success">@demurrageTransactionsVM.UnspentCreditValue</td>
+                <td class="currency warning">-@demurrageTransactionsVM.ToBeDeducted</td>
+            </tr>
+            <tr>
+                <td colspan="8" class="nopadding notopbottomborder">
+                    <div id="@collapseId" class="collapse" >
+                        <div class="">
+                            <table width="100%" class="noradius sub">
+                                @foreach (var demurrageTransactionVM in demurrageTransactionsVM.DemurrageTransactions)
+                                {
+                                    <tr>
+                                        <td class="date"></td>
+                                        <td class="nowrap date">@demurrageTransactionVM.TransactionDateEarnt.ToString("dd MMM yyyy")</td>
+                                        <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdSellerTransactionEarnt })" title="@T("Transactions for this member")">@demurrageTransactionVM.NameSellerTransactionEarnt</a></td>
+                                        <td>@demurrageTransactionVM.DescriptionTransactionEarnt</td>
+                                        <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdBuyerTransactionEarnt})" title="@T("Transactions for this member")">@demurrageTransactionVM.NameBuyerTransactionEarnt</a></td>
+                                        <td class="currency">@demurrageTransactionVM.ValueTransactionEarnt</td>
+                                        <td class="currency successSub">@demurrageTransactionVM.CreditValueTransactionEarnt</td>
+                                        <td class="currency warningSub"><a rel="tooltip" title='@demurrageTransactionVM.DeductionExplanation'>-@demurrageTransactionVM.ValueDeducted</a></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var demurrageTransactionVM in demurrageTransactionsVM.DemurrageTransactions)
+            {
+                <tr>
+                    <td class="nowrap date">@demurrageTransactionVM.RecordedDate.ToString("dd MMM yyyy")</td>
+                    <td class="nowrap date">@demurrageTransactionVM.TransactionDateEarnt.ToString("dd MMM yyyy")</td>
+                    <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdSellerTransactionEarnt })" title="@T("Transactions for this member")">@demurrageTransactionVM.NameSellerTransactionEarnt</a></td>
+                    <td>@demurrageTransactionVM.DescriptionTransactionEarnt</td>
+                    <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdBuyerTransactionEarnt})" title="@T("Transactions for this member")">@demurrageTransactionVM.NameBuyerTransactionEarnt</a></td>
+                    <td class="currency">@demurrageTransactionVM.ValueTransactionEarnt</td>
+                    <td class="currency success">@demurrageTransactionVM.CreditValueTransactionEarnt</td>
+                    <td class="currency warning"><a rel="tooltip" title='@demurrageTransactionVM.DeductionExplanation'>-@demurrageTransactionVM.ValueDeducted</a></td>
+                </tr>
+            }
+        }
+    }
+
+</table>
+
+@*<table class="items table table-striped table-bordered" >
+    <thead>
+        <tr>
+            <th scope="col">@T("Date")</th>
+            <th scope="col">@T("Original transaction date")</th>
+            <th scope="col">@T("Seller")</th>
+            <th scope="col">@T("Description")</th>
+            <th scope="col">@T("Original value")</th>
+            <th scope="col">@T("Credit value remaining")</th>
+            <th scope="col">@T("To be deducted")</th>
+            <th scope="col">@T("Buyer")</th>
+        </tr>
+    </thead>    
+@foreach (var demurrageTransactionVM in Model)
+{
+    <tr>
+        <td>@demurrageTransactionVM.RecordedDate.ToShortDateString()</td>
+        <td>@demurrageTransactionVM.TransactionDateEarnt.ToShortDateString()</td>
+        <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdSellerTransactionEarnt })" title="@T("Transactions for this member")">@demurrageTransactionVM.NameSellerTransactionEarnt</a></td>
+        <td>@demurrageTransactionVM.DescriptionTransactionEarnt</td>
+        <td>@demurrageTransactionVM.ValueTransactionEarnt</td>
+        <td>@demurrageTransactionVM.CreditValueTransactionEarnt</td>
+        <td>@demurrageTransactionVM.ValueDeducted</td>
+        <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdBuyerTransactionEarnt })" title="@T("Transactions for this member")">@demurrageTransactionVM.NameBuyerTransactionEarnt</a></td>
+    </tr>
+}
+</table>*@

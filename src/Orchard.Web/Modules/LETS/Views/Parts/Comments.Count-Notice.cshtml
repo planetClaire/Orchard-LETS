@@ -1,0 +1,3 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Mvc.Html
+<div class="commentCount">@Html.ItemDisplayLink(T.Plural("1 Comment", "{0} Comments", (int)Model.CommentCount).ToString(), (ContentItem)Model.ContentItem)</div>

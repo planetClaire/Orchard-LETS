@@ -1,0 +1,17 @@
+﻿@* Street address is private *@
+@if (WorkContext.CurrentUser.Id.Equals(Model.Address.User.Id))
+{
+    <div class="row">
+        <div class="span2"><h4>@T("Street address")</h4></div>
+        <div class="span7">
+            @Model.Address.StreetAddress
+            <p><span class="label label-info">Private</span> <em>@T("Your street address is not shown to other members")</em></p>
+        </div>
+    </div>
+    <hr />
+}
+<div class="row">
+    <div class="span2" ><h4>@T("Locality")</h4></div>
+    <div class="span7">@Html.ActionLink((string)string.Format("{0} {1}", @Model.Locality, @Model.Postcode), "Notices", new { area = "LETS", Controller = "Locality", id = @Model.Address.Locality.Id })</div>
+</div>
+<hr />

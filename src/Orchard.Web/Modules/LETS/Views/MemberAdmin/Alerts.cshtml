@@ -1,0 +1,15 @@
+﻿@model IEnumerable<LETS.ViewModels.AdminAlertViewModel>
+
+<ol>
+@foreach(var alert in Model)
+{
+    <li>
+        <h3><a href="@alert.ReferenceLinkHref">@alert.ReferenceLinkText</a></h3>
+        <p>@alert.Message</p>
+        @if(!string.IsNullOrEmpty(alert.ActionLinkHref))
+        {
+            <a href="@alert.ActionLinkHref">@alert.ActionLinkText</a>
+        }
+    </li>
+}
+</ol>

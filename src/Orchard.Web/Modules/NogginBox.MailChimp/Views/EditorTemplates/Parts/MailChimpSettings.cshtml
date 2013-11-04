@@ -1,0 +1,8 @@
+@model NogginBox.MailChimp.Models.MailChimpSettingsPart
+@Html.HiddenFor(m => m.Id)
+<fieldset>
+	 <label for="@Html.FieldIdFor(m => m.ApiKey)">@T("API Key")</label>
+	@Html.EditorFor(m => m.ApiKey)
+	@Html.ValidationMessage("ApiKey", "*")
+	<p>Get your <a href="http://admin.mailchimp.com/account/api-key-popup">MailChimp API Key</a>.</p>
+</fieldset>

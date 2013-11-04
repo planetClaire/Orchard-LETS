@@ -1,0 +1,15 @@
+﻿table.table-bordered th, table.table-bordered td {
+    border: 1px solid #EAEAEA;
+}
+table td.nopadding {
+    padding: 0;
+}
+table#tableDemurrageForecast td.date {
+        width: 105px;
+}
+table#tableDemurrageForecast td.currency {
+        width: 70px;
+}
+table.sub td.date {
+    width: 90px;
+}

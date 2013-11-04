@@ -1,0 +1,22 @@
+﻿@using LETS.Models
+@using Microsoft.CSharp.RuntimeBinder
+@using Orchard.ContentManagement
+@{
+    var currencyUnit = WorkContext.CurrentSite.As<LETSSettingsPart>().CurrencyUnit;
+}
+<div class="pricingInfo">
+    @try
+    {
+    if (Model.ContentPart.Price > 0)
+    {
+        <span class="price"><span class="unit">@currencyUnit</span>@Model.ContentPart.Price</span>
+        <span class="terms">@Display.Per(Model.ContentPart.Per) @Display.PaymentTerms(PaymentTerms: Model.ContentPart.PaymentTerms, IncludeSeparator: true, IncludeLabel: false)</span>
+    }
+    else
+    {
+        <span class="terms">@Display.PaymentTerms(PaymentTerms: Model.ContentPart.PaymentTerms, IncludeSeparator: false, IncludeLabel: true)</span>
+    }
+
+    }
+    catch (RuntimeBinderException) { }
+</div>

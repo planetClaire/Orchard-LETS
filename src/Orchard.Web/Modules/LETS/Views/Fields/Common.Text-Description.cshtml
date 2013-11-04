@@ -1,0 +1,18 @@
+﻿@using LETS.Helpers
+@using Orchard.Utility.Extensions;
+@{
+    string name = Model.ContentField.DisplayName;
+}
+@if (HasText(name) && HasText(Model.Value))
+{
+    if (Model.ContentField.PartFieldDefinition.Settings["TextFieldSettings.Flavor"].Equals("Textarea"))
+    {
+        var text = Helpers.Linkify(Html.Encode((HtmlString) Model.Value).ReplaceNewLinesWith("<br />"));
+        <h4>@name</h4>
+        <p class="text">@(new MvcHtmlString(text))</p>
+    }
+    else
+    {
+        <p class="text-field"><span class="value">@Model.Value</span></p>
+    }
+}

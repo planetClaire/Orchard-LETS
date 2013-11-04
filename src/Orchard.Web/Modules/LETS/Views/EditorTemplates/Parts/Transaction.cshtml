@@ -1,0 +1,79 @@
+﻿@using LETS.Helpers
+@using LETS.Models
+@using Orchard.ContentManagement
+@using Orchard.Security
+@model LETS.ViewModels.EditTransactionViewModel
+@{
+    var minTransactionDay = WorkContext.CurrentSite.As<LETSSettingsPart>().OldestRecordableTransactionDays * -1;
+    var isAdmin = WorkContext.Resolve<IAuthorizationService>().TryCheckAccess(LETS.Permissions.AdminMemberContent, WorkContext.CurrentUser, WorkContext.Resolve<IContentManager>().Create<TransactionPart>("Transaction"));
+}
+<div class="control-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.TransactionDate)">@T("Transaction date")</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.TransactionDate, new { @class = "required input-small date" })
+        @Html.ValidationMessageFor(m => m.TransactionDate)
+        @Html.HiddenFor(m => m.TransactionTime)
+    </div>
+</div>
+
+@if (isAdmin) {
+    <div class="control-group">
+        <label class="control-label" for="@Html.FieldIdFor(m => m.TransactionType)">@T("Type")</label>
+        <div class="controls">
+            @Html.DropDownListFor(model => model.TransactionType, new SelectList(Enum.GetValues(typeof (TransactionType))))
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="required control-label" for="@Html.FieldIdFor(m => m.IdSeller)">@T("Seller")</label>
+        <div class="controls noticeTypesRadioList">
+            @Html.DropDownGroupListFor(model => model.IdSeller, Model.Members, @T("Choose a seller").ToString())
+            @Html.ValidationMessageFor(model => model.IdSeller)
+        </div>
+    </div>
+}
+else {
+    @Html.HiddenFor(m => m.TransactionType)
+    @Html.HiddenFor(m => m.IdSeller)
+}
+
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdBuyer)">@T("Buyer")</label>
+    <div class="controls noticeTypesRadioList">
+        @Html.DropDownGroupListFor(model => model.IdBuyer, Model.Members, @T("Choose a buyer").ToString())
+        @Html.ValidationMessageFor(model => model.IdBuyer)
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.Description)">@T("Description")</label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.Description, new { @class = "required input-xlarge" })
+        @Html.ValidationMessageFor(model => model.Description)
+    </div>    
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.Value)">@T("Value")</label>
+    <div class="controls">
+        <div class="input-prepend">
+            <span class="add-on">@Model.CurrencyUnit</span>@Html.TextBoxFor(model => model.Value, new { @class = "input-mini" })
+        </div>
+        @Html.ValidationMessageFor(model => model.Value)
+    </div>    
+</div>
+
+@using (Script.Foot())
+{
+    @* generates the localization script *@
+    @Display.DatePickerLocalization()
+
+    <script type="text/javascript">    
+    //<![CDATA[
+        $(function () {
+            var txtTransactionDate = $('#@Html.FieldIdFor(m => m.TransactionDate)');
+            txtTransactionDate.datepicker({ showAnim: "", minDate: @minTransactionDay, maxDate: 0, showOn: "both", buttonImageOnly: false });
+        })
+    //]]>
+</script>
+}

@@ -1,0 +1,29 @@
+﻿@{
+    Script.Require("jQuery");
+    Script.Include(string.Format("http://maps.googleapis.com/maps/api/js?key={0}&sensor=false", Model.MembersMap.ApiKey));
+    Script.Include("MembersMap.js");
+    Style.Include("common.css");
+    var markers = new MvcHtmlString(Model.MemberMarkers);
+}
+
+<div id="map_canvas" style='@string.Format("width:{0}px; height:{1}px;", Model.MembersMap.MapWidth, Model.MembersMap.MapHeight)'></div>
+
+@using (Script.Head()) {
+    <script type="text/javascript">
+        var map;
+        var infoWindow;
+
+        $(document).ready(function() {
+            initializeMap(@Model.MembersMap.Latitude, @Model.MembersMap.Longitude, @Model.MembersMap.ZoomLevel);
+            addMarkers();
+       });
+
+        function addMarkers() {
+            var markers = @markers;
+            for (var i = 0; i < markers.length; i++) {
+                AddMarker(markers[i]);
+            }
+        }
+
+    </script>
+}

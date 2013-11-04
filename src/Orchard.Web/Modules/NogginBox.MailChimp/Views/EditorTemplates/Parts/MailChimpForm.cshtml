@@ -1,0 +1,107 @@
+@model NogginBox.MailChimp.ViewModels.EditFormModel
+@using NogginBox.MailChimp;
+
+@if (Model.HasApiKey)
+{
+	<fieldset>
+    <label>@T("Message")</label>
+	<span class="hint">@T("This is the message seen above your form inviting people to subscribe to your list.")</span>
+    @Html.TextArea("Message", (string)Model.Message, 7, 80, new { @class = "html" })
+    @Html.ValidationMessageFor(m => m.Message)
+	</fieldset>
+	
+	<fieldset>
+    <label>@T("Thankyou message")</label>
+	<span class="hint">@T("This is the message seen after someone has subscribed congratulating them on their excellent decision.")</span>
+    @Html.TextArea("ThankyouMessage", (string)Model.ThankyouMessage, 7, 80, new { @class = "html" })
+    @Html.ValidationMessageFor(m => m.ThankyouMessage)
+	</fieldset>
+	
+	if (Model.PossibleLists.Count() == 0)
+	{
+		<p>@T("You have no lists.")</p> 
+	}
+	else
+	{ 
+		<fieldset>
+		<legend>@T("Select your MailChimp list")</legend>
+
+		@foreach (var list in Model.PossibleLists)
+		{
+			var isChecked = (list.Key == Model.ListId) ? new { @checked = "checked" } : null;
+			<label>@Html.RadioButtonFor(t => t.ListId, list.Key, isChecked) @list.Value</label>
+		}
+		@Html.ValidationMessage("ListId", "*")
+		</fieldset>
+	}
+
+	if (Model.AvailableMergeVariables != null)
+	{
+		<fieldset>
+		<legend>@T("Merge variables")</legend>
+		@{ var c = 0; }
+		@foreach (var mergeVar in Model.AvailableMergeVariables)
+		{
+			var isChecked = mergeVar.Required || Model.MergeVariables.Select(t => t.Tag).Contains(mergeVar.Tag);
+			var checkedBit = isChecked ? new HtmlString("checked=\"checked\" ") : null;
+			var readOnlyBit = mergeVar.Required ? new HtmlString("disabled=\"disabled\" ") : null;
+			<label><input type="checkbox" name="@Html.FieldNameFor(m => m.MergeVariables[c].Checked)" value="true" @checkedBit@readOnlyBit/>
+			@mergeVar.Label (@Html.ShowVarType(mergeVar.Type))</label>
+			<input type="hidden" name="@Html.FieldNameFor(m => m.MergeVariables[c].Tag)" value="@mergeVar.Tag" />
+																				   c++;
+		}
+		</fieldset> 
+		
+		c = 0;
+		foreach (var interestGroup in Model.InterestGroups)
+		{ 
+			<fieldset class="items">
+			<legend>@T("Interest group"):  @interestGroup.Name</legend>
+			@Html.HiddenFor(m => m.InterestGroups[c].GroupId)
+			<label>@Html.CheckBoxFor(m => m.InterestGroups[c].Show) @T("Show")</label>
+			<p>@T("Input type"): @interestGroup.Type</p>
+			<ul style="list-style-type: disc; margin-left: 1em;">
+			@foreach (var group in interestGroup.getGroups())
+			{
+				<li>@group</li>
+			}
+			</ul>
+			</fieldset>
+			c++;
+		}
+	}
+}
+else
+{ 
+	<p>You must set up an @Html.ActionLink("API key first", "Index", "Admin", new { area = "NogginBox.MailChimp" }, null) before you can associate this subscribe page with a list.</p>
+}
+
+
+
+
+@{ 
+    Script.Require("TinyMce");
+}
+@using(Script.Foot()) {
+<script type="text/javascript">
+//<![CDATA[
+    tinyMCE.init({
+        theme: "advanced",
+        mode: "specific_textareas",
+        editor_selector: "html",
+        plugins: "fullscreen,autoresize,searchreplace",
+        theme_advanced_toolbar_location: "top",
+        theme_advanced_toolbar_align: "left",
+        theme_advanced_buttons1: "search,replace,|,cut,copy,paste,|,undo,redo,|,link,unlink,charmap,emoticon,codeblock,|,bold,italic,|,numlist,bullist,formatselect,|,code,fullscreen",
+        theme_advanced_buttons2: "",
+        theme_advanced_buttons3: "",
+        convert_urls: false,
+        request_verification_token: "@Html.AntiForgeryTokenValueOrchard()",
+        extended_valid_elements: "canvas[id|width|height|style],script[src|type],div[id]" +
+            "object[classid|codebase|type|data|width|height|align|name|id],param[name|value],embed[quality|type|pluginspage|width|height|src|align]," +
+            "iframe[src|frameborder|width|height|scrolling|name|id]," +
+            "video[src|audio|autoplay|controls|width|height|loop|preload|poster],audio[src|autoplay|loop|controls|preload],source[id|src|type]"
+    });
+//]]>
+</script>
+}

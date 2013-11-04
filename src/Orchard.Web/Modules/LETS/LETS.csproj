@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{66D55827-018F-41E0-BDD9-E3EBA69C57E4}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LETS</RootNamespace>
+    <AssemblyName>LETS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Content\images\closelabel.gif" />
+    <Content Include="Content\images\email.gif" />
+    <Content Include="Content\images\facebook.png" />
+    <Content Include="Content\images\flickr.png" />
+    <Content Include="Content\images\goodreads.png" />
+    <Content Include="Content\images\googleplus.png" />
+    <Content Include="Content\images\linkedin.png" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\nextlabel.gif" />
+    <Content Include="Content\images\pintrest.png" />
+    <Content Include="Content\images\prevlabel.gif" />
+    <Content Include="Content\images\skype.png" />
+    <Content Include="Content\images\tumblr.png" />
+    <Content Include="Content\images\twitter.png" />
+    <Content Include="Content\images\website.png" />
+    <Content Include="Images\bullets.png" />
+    <Content Include="Data\testRecipe.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Data\LETSSetupRecipe.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\bootstrap-accordion.min.js" />
+    <Content Include="Scripts\slimbox2.js" />
+    <Content Include="Scripts\MembersMap.js" />
+    <Content Include="Styles\bootstrap-accordion.min.css" />
+    <Content Include="Styles\common.css" />
+    <Content Include="Styles\menu.LETS-admin.css" />
+    <Content Include="Styles\slimbox2.css" />
+    <Content Include="Views\EditorTemplates\Parts\Member.cshtml" />
+    <Content Include="Views\Parts\Locality.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Web.config" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Module.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminMenu.cs" />
+    <Compile Include="Commands\LETSCommands.cs" />
+    <Compile Include="ContainerModule.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\LocalityController.cs" />
+    <Compile Include="Controllers\MemberAdminController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\NoticeController.cs" />
+    <Compile Include="Controllers\NoticesAdminController.cs" />
+    <Compile Include="Controllers\NoticeTypeController.cs" />
+    <Compile Include="Controllers\TransactionsAdminController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Drivers\AddressPartDriver.cs" />
+    <Compile Include="Drivers\AuthNavigationWidgetPartDriver.cs" />
+    <Compile Include="Drivers\CommentsWidgetPartDriver.cs" />
+    <Compile Include="Drivers\MemberAccessOnlyPartDriver.cs" />
+    <Compile Include="Drivers\MemberAdminPartDriver.cs" />
+    <Compile Include="Drivers\MemberLinksPartDriver.cs" />
+    <Compile Include="Drivers\NoticeTitlePartDriver.cs" />
+    <Compile Include="Drivers\MembersMapPartDriver.cs" />
+    <Compile Include="Drivers\StatsWidgetPartDriver.cs" />
+    <Compile Include="Feeds\BlogPostFeedItemBuilder.cs" />
+    <Compile Include="Feeds\CommentFeedItemBuilder.cs" />
+    <Compile Include="Feeds\CommentsFeedQuery.cs" />
+    <Compile Include="Feeds\LETSFeedQuery.cs" />
+    <Compile Include="Feeds\MemberFeedItemBuilder.cs" />
+    <Compile Include="Feeds\MemberFeedQuery.cs" />
+    <Compile Include="Feeds\NoticeFeedItemBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Feeds\NoticeTypeFeedQuery.cs" />
+    <Compile Include="Handlers\MemberAccessOnlyPartHandler.cs" />
+    <Compile Include="Handlers\MemberAdminPartHandler.cs" />
+    <Compile Include="Handlers\MemberLinksPartHandler.cs" />
+    <Compile Include="Handlers\MembersMapPartHandler.cs" />
+    <Compile Include="Helpers\JsonObject.cs" />
+    <Compile Include="Models\AuthNavigationWidgetPart.cs" />
+    <Compile Include="Models\CommentsWidgetPart.cs" />
+    <Compile Include="Models\CreditUsageRecord.cs" />
+    <Compile Include="Models\CreditUsageRecordSimulation.cs" />
+    <Compile Include="Models\MemberAccessOnlyPart.cs" />
+    <Compile Include="Models\MemberAccessOnlyPartRecord.cs" />
+    <Compile Include="Models\MemberAdminPart.cs" />
+    <Compile Include="Models\MemberAdminPartRecord.cs" />
+    <Compile Include="Models\MemberLinksPart.cs" />
+    <Compile Include="Models\MemberLinksPartRecord.cs" />
+    <Compile Include="Models\MemberType.cs" />
+    <Compile Include="Models\StatsWidgetPart.cs" />
+    <Compile Include="Models\TransactionRecordSimulation.cs" />
+    <Compile Include="Models\TransactionType.cs" />
+    <Compile Include="Models\MemberMapMarker.cs" />
+    <Compile Include="Models\MembersMapPart.cs" />
+    <Compile Include="Models\MembersMapPartRecord.cs" />
+    <Compile Include="Notifications\IncompleteProfileBanner.cs" />
+    <Compile Include="ResourceManifest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Routes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scheduling\DemurrageTasks.cs" />
+    <Compile Include="Services\ILETSService.cs" />
+    <Compile Include="Services\ITransactionService.cs" />
+    <Compile Include="Drivers\LocalityPartDriver.cs" />
+    <Compile Include="Drivers\TransactionPartDriver.cs" />
+    <Compile Include="Events\UserEvents.cs" />
+    <Compile Include="Handlers\AddressPartHandler.cs" />
+    <Compile Include="Handlers\LocalityPartHandler.cs" />
+    <Compile Include="Handlers\TransactionPartHandler.cs" />
+    <Compile Include="Helpers\GroupedSelectListItem.cs" />
+    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Models\NoticeTypePart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\NoticeTypePartRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\TransactionPart.cs" />
+    <Compile Include="Models\TransactionPartRecord.cs" />
+    <Compile Include="Notifications\INotificationManager.cs" />
+    <Compile Include="Notifications\INotificationProvider.cs" />
+    <Compile Include="Notifications\MemberNotificationFilter.cs" />
+    <Compile Include="Notifications\MemberNotificationManager.cs" />
+    <Compile Include="Notifications\MissingNoticesBanner.cs" />
+    <Compile Include="Projections\NoticeTypeFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Projections\NoticeTypeFilterForms.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\AddressService.cs" />
+    <Compile Include="Services\IAddressService.cs" />
+    <Compile Include="Drivers\MemberPartDriver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Drivers\NoticeTypePartDriver.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Handlers\MemberPartHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Handlers\NoticeTypePartHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\AddressPart.cs" />
+    <Compile Include="Models\AddressPartRecord.cs" />
+    <Compile Include="Models\LocalityPart.cs" />
+    <Compile Include="Models\LocalityPartRecord.cs" />
+    <Compile Include="Models\MemberPart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\MemberPartRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IMemberService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IMembersMapService.cs" />
+    <Compile Include="Services\LETSService.cs" />
+    <Compile Include="Services\MemberService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\NoticeService.cs" />
+    <Compile Include="Services\TransactionService.cs" />
+    <Compile Include="Services\MembersMapService.cs" />
+    <Compile Include="Shapes\LETSShapes.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tokens.cs" />
+    <Compile Include="ViewModels\AdminAlertViewModel.cs" />
+    <Compile Include="ViewModels\DemurrageForecastViewModel.cs" />
+    <Compile Include="ViewModels\DemurrageTransactionsViewModel.cs" />
+    <Compile Include="ViewModels\DemurrageTransactionViewModel.cs" />
+    <Compile Include="ViewModels\EditAddressViewModel.cs" />
+    <Compile Include="ViewModels\EditNoticeViewModel.cs" />
+    <Compile Include="Services\INoticeService.cs" />
+    <Compile Include="Drivers\LETSSettingsPartDriver.cs" />
+    <Compile Include="Drivers\NoticePartDriver.cs" />
+    <Compile Include="Handlers\LETSSettingsPartHandler.cs" />
+    <Compile Include="FeatureEvents.cs" />
+    <Compile Include="Handlers\NoticePartHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\LETSSettingsPart.cs" />
+    <Compile Include="Models\LETSSettingsPartRecord.cs" />
+    <Compile Include="Migrations.cs" />
+    <Compile Include="Models\NoticePart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\NoticePartRecord.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Permissions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\MissingSettingsBanner.cs" />
+    <Compile Include="ViewModels\EditTransactionViewModel.cs" />
+    <Compile Include="ViewModels\LETSSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\LocalityNoticesMembersViewModel.cs" />
+    <Compile Include="ViewModels\LocalityViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\MailchimpMemberViewModel.cs" />
+    <Compile Include="ViewModels\MailchimpSyncViewModel.cs" />
+    <Compile Include="ViewModels\MemberListContentsViewModel.cs" />
+    <Compile Include="ViewModels\MemberListsViewModel.cs" />
+    <Compile Include="ViewModels\MemberListViewModel.cs" />
+    <Compile Include="ViewModels\BrowseNoticeCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\MemberNoticesViewModel.cs" />
+    <Compile Include="ViewModels\MemberTransactionsViewModel.cs" />
+    <Compile Include="ViewModels\MemberViewModel.cs" />
+    <Compile Include="ViewModels\NoticeCategoryViewModel.cs" />
+    <Compile Include="ViewModels\NoticeTypeNoticesViewModel.cs" />
+    <Compile Include="ViewModels\RegisterMemberViewModel.cs" />
+    <Compile Include="ViewModels\RegisterNoticeTypesViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\MemberTransactionViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Content\Web.config" />
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\EditorTemplates\Parts\LETSSettings.cshtml" />
+    <Content Include="Views\Parts\Notice.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Notice.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Parts\Member.cshtml" />
+    <Content Include="Views\Member\ListContents.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Address.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Locality.cshtml" />
+    <Content Include="Views\Parts\Address.cshtml" />
+    <Content Include="Views\NoticeType\Index.cshtml" />
+    <Content Include="Views\Register.cshtml" />
+    <Content Include="Views\Content.SaveButton-url-lets-account-registermember.cshtml" />
+    <Content Include="Views\Account\ChallengeEmailSent.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\NoticeType.cshtml" />
+    <Content Include="Views\Notice\Create.cshtml" />
+    <Content Include="Views\Content-Notice.RegisterNew.cshtml" />
+    <Content Include="Views\Parts\NoticeType.cshtml" />
+    <Content Include="Views\EditorTemplate-ArchiveNotice.cshtml" />
+    <Content Include="Views\Notice\Edit.cshtml" />
+    <Content Include="Views\User.cshtml" />
+    <Content Include="Views\EditorTemplate-Comments.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts.Comments.Comments.cshtml" />
+    <Content Include="Views\Notice\Browse.cshtml" />
+    <Content Include="Views\MetadataSummary_DraftWrapper.cshtml" />
+    <Content Include="Views\Fields\Common.Text-Description.cshtml" />
+    <Content Include="Views\Parts\Common.Metadata.Summary-Notice.cshtml" />
+    <Content Include="Views\Parts\Common.Metadata-Notice.cshtml" />
+    <Content Include="Views\Account\ChallengeEmailSuccess.cshtml" />
+    <Content Include="Views\Content_DetailedSummaryWrapper.cshtml" />
+    <Content Include="Views\Fields\AgileUploader-Photos.cshtml" />
+    <Content Include="Views\Content.SaveButton-url-users-account-registermember.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\MemberAdmin.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\MemberLinks.cshtml" />
+    <Content Include="Views\Fields\Common.Text.cshtml" />
+    <Content Include="Views\NoticeOwnerLinks.cshtml" />
+    <Content Include="Views\Parts\Comments.Count-Notice.cshtml" />
+    <Content Include="Views\Parts\Notice.Summary.cshtml" />
+    <Content Include="Views\Parts\Notice.DetailedSummary.cshtml" />
+    <Content Include="Views\LogOn.cshtml" />
+    <Content Include="Views\Account\RequestLostPasswordMember.cshtml" />
+    <Content Include="Views\Parts\Comments.cshtml" />
+    <Content Include="Views\CommentAuthor.cshtml" />
+    <Content Include="Views\Parts\Transaction.cshtml" />
+    <Content Include="Views\Transactions\Index.cshtml" />
+    <Content Include="Views\MemberAdmin\Index.cshtml" />
+    <Content Include="Views\TransactionsAdmin\List.cshtml" />
+    <Content Include="Views\NoticesAdmin\List.cshtml" />
+    <Content Include="Views\Transactions.cshtml" />
+    <Content Include="Views\MemberAdmin\Alerts.cshtml" />
+    <Content Include="Views\TransactionsAdmin\Demurrage.cshtml" />
+    <Content Include="Views\Profile.Head.cshtml" />
+    <Content Include="Views\Parts\MemberLinks.cshtml" />
+    <Content Include="Views\Profile.Notices.cshtml" />
+    <Content Include="Views\Parts\Title.Summary-Notice.cshtml" />
+    <Content Include="Views\Parts\Title-Notice.cshtml" />
+    <Content Include="Views\PaymentTerms.cshtml" />
+    <Content Include="Views\Per.cshtml" />
+    <Content Include="Views\PricingInfo.cshtml" />
+    <Content Include="Views\MemberAdmin\Mailchimp.cshtml" />
+    <Content Include="Views\SortableColumnHeader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\..\lib\autofac\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Dynamic">
+      <HintPath>..\..\..\..\lib\dlr\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\..\lib\nhibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
+      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
+      <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AgileUploaderField\AgileUploaderField.csproj">
+      <Project>{BCEA07F6-CEFE-4B07-AC95-FD1B7ED7EF74}</Project>
+      <Name>AgileUploaderField</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
+      <Project>{BB5C57F4-D9CB-4440-89A6-D9FF9F41E4E3}</Project>
+      <Name>Contrib.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NogginBox.MailChimp\NogginBox.MailChimp.csproj">
+      <Project>{1024F5BA-7E04-4E70-8D94-30584F09918E}</Project>
+      <Name>NogginBox.MailChimp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.ArchiveLater\Orchard.ArchiveLater.csproj">
+      <Project>{1C981BB3-26F7-494C-9005-CC27A5144233}</Project>
+      <Name>Orchard.ArchiveLater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Blogs\Orchard.Blogs.csproj">
+      <Project>{63FBD4D9-E1DA-4A7B-AA6A-D6074FE50867}</Project>
+      <Name>Orchard.Blogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Comments\Orchard.Comments.csproj">
+      <Project>{14C049FD-B35B-415A-A824-87F26B26E7FD}</Project>
+      <Name>Orchard.Comments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Fields\Orchard.Fields.csproj">
+      <Project>{3787DDE5-E5C8-4841-BDA7-DCB325388064}</Project>
+      <Name>Orchard.Fields</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Roles\Orchard.Roles.csproj">
+      <Project>{D10AD48F-407D-4DB5-A328-173EC7CB010F}</Project>
+      <Name>Orchard.Roles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
+      <Project>{E649EA64-D213-461B-87F7-D67035801443}</Project>
+      <Name>Orchard.Taxonomies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
+      <Name>Orchard.Tokens</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
+      <Project>{79AED36E-ABD0-4747-93D3-8722B042454B}</Project>
+      <Name>Orchard.Users</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePasswordSuccessMember.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\LostPasswordMember.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MemberList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MemberAdminList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Title.DetailedSummary.Notice.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CommentsWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AuthNavigationWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Locality\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Locality\Notices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Member.Summary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Notice\Member.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\NoticeType\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\MembersMap.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\MembersMap.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Fields.Contrib.TaxonomyField.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts.Title-Category.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Transactions\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\StatsWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Transactions\Demurrage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\TransactionsAdmin\DemurrageForecast.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\NoticeType.SummaryAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Locality.SummaryAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ListOfComments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rules\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1887</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

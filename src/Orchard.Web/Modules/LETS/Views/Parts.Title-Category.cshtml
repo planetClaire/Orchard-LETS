@@ -1,0 +1,18 @@
+﻿@using Orchard.Taxonomies.Models
+@using Orchard.Taxonomies.Services
+@{
+
+    var term = Model.ContentItem.TermPart;
+    var taxonomyService = WorkContext.Resolve<ITaxonomyService>();
+    var parent = ((IEnumerable<TermPart>)taxonomyService.GetParents(term)).FirstOrDefault();
+}
+
+ 
+
+<h1>
+@if(parent != null) {
+    <span>@parent.Name - </span>
+}
+<span>@term.Name</span>
+</h1>
+

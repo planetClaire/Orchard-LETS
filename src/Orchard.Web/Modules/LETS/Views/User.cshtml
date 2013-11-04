@@ -1,0 +1,12 @@
+﻿<ul class="nav pull-right user">
+    <li >
+        @if (WorkContext.CurrentUser != null)
+        {
+                @Html.ActionLink(T("Logout").ToString(), "LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })
+        }
+        else
+        {
+            @Html.ActionLink(T("Login").ToString(), "LogOnMember", new { Controller = "Account", Area = "LETS", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) })
+        }
+    </li>
+</ul>

@@ -1,0 +1,79 @@
+﻿@using LETS.ViewModels
+@using LETS.Helpers
+@{
+    var memberVM = (RegisterMemberViewModel)Model.Register;
+    var noticeTypesVM = (RegisterNoticeTypesViewModel)Model.RequiredNoticeTypes;
+
+}
+<header class="page-header">
+    <h1>@Html.TitleForPage(T("Become a Member").ToString())</h1>
+</header>
+<p>@T("Passwords are required to be a minimum of {0} characters in length.", ViewData["PasswordLength"])</p>
+@* markup optimised for twitter bootstrap form-horizontal *@
+@using (Html.BeginFormAntiForgeryPost(new { @class = "form-horizontal" }))
+{ 
+    @Html.ValidationSummary()
+    <fieldset>
+        <legend>@T("Login Details")</legend>
+    
+        <div class="control-group">
+            <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Email)">@T("Email")</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => memberVM.Email, new{ autofocus = "autofocus", type = "email", @class = "required input-xlarge" })
+                @Html.ValidationMessageFor(m => memberVM.Email)
+            </div>
+        </div>
+    
+        <div class="control-group">
+            <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Password)">@T("Password")</label>
+            <div class="controls">
+                @Html.PasswordFor(m => memberVM.Password, new { @class = "required input-xlarge" })
+                @Html.ValidationMessageFor(m => memberVM.Password)
+            </div>
+        </div>
+    
+        <div class="control-group">
+            <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.ConfirmPassword)">@T("Confirm Password")</label>
+            <div class="controls">
+                @Html.PasswordFor(m => memberVM.ConfirmPassword, new { @class = "required input-xlarge" })
+                @Html.ValidationMessageFor(m => memberVM.ConfirmPassword)
+            </div>
+        </div>
+
+        @if (Model.UserProfile != null)
+        {
+            <fieldset>
+                <legend>@T("Member Details")</legend>
+                @Display(Model.UserProfile)
+            </fieldset>
+        }
+
+        @* there's a better way to do this 2D nested list but I don't know what it is yet... *@
+        @if (noticeTypesVM != null)
+        {
+            for (int i = 0; i < noticeTypesVM.NoticeTypes.Count; i++)
+            {
+                <fieldset>
+                    <legend><span>Your </span>@noticeTypesVM.NoticeTypes[i].NoticeTypeName<span>s</span></legend>
+                    <p><strong>Your membership requires you to have atleast @noticeTypesVM.NoticeTypes[i].RequiredCount @noticeTypesVM.NoticeTypes[i].NoticeTypeName<span>/s</span>.</strong> Please add them here (you'll be able to add fuller descriptions & photos after your membership has been approved.</p>
+                    @Html.HiddenFor(m => noticeTypesVM.NoticeTypes[i].IdNoticeType)
+                    @for (var j = 0; j < noticeTypesVM.NoticeTypes[i].RequiredCount; j++)
+                    {
+                        <div class="control-group">
+                            @Html.DropDownGroupListFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm, noticeTypesVM.CategoryTerms, "Choose a category...")
+                            @Html.TextBoxFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title, new { placeholder = string.Format("Type your {0} here...", noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower()), @class = "wide input-xlarge" })
+                            <div class="registerNoticeError">
+                                @Html.ValidationMessageFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm)
+                                @Html.ValidationMessageFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title)
+                            </div>
+                        </div>
+                    }
+                </fieldset>
+            }
+        }
+
+    <div class="form-actions">
+        <button class="btn btn-primary btn-large" type="submit">@T("Register")</button>
+    </div>    
+    </fieldset>
+} 

@@ -1,0 +1,16 @@
+--- EnumerationField.cs
++++ EnumerationField.cs
+@@ -23,7 +23,12 @@
+             }
+ 
+             set {
+-                Value = Separator + string.Join(Separator.ToString(), value) + Separator;
++                if (value.Length.Equals(1) && value[0].Equals(string.Empty)) {
++                    Value = string.Empty;
++                }
++                else {
++                    Value = Separator + string.Join(Separator.ToString(), value) + Separator;
++                }
+             }
+         }
+     }

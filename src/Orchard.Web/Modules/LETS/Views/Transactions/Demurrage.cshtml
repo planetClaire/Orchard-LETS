@@ -1,0 +1,97 @@
+﻿@model LETS.ViewModels.DemurrageForecastViewModel
+@{
+    var runningBalance = Model.MemberBalance;
+    Style.Require("LETS.Common");
+}
+
+<header class="page-header">
+    <h1>@T("Your demurrage forecast")</h1>
+</header>
+<p>@Html.ActionLink(T("Back to transactions").ToString(), "Index", new { area="LETS", controller="Transactions"})</p>
+<p><a href="http://swanhillslets.org/living-gumnuts">Long explanation of the demurrage system in use at Swan Hills LETS</a></p>
+<p>@T("This is what your trading account will look like <strong>if you spend nothing for the next 2 years</strong>").  This page will <strong>update automatically</strong> every time a trade is recorded on your account.</p>
+<p>If you spend regularly, you will lose nothing, and there are currently <strong>no administration fees</strong></p>
+<p><span class="success">Amounts in green should be spent in the given time</span> to avoid <span class="warning">amounts in yellow</span> being deducted</p>
+<div id="accordion2" class="accordion"> </div>
+<table class="items table table-bordered" >
+    <thead>
+    <tr>
+        <td colspan="5" class="text-right"><strong >@T("Your balance now")</strong></td>
+        <td class="currency">@Model.MemberBalance</td>
+        <td colspan="2"></td>
+    </tr>  
+    @if (Model.MemberBalance <= 0)
+    {
+        <tr><td colspan="8"><strong>@T("Your account is not currently in credit so you are not affected by demurrage.")</strong></td></tr>
+    }
+        <tr><td colspan="8"></td></tr> 
+        <tr>
+            <th scope="col">@T("Original trade date")</th>
+            <th scope="col">@T("Description")</th>
+            <th scope="col">@T("Trade value")</th>
+            <th scope="col">@T("Unspent credit remaining")</th>
+            <th scope="col">@T("May be deducted")</th>
+            <th scope="col">@T("Your balance")</th>
+            <th scope="col">@T("When")</th>
+            <th scope="col">@T("From now")</th>
+        </tr>
+    </thead> 
+    @foreach (var demurrageTransactionsVM in Model.DemurrageEvents)
+{
+        if (demurrageTransactionsVM.DemurrageTransactions.Count > 1)
+        {
+            runningBalance -= demurrageTransactionsVM.ToBeDeducted;
+            var collapseId = string.Format("collapse{0}", demurrageTransactionsVM.DemurrageDate.Ticks);
+            <tr >
+                <td colspan="2"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href='#@collapseId'>Multiple deductions <i id="toggle" class="icon-plus"></i></a></td>
+                <td class="currency ">@demurrageTransactionsVM.TradeValue</td>
+                <td class="currency success">@demurrageTransactionsVM.UnspentCreditValue</td>
+                <td class="currency warning">-@demurrageTransactionsVM.ToBeDeducted</td>
+                <td class="currency">@runningBalance</td>
+                <td class="nowrap date">@demurrageTransactionsVM.DemurrageDate.ToString("dd MMM yyyy")</td>
+                <td class="success">@string.Format("{0:%d} days", demurrageTransactionsVM.DemurrageDate - DateTime.Now)</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="nopadding notopbottomborder">
+                    <div id="@collapseId" class="collapse" >
+                        <div class="">
+                            <table width="100%" class="noradius sub">
+                                @foreach (var demurrageTransactionVM in demurrageTransactionsVM.DemurrageTransactions)
+                                {
+                                    <tr>
+                                        <td class="spacer"></td>
+                                        <td class="nowrap date">@demurrageTransactionVM.TransactionDateEarnt.ToString("dd MMM yyyy")</td>
+                                        <td>@demurrageTransactionVM.DescriptionTransactionEarnt</td>
+                                        <td class="currency">@demurrageTransactionVM.ValueTransactionEarnt</td>
+                                        <td class="currency successSub">@demurrageTransactionVM.CreditValueTransactionEarnt</td>
+                                        <td class="currency warningSub"><a rel="tooltip" title='@demurrageTransactionVM.DeductionExplanation'>-@demurrageTransactionVM.ValueDeducted</a></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td colspan="3" class="nopadding notopbottomborder"></td>
+            </tr>
+        }
+        else
+        {
+            foreach (var demurrageTransactionVM in demurrageTransactionsVM.DemurrageTransactions)
+            {
+                runningBalance -= @demurrageTransactionVM.ValueDeducted;
+                <tr>
+                    <td  class="nowrap date">@demurrageTransactionVM.TransactionDateEarnt.ToString("dd MMM yyyy")</td>
+                    <td>@demurrageTransactionVM.DescriptionTransactionEarnt</td>
+                    @*<td><a href="@Url.Action("Index", "Transactions", new { area = "LETS", id = demurrageTransactionVM.IdSellerTransactionEarnt })#@demurrageTransactionVM.IdTransactionEarnt" title="@T("Go to this transaction")" >@demurrageTransactionVM.DescriptionTransactionEarnt</a></td>*@
+                    <td class="currency">@demurrageTransactionVM.ValueTransactionEarnt</td>
+                    <td class="currency success">@demurrageTransactionVM.CreditValueTransactionEarnt</td>
+                    <td class="currency warning"><a rel="tooltip" title='@demurrageTransactionVM.DeductionExplanation'>-@demurrageTransactionVM.ValueDeducted</a></td>
+                    <td class="currency">@runningBalance</td>
+                    <td class="nowrap date">@demurrageTransactionVM.RecordedDate.ToString("dd MMM yyyy")</td>
+                    <td class="success">@string.Format("{0:%d} days", demurrageTransactionVM.RecordedDate - DateTime.Now)</td>
+                </tr>
+            }
+        }
+}
+
+</table>

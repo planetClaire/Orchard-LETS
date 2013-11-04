@@ -1,0 +1,44 @@
+﻿@using LETS.Helpers
+@using LETS.ViewModels
+@{
+    Layout.Title = T("Edit Notice").ToString();
+    var noticeCategoryVM = (NoticeCategoryViewModel) Model.NoticeCategoryViewModel;
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
+}
+
+@using (Html.BeginFormAntiForgeryPost())
+{
+    Html.ValidationSummary();
+
+    <div id="editNotice">
+        <header class="page-header">
+            <h1>You are editing your notice</h1>    
+        </header>
+        <div class="control-group">
+            <label class="control-label">@T("Category")</label>
+            <div class="controls">
+                @Html.DropDownGroupListFor(m => noticeCategoryVM.IdCategory, noticeCategoryVM.Categories, "Choose a category...")
+                @Html.ValidationMessageFor(m => noticeCategoryVM.IdCategory)
+            </div>
+        </div>
+        @Display(Model)
+
+        <div class="form-actions">
+            @if (!Model.IsPublished) {
+                <button class="btn btn-primary btn-large" type="submit" value="submit.Save" name="submit.Save" >@T("Save &amp; Publish")</button>
+            }
+            else {
+                <button class="btn btn-primary btn-large" type="submit" value="submit.Save" name="submit.Save">@T("Save")</button>
+            }
+            <p class="pull-right">
+                @if (Model.IsPublished)
+                {
+                    <button class="btn btn-warning cancel" type="submit" value="submit.Unpublish" name="submit.Unpublish" >@T("Archive")</button>
+                }
+                <button class="btn btn-danger cancel" type="submit" value="submit.Delete" name="submit.Delete" >@T("Delete")</button>
+            </p>
+        </div>    
+    </div>
+
+}

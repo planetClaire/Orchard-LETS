@@ -1,0 +1,35 @@
+@model NogginBox.MailChimp.ViewModels.MergeVariableModel
+@using NogginBox.MailChimp.ViewModels
+@if(Model.DisplayType == DisplayType.Text)
+{
+	<p><label>@Model.Variable.Label<br /><input type="text" name="@Model.Variable.Tag" value="@Model.Value" /></label>@Html.Partial("MergeVarValidationMessage", Model.Message)</p>
+}
+else if (Model.DisplayType == DisplayType.Radio)
+{
+	<p>@Model.Variable.Label<br />
+	@foreach(var option in Model.Variable.Choices.Split(',')) {
+	 var checkedBit = (Model.Value == option) ? "checked=\"checked\"" : null;
+		<label><input type="radio" name="@Model.Variable.Tag" value="@option" @checkedBit/> @option</label>
+	}</p>
+}
+else if (Model.DisplayType == DisplayType.DropDown)
+{
+	<p><label>@Model.Variable.Label<br />
+	<select name="@Model.Variable.Tag">
+		<option value="">Please select</option>
+	@foreach(var option in Model.Variable.Choices.Split(',')) {
+	 var checkedBit = (Model.Value == option) ? "selected=\"selected\"" : null;
+		<option @checkedBit>@option</option>
+	}</select></label></p>
+}
+else if (Model.DisplayType == DisplayType.TextArea)
+{
+	
+	<p>@Model.Variable.Label</p>@Html.Partial("MergeVarValidationMessage", Model.Message)
+	<p><label>Street address<br /><input name="@(Model.Variable.Tag).addr1" value="@Model.getField("addr1")"></label>
+	<label>Address line 2<br /><input name="@(Model.Variable.Tag).addr2" value="@Model.getField("addr2")"></label>
+	<label>City<br /><input name="@(Model.Variable.Tag).city" value="@Model.getField("city")"></label>
+	<label>State/Province/Region<br /><input name="@(Model.Variable.Tag).state" value="@Model.getField("state")"></label>
+	<label>Postal/zip code<br /><input name="@(Model.Variable.Tag).zip" value="@Model.getField("zip")"></label>
+	<label>Country<br />@Html.DropDownList(Model.Variable.Tag + ".country", Model.Countries, "Please select")</label></p>
+}

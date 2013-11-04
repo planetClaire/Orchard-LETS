@@ -1,0 +1,6 @@
+﻿@{
+    Response.Clear();
+    Response.Status = "301 Moved Permanently";
+    Response.AddHeader("Location", string.Format("/LETS/NoticeType/List/{0}", Model.ContentItem.Id));
+    Response.End();
+}

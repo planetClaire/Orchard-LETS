@@ -1,0 +1,40 @@
+﻿<h1>@Model.MemberType</h1>
+<table class="items" >
+    <colgroup>
+        <col id="Col1" />
+        <col id="Col2" />
+        <col id="Col3" />
+        <col id="Col4" />
+        <col id="Col5" />
+        <col id="Col6" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th scope="col">@T("Last name")</th>
+            <th scope="col">@T("First name")</th>
+            <th scope="col">@T("Email")</th>
+            <th scope="col">@T("Joined")</th>
+            <th scope="col">@T("Balance")</th>
+            <th scope="col">@T("Turnover")</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    @foreach (var member in Model.Members)
+    {
+    <tr>
+        <td>@member.LastName</td>
+        <td>@member.FirstName</td>
+        <td>@member.Email</td>
+        <td>@member.JoinDate.ToShortDateString()</td>
+        <td>@member.Balance</td>
+        <td>@member.Turnover</td>
+        <td>
+            <div>
+                <a href="@Url.Action("Edit", "Admin", new { area = "Orchard.Users", id = member.Id })" title="@T("Edit")">@T("Edit")</a> | 
+                <a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = member.Id })" title="@T("Transactions")">@T("Transactions")</a> |
+                <a href="@Url.Action("List", "NoticesAdmin", new { area = "LETS", id = member.Id })" title="@T("Notices")">@T("Notices")</a>
+            </div>
+        </td>
+    </tr>
+    } 
+</table>

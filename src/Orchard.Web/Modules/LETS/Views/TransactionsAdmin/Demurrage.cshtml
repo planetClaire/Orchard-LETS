@@ -1,0 +1,36 @@
+﻿@model IEnumerable<LETS.ViewModels.DemurrageTransactionViewModel>
+@{
+    ViewBag.Title = "Demurrage";
+}
+
+<h2>Demurrage</h2>
+<p>@Html.ActionLink(T("Process demurrage now (generally this is for testing only)").ToString(), "ProcessDemurrage", "TransactionsAdmin", new { area = "LETS" })</p>
+
+<table class="items table table-striped table-bordered" >
+    <thead>
+        <tr>
+            <th scope="col">@T("Recorded date")</th>
+            <th scope="col">@T("Original transaction date")</th>
+            <th scope="col">@T("Original seller")</th>
+            <th scope="col">@T("Original transaction")</th>
+            <th scope="col">@T("Original value")</th>
+            <th scope="col">@T("Charged")</th>
+            <th scope="col">@T("Credit value remaining")</th>
+            <th scope="col">@T("Original Buyer")</th>
+            <th scope="col">@T("Demurrage Recipient")</th>
+        </tr>
+    </thead>    
+    @foreach (var demurrageTransactionVM in Model) {
+        <tr>
+            <td>@demurrageTransactionVM.RecordedDate.ToShortDateString()</td>
+            <td>@demurrageTransactionVM.TransactionDateEarnt.ToShortDateString()</td>
+            <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdSellerTransactionEarnt})" title="@T("Transactions for this member")">@demurrageTransactionVM.NameSellerTransactionEarnt</a></td>
+            <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdSellerTransactionEarnt })#@demurrageTransactionVM.IdTransactionEarnt" title="@T("Go to this transaction")" >@demurrageTransactionVM.DescriptionTransactionEarnt</a></td>
+            <td>@demurrageTransactionVM.ValueTransactionEarnt</td>
+            <td>@demurrageTransactionVM.ValueDeducted</td>
+            <td>@demurrageTransactionVM.CreditValueTransactionEarnt</td>
+            <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdBuyerTransactionEarnt})" title="@T("Transactions for this member")">@demurrageTransactionVM.NameBuyerTransactionEarnt</a></td>
+            <td><a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = demurrageTransactionVM.IdDemurrageRecipient})" title="@T("Transactions for this member")">@demurrageTransactionVM.NameDemurrageRecipient</a></td>
+        </tr>
+    } 
+</table>

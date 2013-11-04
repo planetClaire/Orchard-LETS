@@ -1,0 +1,8 @@
+﻿@using LETS.Models
+@using Orchard.ContentManagement
+@{
+    var letsSettingsPart = WorkContext.CurrentSite.As<LETSSettingsPart>();
+    var currencyUnit = letsSettingsPart.CurrencyUnit;
+    var turnoverDays = letsSettingsPart.DefaultTurnoverDays;
+}
+<p><span class='badge badge-success'>@Model.TotalTurnover.ToString("n0")@currencyUnit</span> @string.Format("{0} {1} {2}", T("traded in the last"), turnoverDays, T("days"))</p>

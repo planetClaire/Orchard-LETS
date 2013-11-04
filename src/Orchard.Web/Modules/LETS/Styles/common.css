@@ -1,0 +1,42 @@
+﻿.Demurrage .colorCode{
+    color: #f99b17;
+}
+.Fee .colorCode
+{
+    color: #B94A48;
+}
+.Adjustment .colorCode {
+    color: #58b158;
+}
+#map_canvas { height: 100% }
+div.infowindow h4 {
+    margin: 0;
+    line-height: 18px;
+}
+.nopadding {
+    padding: 0 !important;
+}
+.noborder {
+    border: none !important;
+}
+.notopbottomborder {
+    border-top: none !important;
+    border-bottom: none !important;
+}
+td.currency {
+    width: 70px;
+}
+td.date {
+    width: 105px;
+}
+table.sub td.date {
+    width: 90px;
+}
+table.noradius,
+table.noradius td {
+    border-radius: 0 !important;
+}
+td.spacer {
+    border: none !important;
+    width: 20px;
+}

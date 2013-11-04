@@ -1,0 +1,24 @@
+﻿@model BrowseNoticeCategoriesViewModel
+@using LETS.ViewModels
+
+<header class="page-header">
+    <h1>@T("Browse Categories")</h1>
+</header>
+<div class="row">
+    @foreach (var browseNoticeCategoryViewModel in Model.Categories)
+    {
+        <div class="span3">
+            <h3>@browseNoticeCategoryViewModel.Term.Name</h3>
+            <ul class="subCategories browseCategories">
+                @foreach(var subCategory in browseNoticeCategoryViewModel.SubCategories)
+                {
+                    var className = "empty";
+                    if (subCategory.NoticeCount > 0) { className = ""; }
+                    <li class="@className">
+                        @Html.ItemDisplayLink(subCategory.Term.Name, subCategory.Term.ContentItem)
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>

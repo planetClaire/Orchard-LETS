@@ -1,0 +1,101 @@
+<!--Exported from Orchard-->
+<Orchard>
+  <Recipe>
+    <Name>LETS initial data &amp; settings</Name>
+    <Author>admin</Author>
+  </Recipe>
+  <Settings>
+    <RegistrationSettingsPart UsersCanRegister="true" UsersMustValidateEmail="true" UsersAreModerated="true" NotifyModeration="true" NotificationsRecipients="admin" EnableLostPassword="true" />
+  </Settings>
+  <Data>
+    <Menu Id="/Identifier=bce106f35b8e4e9ebff06a3bd621e727" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:46:13Z" PublishedUtc="2012-04-03T10:46:13Z" ModifiedUtc="2012-04-03T10:46:13Z" />
+      <IdentityPart Identifier="bce106f35b8e4e9ebff06a3bd621e727" />
+      <AdvancedMenuPart Name="Navigation" />
+    </Menu>
+    <MenuWidget Id="/Identifier=0268e8a58b554620bc89376e114352c2" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" Container="/Layer.LayerName=Default" CreatedUtc="2012-04-03T10:51:02Z" PublishedUtc="2012-04-03T10:51:02Z" ModifiedUtc="2012-04-03T10:51:02Z" />
+      <IdentityPart Identifier="0268e8a58b554620bc89376e114352c2" />
+      <WidgetPart Title="Navigation" Position="1" Zone="Navigation" RenderTitle="false" />
+      <MenuWidgetPart MenuName="Navigation" Mode="SiblingsExpanded" WrapChildrenInDiv="true" Levels="0" CutOrFlattenLower="false" />
+    </MenuWidget>
+    <SimpleMenuItem Id="/Identifier=d0fe47f51e9c4811aad97b126b938411" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:47:01Z" PublishedUtc="2012-04-03T10:47:01Z" ModifiedUtc="2012-04-03T10:47:01Z" />
+      <IdentityPart Identifier="d0fe47f51e9c4811aad97b126b938411" />
+      <AdvancedMenuItemPart Text="Browse categories" Position="2" Url="lets/notice/browse" MenuName="Navigation" DisplayText="true" DisplayHref="true" AuthenticationLevel="Any" IncludeReturnUrl="false" />
+    </SimpleMenuItem>
+    <SimpleMenuItem Id="/Identifier=ed5d0d736d7549dda3ad9a6b9be88176" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:49:49Z" PublishedUtc="2012-04-03T10:49:49Z" ModifiedUtc="2012-04-03T10:49:49Z" />
+      <IdentityPart Identifier="ed5d0d736d7549dda3ad9a6b9be88176" />
+      <AdvancedMenuItemPart Text="Add a notice" Position="3" Url="/lets/notice/create" MenuName="Navigation" DisplayText="true" DisplayHref="true" AuthenticationLevel="Any" IncludeReturnUrl="false" />
+    </SimpleMenuItem>
+    <SimpleMenuItem Id="/Identifier=13b433f47a914733aeb3e72f9e7c8cac" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:50:17Z" PublishedUtc="2012-04-03T10:50:17Z" ModifiedUtc="2012-04-03T10:50:17Z" />
+      <IdentityPart Identifier="13b433f47a914733aeb3e72f9e7c8cac" />
+      <AdvancedMenuItemPart Text="Members" Position="4" Url="/lets/member" MenuName="Navigation" DisplayText="true" DisplayHref="true" AuthenticationLevel="Any" IncludeReturnUrl="false" />
+    </SimpleMenuItem>
+    <SimpleMenuItem Id="/Identifier=2183e0372dac4fc1a4e0c1b507f65280" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-24T08:27:49Z" PublishedUtc="2012-04-24T08:27:49Z" ModifiedUtc="2012-04-24T08:27:49Z" />
+      <IdentityPart Identifier="2183e0372dac4fc1a4e0c1b507f65280" />
+      <AdvancedMenuItemPart Text="Trading" Position="5" Url="/lets/transactions" MenuName="Navigation" DisplayText="true" DisplayHref="true" RequiresPermission="AccessMemberContent" AuthenticationLevel="Any" IncludeReturnUrl="false" />
+    </SimpleMenuItem>
+    <Locality Id="/alias=kalamunda" Status="Published">
+      <AutoroutePart Alias="kalamunda" UseCustomPattern="false" />
+      <TitlePart Title="Kalamunda" />
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-02-27T11:59:35Z" PublishedUtc="2012-02-27T11:59:35Z" ModifiedUtc="2012-02-27T11:59:35Z" />
+      <LocalityPart Postcode="6076" />
+    </Locality>
+    <NoticeType Id="/alias=request" Status="Published">
+      <AutoroutePart Alias="request" UseCustomPattern="false" />
+      <TitlePart Title="Request" />
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-02-27T11:59:50Z" PublishedUtc="2012-04-03T11:03:13Z" ModifiedUtc="2012-04-03T11:03:13Z" />
+    </NoticeType>
+    <NoticeType Id="/alias=offer" Status="Published">
+      <AutoroutePart Alias="offer" UseCustomPattern="false" />
+      <TitlePart Title="Offer" />
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-02-27T11:59:45Z" PublishedUtc="2012-04-03T11:03:25Z" ModifiedUtc="2012-04-03T11:03:25Z" />
+    </NoticeType>
+    <ProjectionWidget Id="/Identifier=a57edd976a3c47da9bc48a7edf6b4c05" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" Container="/Layer.LayerName=Default" CreatedUtc="2012-04-03T22:10:44Z" PublishedUtc="2012-04-03T22:10:44Z" ModifiedUtc="2012-04-03T22:10:44Z" />
+      <IdentityPart Identifier="a57edd976a3c47da9bc48a7edf6b4c05" />
+      <ProjectionPart Items="5" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="true" Query="/Identifier=30acdf91422441949967c0895cbca8ea" LayoutIndex="-1" />
+      <WidgetPart Title="Latest offers" Position="2" Zone="AsideSecond" RenderTitle="true" />
+    </ProjectionWidget>
+    <ProjectionWidget Id="/Identifier=7787d2a9667f4741b44ff3a8d669462a" Status="Published">
+      <CommonPart Owner="/User.UserName=admin@swanhillslets.org" Container="/Layer.LayerName=Default" CreatedUtc="2012-04-03T22:11:48Z" PublishedUtc="2012-04-03T22:11:48Z" ModifiedUtc="2012-04-03T22:11:48Z" />
+      <IdentityPart Identifier="7787d2a9667f4741b44ff3a8d669462a" />
+      <ProjectionPart Items="5" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="true" Query="/Identifier=fd008e2bae014de48e63734f8c2b46d2" LayoutIndex="-1" />
+      <WidgetPart Title="Latest requests" Position="1" Zone="AsideSecond" RenderTitle="true" />
+    </ProjectionWidget>
+    <Query Id="/Identifier=30acdf91422441949967c0895cbca8ea" Status="Published">
+      <TitlePart Title="Latest offers" />
+      <IdentityPart Identifier="30acdf91422441949967c0895cbca8ea" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="NoticeType" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;NoticeTypeIds&gt;26&lt;/NoticeTypeIds&gt;&lt;__RequestVerificationToken&gt;xjlSlILsURQyzdHdagiHccSll9kg1iUyiYCzPBpnmCcJawt0WgdItdoP58kGRm8AumQs4tySTOBaOA+03v0y97Eku81jSs1aB4J1qKjZ4hZ+JFUizzlcyg41X+d8f8hllK64Yrdh/H7jd3NnQ/z1CilIUhPImKy2wn4LUVAWXk6WLB2SqgGJQmoO9yXHtxx14Qq3EZtLVwF5nrWtxMluC+nPkCkU6P5zF+KA1dUWhek=&lt;/__RequestVerificationToken&gt;&lt;/Form&gt;" Type="IsNoticeType" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="CommonPartRecord" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;false&lt;/Sort&gt;&lt;__RequestVerificationToken&gt;HBMu1ib8U4wFzABtTCG1FFTGNSjvhzOYyOjDbQI0ZOg+Mw9pcTqRNKF8E3qm/uwhMu7EWtbytN5PuuEJRGEogHYgi8M1JfPe7rSZwgVRQ0hvR6yKu3wqeEYOVyNPZu3/juCg5axobLvfTtE+bdtsRi8k7e6BOUV2BeNUvGCNKxj7JQ4xGxLbarI22FvngwlfYOd69Wbvaw92dF4GbUgA7QNt5GET40JCHr2gaUoF5/o=&lt;/__RequestVerificationToken&gt;&lt;/Form&gt;" Type="PublishedUtc" />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+    </Query>
+    <Query Id="/Identifier=fd008e2bae014de48e63734f8c2b46d2" Status="Published">
+      <TitlePart Title="Latest requests" />
+      <IdentityPart Identifier="fd008e2bae014de48e63734f8c2b46d2" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="NoticeType" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;NoticeTypeIds&gt;25&lt;/NoticeTypeIds&gt;&lt;__RequestVerificationToken&gt;+eYriIBLISONZIzjTFin5hoxwcxxGq7Z9UEVRsjFKy2+SEw4pAiAF7f0yvAq+RZx7ANRc+RV+vz//E9SXM0QiC6/U663fxZsPiSD//Z5X5FlJgOKgeyAVl1v61mgP4WpBwPEoaK9BOCBduQ9nnqqyJ4WD02IvY/F/7YzJpL+o4taOTKoRtR8FL9TqY8IBOfyMksM4aAYG9Z5No0B52/ZULIfFK+oJMFCtLiWo+G2reM=&lt;/__RequestVerificationToken&gt;&lt;/Form&gt;" Type="IsNoticeType" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="CommonPartRecord" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;false&lt;/Sort&gt;&lt;__RequestVerificationToken&gt;EsC94uQBtyCzgQHBawI+N3lqD29MVumMrlEqXFIEb9nKsSvi17mOr4zSktAzUGsF7h6Sf96CDMeaBpY55BQscphrLjPNL0YoTvDM2JJ+gsnldye3FPnRFaWizipkshjI7xPYcC6PQkpu0FsrDNpIRtI3KvW2dpCgKQtqwr3ZJxYvK83zFE9cSyXy8tZldBcmye+iD8JiiwY1K5+W6NQq77RbQEUBlXDrCD2KQU9WSbA=&lt;/__RequestVerificationToken&gt;&lt;/Form&gt;" Type="PublishedUtc" />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+    </Query>
+  </Data>
+</Orchard>

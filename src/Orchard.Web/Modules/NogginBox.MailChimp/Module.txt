@@ -1,0 +1,11 @@
+Name: MailChimp
+Author: Richard Garside - NogginBox
+Website: http://www.nogginbox.co.uk
+Version: 1.2
+OrchardVersion: 1.4
+Description: Add a mailchimp subscribe page to your website.
+Features:
+    NogginBox.MailChimp:
+        Name: MailChimp
+        Description: Add a mailchimp subscribe page to your website.
+        Category: Messaging

@@ -1,0 +1,6 @@
+﻿@model LETS.ViewModels.MemberListsViewModel
+@foreach (var list in Model.MemberLists)
+{
+    @Display.MemberAdminList(Members: list.Members, MemberType: list.MemberType)
+}
+

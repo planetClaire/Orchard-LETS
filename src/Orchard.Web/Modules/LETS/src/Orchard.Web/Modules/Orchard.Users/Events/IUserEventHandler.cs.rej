@@ -1,0 +1,19 @@
+--- IUserEventHandler.cs
++++ IUserEventHandler.cs
+@@ -47,6 +47,16 @@
+         /// Called after a user has been approved
+         /// </summary>
+         void Approved(IUser user);
++
++        /// <summary>
++        /// Called after a user has been moderated
++        /// </summary>
++        void Moderated(IUser user);
++
++        /// <summary>
++        /// Called before a user is deleted
++        /// </summary>
++        void Deleting(IUser user);
+     }
+ }
+ 

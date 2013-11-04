@@ -1,0 +1,13 @@
+﻿@model Orchard.Comments.Models.CommentsPart
+@using Orchard.Comments.Models;
+@using Orchard.Localization;
+
+<div class="control-group">
+    <label class="control-label">@T("Comments")</label>
+    <div class="controls">
+        <label class="checkbox inline" for="CommentsActive">
+            @Html.CheckBoxFor(m => m.CommentsActive)
+            @T("Allow new comments")
+        </label> 
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@using LETS.Models
+@model LETS.ViewModels.MailchimpSyncViewModel
+
+<h2>@T("Mailchimp")</h2>
+
+<h3>@T("Approved & verified members missing from Mailchimp list")</h3>
+@if (Model == null || Model.MissingListMembers.Count().Equals(0))
+{
+    <p>@T("Nothing to show")</p>
+}
+else
+{
+    <table class="items">
+        @foreach (var member in Model.MissingListMembers)
+        {
+            <tr>
+                <td>@member.Name</td>
+                <td>@member.Email</td>
+                <td><a href="@Url.Action("SubscribeToMailchimp", "MemberAdmin", new {area = "LETS", id = member.Id})" title="@T("Subscribe")">@T("Subscribe")</a></td>
+            </tr>
+        }
+    </table>
+}
+<h3>@T("Emails on list missing from approved & verified members")</h3>
+@if (Model == null || Model.MissingOrchardMembers.Count().Equals(0))
+{
+    <p>@T("Nothing to show")</p>
+}
+else
+{
+    <table class="items">
+        @foreach (var member in Model.MissingOrchardMembers)
+        {
+            <tr>
+                <td>@member.Email</td>
+            </tr>
+        }
+    </table>
+}

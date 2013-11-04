@@ -1,0 +1,9 @@
+﻿@model LETS.ViewModels.MemberListContentsViewModel
+
+<header class="page-header">
+    <h1>@Model.ContentTypeName<span>s</span> for @Model.MemberPart.FirstLastName</h1>
+</header>
+@foreach (var shape in Model.ContentSummaries)
+{
+    @Display(shape)
+}

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<LETS.Models.NoticeTypePart>
+<h1>@T("All notices")</h1>
+<h2>@T("Click to list")</h2>
+<ul>
+@foreach(var noticeType in Model) {
+    <li>
+        @Html.ActionLink(noticeType.Title, "List", new { area = "LETS", Controller = "NoticeType", id = noticeType.Id })
+    </li>
+}
+</ul>

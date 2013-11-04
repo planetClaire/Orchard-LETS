@@ -1,0 +1,67 @@
+﻿@using LETS.Models
+@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions;
+@{
+    var contextExists = TempData["CreateCommentContext.Name"] != null;
+    var name = Convert.ToString(TempData["CreateCommentContext.Name"]);
+    var commentText = Convert.ToString(TempData["CreateCommentContext.CommentText"]);
+    var email = Convert.ToString(TempData["CreateCommentContext.Email"]);
+    var siteName = Convert.ToString(TempData["CreateCommentContext.SiteName"]);
+}
+@if (Model.ContentPart.Comments.Count > 0)
+{
+    <div id="comments">
+        <h2 class="comment-count">@T.Plural("1 Comment", "{0} Comments", (int)Model.ContentPart.Comments.Count)</h2>
+@* ReSharper disable Mvc.PartialViewNotResolved *@
+        @{Html.RenderPartial("ListOfComments", (IEnumerable<Orchard.Comments.Models.CommentPart>)Model.ContentPart.Comments);}
+@* ReSharper restore Mvc.PartialViewNotResolved *@
+    </div>
+}
+@if (Model.ContentPart.CommentsActive == false)
+{
+    // Comments are closed
+    if (Model.ContentPart.Comments.Count > 0)
+    {
+    <div id="comments">
+        <p class="comment-disabled">@T("Comments have been disabled for this content.")</p>
+    </div>
+    }
+}
+else if (WorkContext.CurrentUser == null || !AuthorizedFor(Orchard.Comments.Permissions.AddComment))
+{
+    // Must be a logged in member or otherwise authorised to comment
+    <h2 id="add-comment">@T("Add a Comment")</h2>
+    <p class="info message">@T("You must {1} and {0} to comment.", Html.ActionLink(T("login").ToString(), "LogOnMember", new { Controller = "Account", Area = "LETS", ReturnUrl = string.Format("{0}#addacomment", Context.Request.RawUrl) }), Html.ActionLink(T("be a member").ToString(), "RegisterMember", new { Controller = "Account", Area = "LETS" }))</p>
+}
+else
+{
+    using (Html.BeginForm("Create", "Comment", new { area = "Orchard.Comments" }, FormMethod.Post, new { @class = "comment-form" }))
+    { 
+        @Html.ValidationSummary() 
+        @Html.Hidden("Name", WorkContext.CurrentUser.UserName ?? "")
+        @Html.Hidden("Email", WorkContext.CurrentUser.Email ?? "")
+
+        <h3 id="commenter">
+            @if (WorkContext.CurrentUser != null)
+            {
+                var member = WorkContext.CurrentUser.As<MemberPart>();
+                @T("Would you like to leave a comment {0}?", member.FirstName)
+            }
+        </h3>
+        <p class="help alert alert-warning">For all eyes, this is not for personal communications, use email or telephone for that!</p>
+        <fieldset>
+            <div class="clearfix">
+                <label for="comment-text">@T("Comment")</label>
+                <div class="input">
+                    <textarea id="comment-text" rows="10" cols="30" name="CommentText">@(contextExists ? commentText : String.Empty)</textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary btn-large" type="submit">@T("Submit Comment")</button>
+                @Html.Hidden("CommentedOn", (int)Model.ContentPart.ContentItem.Id)
+                @Html.Hidden("ReturnUrl", Context.Request.ToUrlString())
+                @Html.AntiForgeryTokenOrchard()
+            </div>
+        </fieldset>
+    }
+}

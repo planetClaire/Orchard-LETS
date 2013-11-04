@@ -1,0 +1,15 @@
+﻿@using LETS.Models
+@using Orchard.ContentManagement
+@using Orchard.Security
+
+@{
+    var member = ((IUser)Model.ContentPart.ContentItem.CommonPart.Owner).As<MemberPart>();
+}
+@if (member != null) {
+    @Html.ActionLink(member.FirstLastName, "Index", new {username = member.User.UserName, area = "Contrib.Profile", Controller = "Home"})
+}
+else {
+    var comment = (Orchard.Comments.Models.CommentPart)Model.ContentPart;
+    @Html.LinkOrDefault(comment.Record.Author, comment.Record.SiteName, new { rel = "nofollow" })
+}
+

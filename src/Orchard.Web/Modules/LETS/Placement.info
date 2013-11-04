@@ -1,0 +1,118 @@
+﻿<Placement>
+  <!-- "Permalink" & "Set as home page" at the bottom -->
+  <Place Parts_Autoroute_Edit="Content:after"/>
+
+  <!-- LETS settings -->
+  <Place Parts_LETSSettings_Edit="Content:0"/>
+
+  <!-- Locality -->
+  <Place Parts_Locality_Edit="Content:0"/>
+  <Match DisplayType="Detail">
+    <Place Parts_Locality="Content:0" />
+  </Match>
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_Locality_SummaryAdmin="Content:0"></Place>
+  </Match>
+
+  <Match ContentType="Locality">
+    <Place Parts_Common_Metadata="-"/>
+  </Match>
+
+  <!-- Member -->
+  <Place Parts_Member_Edit="Content:1" />
+  <Match Path="~/Profile/Edit">
+    <Place Fields_Common_Text_Edit-Mobile="Content:1.1"/>
+    <Place Fields_Common_Text_Edit-rfcAbout="Content:1.3"/>
+  </Match>
+
+  <!-- Member Links -->
+  <Place Parts_MemberLinks="Content:0.5" />
+  <Place Parts_MemberLinks_Edit="Content:1.5" />
+
+  <!-- Member Admin -->
+  <Place Parts_MemberAdmin_Edit="Content:1" />
+
+  <!-- Address -->
+  <Place Parts_Address_Edit="Content:1.2" />
+
+  <!-- Notice -->
+  <Place Parts_Notice_Edit="Content:0"></Place>
+  <Place Fields_Enumeration-PaymentTerms="-" />
+  <Place Fields_Enumeration-Per="-" />
+
+  <!-- Transaction -->
+  <Place Parts_Transaction="Content:0"/>
+  <Place Parts_Transaction_Edit="Content:0"></Place>
+
+  <!-- editing Notices -->
+  <Match ContentType="Notice">
+    <Match Path="~/LETS/Notice/Edit/*">
+      <Place Content_SaveButton="-" />
+    </Match>
+  </Match>
+
+  <Match ContentType="Notice">
+    <Match Path="~/LETS/Notice/*">
+      <Place Parts_Common_Owner_Edit="-"/>
+      <Place Parts_Autoroute_Edit="-"/>
+      <Place Fields_Contrib_TaxonomyField_Edit="-"/>
+      <Place Parts_Title_Edit="Content:0"/>
+      <Place Fields_Enumeration_Edit-Per="Content:1.7"/>
+      <Place Fields_Enumeration_Edit-PaymentTerms="Content:1.8"/>
+      <Place Fields_AgileUploader_Edit="Content:4"/>
+      <Place Parts_Comments_Enable="Content:5"/>
+    </Match>
+  </Match>
+
+  <!-- Detailed Summary display -->
+    <Match DisplayType="DetailedSummary">
+      <Match ContentType="Notice">
+        <Place Parts_Title_DetailedSummary_Notice="Header:1"></Place>
+      </Match>
+      <Place Fields_AgileUploader="Header:after" />
+      <Place Parts_Common_Metadata="Content:before"/>
+      <Place Fields_Common_Text-Description="Content:0"/>
+      <Place Parts_Notice_DetailedSummary="Content:1"></Place>
+      <Place Parts_Comments_Count="Content:after:1" />
+      <Place Fields_Contrib_TaxonomyField="Content:after:1"/>
+    </Match>
+  
+  <!-- Summary display -->
+  <Match DisplayType="Summary">
+    <Place Fields_Common_Text-Description="-"/>
+    <Place Parts_Notice_Summary="Content:0"></Place>
+    <Place Parts_Member_Summary="Content:0"></Place>
+    <Place Parts_Comments_Count="Content:3" />
+    <Place Fields_Contrib_TaxonomyField="Content:after"/>
+  </Match>
+  
+  <!-- Detail display -->
+  <Match DisplayType="Detail"  >
+    <Place Parts_Address="Content:2" />
+    <Place Fields_Common_Text-Description="Content:0"/>
+    <Place Parts_Notice="Content:1"></Place>
+    <Place Parts_Member="Content:1"></Place>
+    <Place Fields_Contrib_TaxonomyField="Content:2.5"/>
+  </Match>
+
+  <!-- Notice Type -->
+  <Match DisplayType="Detail">
+    <Place Parts_NoticeType="Content:0"/>
+  </Match>
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_NoticeType_SummaryAdmin="Content:0"/>
+  </Match>
+  <Place Parts_NoticeType_Edit="Content:0"></Place>
+
+  <!-- Category -->
+  <Match ContentType="Category">
+    <Place Parts_Common_Metadata="-"/>
+  </Match>
+
+  <Place CommentsWidget="Content:0" />
+  <Place StatsWidget="Content:0" />
+  <Place AuthNavigationWidget="Content:0" />
+
+  <Place Parts_MembersMap="Content:0"/>
+  <Place Parts_MembersMap_Edit="Content:0"></Place>
+</Placement>

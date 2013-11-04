@@ -1,0 +1,10 @@
+--- Enumeration.Edit.cshtml
++++ Enumeration.Edit.cshtml
+@@ -37,6 +37,7 @@
+                     </div>
+                 }
+             }
++            <input name="@Html.FieldNameFor(m => m.SelectedValues)" type="hidden" />
+             break;
+     }
+     

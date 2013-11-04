@@ -1,0 +1,16 @@
+﻿@using LETS.Models
+@using Orchard.ContentManagement;
+
+@{
+  var userName = ((IContent)Model.ContentItem).As<Orchard.Security.IUser>().UserName;
+    var member = ((IContent) Model.ContentItem).As<MemberPart>();
+}
+  <!-- Profile Head -->
+<div class="profile-head page-header">
+    <h1>@member.FirstLastName</h1>
+@* ReSharper disable Mvc.ActionNotResolved *@
+    @if(WorkContext.CurrentUser != null && WorkContext.CurrentUser.UserName == userName) {
+        @Html.ActionLink(T("Edit your profile").Text, "Edit")
+    }
+@* ReSharper restore Mvc.ActionNotResolved *@
+</div>

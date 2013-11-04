@@ -1,0 +1,15 @@
+﻿@model LETS.Models.NoticeTypePart
+<div class="control-group">
+    <label class="required" for="@Html.FieldIdFor(m => m.RequiredCount)">@T("Minimum number of notices members should have")</label>
+    <div class="controls">
+        @Html.EditorFor(model => model.RequiredCount)
+        @Html.ValidationMessageFor(model => model.RequiredCount)
+    </div>
+</div>
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.SortOrder)">@T("Sort order")</label>
+    <div class="controls">
+        @Html.EditorFor(model => model.SortOrder)
+        @Html.ValidationMessageFor(model => model.SortOrder)
+    </div>
+</div>

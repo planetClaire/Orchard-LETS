@@ -1,0 +1,22 @@
+﻿@using System.Linq;
+@{
+    string valueToDisplay = string.Empty;
+    string[] selectedValues = Model.PaymentTerms.SelectedValues;
+    if (selectedValues != null) {
+        string valueFormat = T("{0}").ToString();
+        string[] translatedValues = selectedValues.Select(v => string.Format(valueFormat, T(v).Text)).ToArray();
+        string separator = T(", ").ToString();
+        valueToDisplay = string.Join(separator, translatedValues);
+    }
+    if (!string.IsNullOrEmpty(valueToDisplay)) {
+        if (Model.IncludeSeparator)
+        {
+            @:|
+        }
+        if (Model.IncludeLabel)
+        {
+            <span class="paymentTermsLabel">@Model.PaymentTerms.DisplayName ::</span>
+        }
+        <span class="value paymentTerms">@Html.Raw(valueToDisplay)</span>
+    }
+}

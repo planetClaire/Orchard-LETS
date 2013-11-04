@@ -1,0 +1,15 @@
+﻿@model LETS.ViewModels.EditAddressViewModel
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.StreetAddress)">@T("Street address")</label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.StreetAddress, new { @class = "required input-xlarge" })
+        @Html.ValidationMessageFor(model => model.StreetAddress)
+    </div>
+</div>
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdLocality)">@T("Locality")</label>
+    <div class="controls">
+        @Html.DropDownListFor(model => model.IdLocality, new SelectList(Model.Localities, "Id", "Name"), "Choose a locality...")
+        @Html.ValidationMessageFor(model => model.IdLocality)
+    </div>
+</div>

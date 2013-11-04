@@ -1,0 +1,5 @@
+﻿@using LETS.Models
+@{
+    var member = (MemberPart) Model.MemberPart;
+}
+@Html.ActionLink(member.FirstLastName, "Index", new { username = member.User.UserName, area = "Contrib.Profile", Controller = "Home" })

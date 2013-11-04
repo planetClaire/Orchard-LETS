@@ -1,0 +1,9 @@
+﻿@using LETS.Models
+@Display.PricingInfo(ContentPart: Model.ContentPart)
+<div class="member">
+    <h4>@T("Contacts")</h4>
+    @Html.ActionLink(((MemberPart)Model.ContentPart.Member).FirstLastName, "Index", new { username = Model.ContentPart.Member.User.UserName, area = "Contrib.Profile", Controller = "Home" }) |
+    @*@Html.ActionLink("first last name", "Index", new { username = Model.ContentPart.Member.User.UserName, area = "Contrib.Profile", Controller = "Home" }) |*@
+    <a href="mailto:@Model.ContentPart.Member.User.Email">@Model.ContentPart.Member.User.Email</a> |
+    @T("Telephone"): <a href="tel:@Model.ContentPart.Member.Telephone">@Model.ContentPart.Member.Telephone</a>
+</div>

@@ -1,0 +1,9 @@
+﻿@model LETS.ViewModels.MemberTransactionsViewModel
+
+<header class="page-header">
+    <h1>@T("Transactions for {0}", Model.Member.FirstLastName)</h1>
+</header>
+<p>@Html.ActionLink(T("Back to Members").ToString(), "Index", "MemberAdmin", new { area = "LETS" }, null)</p>
+@* ReSharper disable Mvc.PartialViewNotResolved *@
+@Html.Partial("Transactions")
+@* ReSharper restore Mvc.PartialViewNotResolved *@

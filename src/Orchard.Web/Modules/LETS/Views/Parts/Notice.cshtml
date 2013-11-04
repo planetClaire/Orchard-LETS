@@ -1,0 +1,8 @@
+﻿@Display.PricingInfo(ContentPart: Model.ContentPart)
+<div class="member">
+    <h4>@T("Contacts")</h4>
+    @Html.ActionLink((string)String.Format("{0} {1}", Model.ContentPart.Member.FirstName, Model.ContentPart.Member.LastName), "Index", new { username = Model.ContentPart.Member.User.UserName, area = "Contrib.Profile", Controller = "Home" }) |
+    <a href="mailto:@Model.ContentPart.Member.User.Email">@Model.ContentPart.Member.User.Email</a> |
+    @T("Telephone"): <a href="tel:@Model.ContentPart.Member.Telephone">@Model.ContentPart.Member.Telephone</a> |
+    @Html.ActionLink(T("More notices from this member").ToString(), "Member", new { id = Model.ContentPart.Member.Id, area = "LETS", Controller = "Notice" })
+</div>

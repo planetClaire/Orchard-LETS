@@ -1,0 +1,8 @@
+﻿@model LETS.ViewModels.MemberListsViewModel
+
+@{
+    Layout.Title = T("Members").ToString();
+}
+@foreach (var list in Model.MemberLists) {
+    @Display.MemberList(Members: list.Members, MemberType: list.MemberType)
+}

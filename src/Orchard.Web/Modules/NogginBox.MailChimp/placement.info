@@ -1,0 +1,7 @@
+﻿<Placement>
+	<Place Parts_Navigation_Menu_Edit="Content:2"/>
+    <Place Parts_MailChimpForm_Edit="Content:6" />
+	<Match DisplayType="Detail">
+		<Place Parts_MailChimpForm="Content:6" />
+	</Match>
+</Placement>

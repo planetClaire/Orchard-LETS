@@ -1,0 +1,4 @@
+relre:obj\/Debug\/.+.cache
+glob:NogginBox.MailChimp.csproj.user
+relre:bin\/.+
+relre:obj\/.+

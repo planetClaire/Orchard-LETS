@@ -1,0 +1,50 @@
+@using NogginBox.MailChimp.ViewModels
+@using NogginBox.MailChimp.Models
+@using Orchard.ContentManagement
+@{
+	Style.Require("MailChimp");
+}
+
+@if (!Model.Sent)
+{
+	@Model.Message
+	
+	using (Html.BeginFormAntiForgeryPost())
+	{
+		<input type="hidden" name="a" value="Subscribe" />
+		<fieldset>
+		@foreach (MergeVariableModel mergeVar in Model.MergeVariables)
+		{ 
+			@Html.Partial("MergeVar", mergeVar)
+		}
+		</fieldset>
+
+	
+		foreach (InterestGroupsModel interestGroup in Model.InterestGroups)
+		{
+			<fieldset>
+			<legend>@interestGroup.Name</legend>
+			@{ var c = 0; }
+			@foreach (var group in interestGroup.Groups)
+			{
+				var checkedBit = (group.Checked) ? "checked=\"checked\" " : null;
+				<label><input type="checkbox" name="Interest[@interestGroup.GroupId][@c]" value="@group.Name" @checkedBit/> @group.Name</label>
+																										   c++;
+			}
+			</fieldset>
+		}
+		
+		<fieldset>
+		<legend>@T("Preferred format")</legend>
+			<label><input type="radio" name="emailType" value="html" @if (Model.EmailType == "html") { @Html.Raw("checked=\"Checked\" ") }/> HTML</label>
+			<label><input type="radio" name="emailType" value="text" @if (Model.EmailType == "text") { @Html.Raw("checked=\"Checked\" ") }/> @T("Text")</label>
+			<label><input type="radio" name="emailType" value="mobile" @if (Model.EmailType == "mobile") { @Html.Raw("checked=\"Checked\" ") }/> @T("Mobile")</label>
+		</fieldset>
+	
+		<input type="submit" value="@T("Subscribe")" />
+	}
+}
+else
+{
+	@Model.ThankyouMessage 
+}

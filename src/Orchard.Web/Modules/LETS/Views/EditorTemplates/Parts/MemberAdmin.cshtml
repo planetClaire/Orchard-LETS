@@ -1,0 +1,40 @@
+﻿@using LETS.Models
+@model LETS.Models.MemberAdminPart
+
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.JoinDate)">@T("Joined")</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.JoinDate, new { @class = "required input-small date" })
+        @Html.ValidationMessageFor(m => m.JoinDate)
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.MemberType)">@T("Type")</label>
+    <div class="controls">
+        @Html.DropDownListFor(model => model.MemberType, new SelectList(Enum.GetValues(typeof(MemberType))))
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.OpeningBalance)">@T("Opening balance")</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.OpeningBalance)
+    </div>
+    @Html.ValidationMessageFor(m => m.OpeningBalance)
+</div>
+
+@using (Script.Foot())
+{
+    @* generates the localization script *@
+    @Display.DatePickerLocalization()
+
+    <script type="text/javascript">    
+    //<![CDATA[
+        $(function () {
+            var txtTransactionDate = $('#@Html.FieldIdFor(m => m.JoinDate)');
+            txtTransactionDate.datepicker({ showAnim: "", maxDate: 0, showOn: "both", buttonImageOnly: false });
+        })
+    //]]>
+</script>
+}

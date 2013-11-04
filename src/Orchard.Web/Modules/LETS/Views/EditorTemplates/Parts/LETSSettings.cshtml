@@ -1,0 +1,111 @@
+﻿@model LETS.ViewModels.LETSSettingsPartViewModel
+           
+<fieldset>
+    <legend>@T("LETS")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.CurrencyUnit)" class="required">@T("Unit of currency")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.CurrencyUnit)
+        @Html.ValidationMessageFor(m => m.LETSSettings.CurrencyUnit)
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.MaximumNoticeAgeDays)" class="required">@T("Maximum age of a notice in days")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.MaximumNoticeAgeDays)
+        @Html.ValidationMessageFor(m => m.LETSSettings.MaximumNoticeAgeDays)
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.OldestRecordableTransactionDays)" class="required">@T("Oldest recordable transaction in days")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.OldestRecordableTransactionDays)
+        @Html.ValidationMessageFor(m => m.LETSSettings.OldestRecordableTransactionDays)
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.DefaultTurnoverDays)" class="required">@T("Default turnover in days")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.DefaultTurnoverDays)
+        @Html.ValidationMessageFor(m => m.LETSSettings.DefaultTurnoverDays)
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.IdRoleMember)">@T("Member role")</label>
+        <select id="@Html.FieldIdFor(m => m.LETSSettings.IdRoleMember)" name="@Html.FieldNameFor(m => m.LETSSettings.IdRoleMember)">
+            @if (Model.LETSSettings.IdRoleMember.Equals(0))
+            {
+                <option>@T("Please select")</option>
+            }
+            @foreach ( var role in Model.Roles) {
+                <option @if(Model.LETSSettings.IdRoleMember == role.Id) { <text>selected="selected"</text> } value="@role.Id">@role.Name</option>
+            }
+        </select>
+
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.IdTaxonomyNotices)">@T("Notices Taxonomy")</label>
+        <select id="@Html.FieldIdFor(m => m.LETSSettings.IdTaxonomyNotices)" name="@Html.FieldNameFor(m => m.LETSSettings.IdTaxonomyNotices)">
+            @if (Model.LETSSettings.IdTaxonomyNotices.Equals(0))
+            {
+                <option>@T("Please select")</option>
+            }
+            @foreach ( var taxonomy in Model.Taxonomies) {
+                <option @if(Model.LETSSettings.IdTaxonomyNotices == taxonomy.Id) { <text>selected="selected"</text> } value="@taxonomy.Id">@taxonomy.Name</option>
+            }
+        </select>
+
+    </div>
+    
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.UseDemurrage)">@T("Use Demurrage")</label>
+        @Html.CheckBoxFor(m => m.LETSSettings.UseDemurrage)
+    </div>
+    
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.DemurrageStartDate)">@("Demurrage start")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.DemurrageStartDate)
+    </div>
+
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.DemurrageTimeIntervalDays)">@("Demurrage time interval in days")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.DemurrageTimeIntervalDays)
+        @Html.ValidationMessageFor(m => m.LETSSettings.DemurrageTimeIntervalDays)
+    </div>
+    
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LETSSettings.DemurrageSteps)">@("Demurrage steps, use integers between 1 and 99 (percentages) separated by commas")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.DemurrageSteps)
+    </div>
+
+    <div >
+        <label class="required control-label" for="@Html.FieldIdFor(m => m.LETSSettings.IdDemurrageRecipient)">@T("Demurrage recipient")</label>
+        <select id="@Html.FieldIdFor(m => m.LETSSettings.IdDemurrageRecipient)" name="@Html.FieldNameFor(m => m.LETSSettings.IdDemurrageRecipient)">
+            @if (Model.LETSSettings.IdDemurrageRecipient.Equals(0))
+            {
+                <option>@T("Please select")</option>
+            }
+            @foreach ( var member in Model.AdminMembers) {
+                <option @if(Model.LETSSettings.IdTaxonomyNotices == member.Id) { <text>selected="selected"</text> } value="@member.Id">@member.FirstLastName</option>
+            }
+        </select>
+    </div>
+    
+    <div>
+        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.IdMailChimpList)">@T("MailChimp Members List Id (requires MailChimp API key setting")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.IdMailChimpList)
+    </div>
+
+    <div>
+        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberLinksZone)">@T("Member profile links zone (eg: 'AsideSecond')")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.MemberLinksZone)
+    </div>
+
+    <div>
+        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberLinksPosition)">@T("Member profile links position (eg: '1' or 'before')")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.MemberLinksPosition)
+    </div>
+
+    <div>
+        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberNoticesZone)">@T("Member profile notices zone (eg: 'AsideSecond')")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.MemberNoticesZone)
+    </div>
+
+    <div>
+        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberNoticesPosition)">@T("Member profile notices position (eg: '2' or 'after')")</label>
+        @Html.TextBoxFor(m => m.LETSSettings.MemberNoticesPosition)
+    </div>
+
+</fieldset>

@@ -1,0 +1,20 @@
+﻿@if (WorkContext.CurrentUser != null) {
+    dynamic user = WorkContext.CurrentUser.ContentItem;
+    List<string> roles = user.UserRolesPart.Roles;
+
+    <ul id="authNav" class="nav nav-pills">
+        <li>@Html.ActionLink(T("Add a notice").ToString(), "Create", new {area = "LETS", controller = "Notice"})</li>
+        <li>@Html.ActionLink(T("My Notices").ToString(), "Member", new {id = WorkContext.CurrentUser.Id, area = "LETS", Controller = "Notice"})</li>
+        <li>@Html.ActionLink(T("Categories").ToString(), "Browse", new {area = "LETS", controller = "Notice"})</li>
+        <li>@Html.ActionLink(T("Members").ToString(), "Index", new {area = "LETS", controller = "Member"})</li>
+        <li>@Html.ActionLink(T("Transactions").ToString(), "Index", new {area = "LETS", controller = "Transactions"})</li>
+        <li>@Html.ActionLink(T("Profile").ToString(), "Edit", new {Controller = "Home", Area = "Contrib.Profile"})</li>
+        <li>@Html.ActionLink(T("Change Password").ToString(), "ChangePassword", new {Controller = "Account", Area = "Orchard.Users"})</li>
+        @if (roles.Contains("Trustee") || roles.Contains("Administrator") || WorkContext.CurrentSite.SuperUser.Equals(WorkContext.CurrentUser.UserName)) {
+            <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new {Area = "Dashboard", Controller = "Admin"})</li>
+        }
+        <li class="pull-right">
+            @Html.ActionLink(WorkContext.CurrentUser.UserName, "Index", new {username = WorkContext.CurrentUser.UserName, area = "Contrib.Profile", Controller = "Home"})
+        </li>
+    </ul>
+}

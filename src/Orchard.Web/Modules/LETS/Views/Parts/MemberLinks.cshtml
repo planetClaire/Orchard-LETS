@@ -1,0 +1,44 @@
+﻿<h3>@T("{0}'s Links", @Model.Member.FirstName)</h3>
+<div id="memberLinks">
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Website))
+    {
+        <a href="@Model.MemberLinks.Website" target="_blank" title='@T("Website, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/website.png")' alt='@T("Website")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Facebook))
+    {
+        <a href="@Model.MemberLinks.Facebook" target="_blank" title='@T("Facebook, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/facebook.png")' alt='@T("Facebook")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Twitter))
+    {
+        <a href="@Model.MemberLinks.Twitter" target="_blank" title='@T("Twitter, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/Twitter.png")' alt='@T("Twitter")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.LinkedIn))
+    {
+        <a href="@Model.MemberLinks.LinkedIn" target="_blank" title='@T("LinkedIn, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/LinkedIn.png")' alt='@T("LinkedIn")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Tumblr))
+    {
+        <a href="@Model.MemberLinks.Tumblr" target="_blank" title='@T("Tumblr, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/Tumblr.png")' alt='@T("Tumblr")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Flickr))
+    {
+        <a href="@Model.MemberLinks.Flickr" target="_blank" title='@T("Flickr, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/Flickr.png")' alt='@T("Flickr")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Pinterest))
+    {
+        <a href="@Model.MemberLinks.Pinterest" target="_blank" title='@T("Pinterest, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/Pinterest.png")' alt='@T("Pinterest")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.GooglePlus))
+    {
+        <a href="@Model.MemberLinks.GooglePlus" target="_blank" title='@T("GooglePlus, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/googleplus.png")' alt='@T("GooglePlus")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Goodreads))
+    {
+        <a href="@Model.MemberLinks.Goodreads" target="_blank" title='@T("Goodreads, open in a new tab")'><img src='@Href("~/modules/LETS/Content/images/Goodreads.png")' alt='@T("Goodreads")' /></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.MemberLinks.Skype))
+    {
+        <a href="skype:@Model.MemberLinks.Skype?chat" title='@T("Skype, chat now")'><img src='@Href("~/modules/LETS/Content/images/Skype.png")' alt='@T("Skype")' /></a>
+    }
+</div>
+<hr />

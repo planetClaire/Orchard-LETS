@@ -1,0 +1,14 @@
+﻿@if (Model.Default.Equals(true) && Request.QueryString["orderby"] == null || Request.QueryString["orderby"] != null && Request.QueryString["orderby"].Equals(Model.Query))
+{
+    <a title="@T("Sort")" rel="tooltip" href="@Url.Action("Index", "Member", new { orderby = Model.Query + "Desc", area = "LETS" })">@Model.Label <i class="icon-arrow-down"></i></a>
+}
+else
+{
+    <a title="@T("Sort")" rel="tooltip" href="@Url.Action("Index", "Member", new { orderby = Model.Query, area = "LETS" })">@Model.Label</a>
+    if (Request.QueryString["orderby"] != null  && Request.QueryString["orderby"].Equals(Model.Query + "Desc"))
+    {
+        <a title="@T("Sort")" rel="tooltip" href="@Url.Action("Index", "Member", new { orderby = Model.Query, area = "LETS" })"> <i class="icon-arrow-up"></i></a>
+    }
+}
+
+
