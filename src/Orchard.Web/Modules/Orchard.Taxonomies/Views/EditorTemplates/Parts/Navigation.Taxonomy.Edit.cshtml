@@ -1,4 +1,6 @@
 ﻿@model TaxonomyNavigationViewModel
+@using Orchard.Taxonomies.ViewModels;
+
 @{
    Script.Require("jQuery");
 }
@@ -22,6 +24,13 @@
    @Html.CheckBoxFor(m => m.DisplayTopMenuItem)
    <label for="@Html.FieldIdFor(m => m.DisplayTopMenuItem)" class="forcheckbox">@T("Display top level menu item")</label>
    <span class="hint">@T("When checked, the selected term to display will be rendered as a root element in the menu.")</span>
+</fieldset>
+
+<fieldset>
+    <label for="@Html.FieldIdFor( m => m.LevelsToDisplay)">@T("Levels to display")</label>
+    @Html.TextBoxFor(m => m.LevelsToDisplay, new { @class = "text small" } )
+    @Html.ValidationMessage("LevelsToDisplay", "*")
+    <span class="hint">@T("The number of levels to display in the hierarchy. 0 to display all levels.")</span>
 </fieldset>
 
 <fieldset>

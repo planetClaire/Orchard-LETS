@@ -8,7 +8,6 @@ using Orchard.Forms.Services;
 using Orchard.Localization;
 using Orchard.MediaProcessing.Descriptors.Filter;
 using Orchard.MediaProcessing.Services;
-using Orchard.Utility.Extensions;
 
 namespace Orchard.MediaProcessing.Providers.Filters {
     public class ResizeFilter : IImageFilterProvider {
@@ -42,7 +41,10 @@ namespace Orchard.MediaProcessing.Providers.Filters {
 
             switch (mode) {
                 case "max": settings.Mode = FitMode.Max; break;
-                case "pad": settings.Mode = FitMode.Pad; break;
+                case "pad": 
+                    settings.Mode = FitMode.Pad; 
+                    settings.Scale = ScaleMode.Both; 
+                    break;
                 case "crop": settings.Mode = FitMode.Crop; break;
                 case "stretch": settings.Mode = FitMode.Stretch; break;
             }
@@ -72,7 +74,7 @@ namespace Orchard.MediaProcessing.Providers.Filters {
             if (context.Media.CanSeek) {
                 context.Media.Seek(0, SeekOrigin.Begin);
             }
-            ImageBuilder.Current.Build(context.Media, result, settings);
+            ImageBuilder.Current.Build(context.Media, result, settings, true);
             context.Media = result;
         }
 
@@ -109,13 +111,13 @@ namespace Orchard.MediaProcessing.Providers.Filters {
                             Title: T("Width"),
                             Value: 0,
                             Description: T("The width in pixels."),
-                            Classes: new[] {"text-small"}),
+                            Classes: new[] {"text small"}),
                         _Height: Shape.Textbox(
                             Id: "height", Name: "Height",
                             Title: T("Height"),
                             Value: 0,
                             Description: T("The height in pixels."),
-                            Classes: new[] {"text-small"}),
+                            Classes: new[] {"text small"}),
                         _Mode: Shape.SelectList(
                             Id: "mode", Name: "Mode",
                             Title: T("Mode"),
@@ -131,9 +133,9 @@ namespace Orchard.MediaProcessing.Providers.Filters {
                         _PadColor: Shape.Textbox(
                             Id: "padcolor", Name: "PadColor",
                             Title: T("Pad Color"),
-                            Value: "#ffffff",
-                            Description: T("The background color to use to pad the image. Named color or hex value."),
-                            Classes: new[] {"text-small"})
+                            Value: "",
+                            Description: T("The background color to use to pad the image e.g., #ffffff, red. Leave empty to keep transparency."),
+                            Classes: new[] {"text small"})
                         );
 
                     f._Mode.Add(new SelectListItem { Value = "max", Text = T("Max").Text });

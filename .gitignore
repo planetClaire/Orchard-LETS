@@ -181,4 +181,7 @@ src/Orchard.Web/Orchard.Web.Publish.xml
 src/TestResults/*
 src/Orchard.Web/Properties/PublishProfiles
 src/Orchard.Azure/Orchard.Azure.CloudService/Staging/
+
+#enable all /lib artifacts
+!lib/*/*.*
 src/Orchard.sln.DotSettings
