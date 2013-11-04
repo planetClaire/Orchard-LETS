@@ -1,0 +1,18 @@
+﻿@model Orchard.Core.Common.ViewModels.TextFieldDriverViewModel
+
+<div class="control-group">
+    <label for="@Html.FieldIdFor(m => m.Text)" class="control-label">@Model.Field.DisplayName</label>
+    @if (String.IsNullOrWhiteSpace(Model.Settings.Flavor)) {
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Text, new { @class = "text input-xlarge" })        
+            <span class="help-inline alert alert-info ">@Model.Settings.Hint</span>
+            @Html.ValidationMessageFor(m => m.Text)
+        </div>
+    }
+    else {
+        <div class="controls">
+            @Display.Body_Editor(Text: Model.Text, EditorFlavor: Model.Settings.Flavor)
+            <span class="help-inline alert alert-info ">@Model.Settings.Hint</span>
+        </div>
+    }
+</div>

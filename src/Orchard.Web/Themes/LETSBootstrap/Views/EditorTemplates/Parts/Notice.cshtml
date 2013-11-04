@@ -1,0 +1,34 @@
+﻿@using LETS.Helpers
+@model LETS.ViewModels.EditNoticeViewModel
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
+    
+    Script.Require("jQuery");
+    Script.Include("jQuery.validate.min.js").AtFoot();
+    Script.Include("jQuery.validate.unobtrusive.min.js").AtFoot();
+
+}
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdNoticeType)">@T("Notice type")</label>
+    <div class="controls noticeTypesRadioList">
+        @Html.RadioButtonForSelectList(model => model.IdNoticeType,
+                                     Model.NoticeTypes.Select(noticeType => new SelectListItem
+                                                                                {
+                                                                                    Selected = noticeType.Id == Model.IdNoticeType,
+                                                                                    Text = @Html.ItemDisplayText(noticeType).ToString(),
+                                                                                    Value = noticeType.Id.ToString()
+                                                                                }))
+        @Html.ValidationMessageFor(model => model.IdNoticeType)
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.Price)">@T("Price")</label>
+    <div class="controls">
+        <div class="input-prepend">
+            <span class="add-on">@Model.CurrencyUnit</span>@Html.TextBoxFor(model => model.Price, new { @class = "input-mini" })
+        </div>
+        @Html.ValidationMessageFor(model => model.Price)
+    </div>    
+</div>

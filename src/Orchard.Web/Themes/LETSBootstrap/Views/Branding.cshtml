@@ -1,0 +1,19 @@
+﻿@using LETSBootstrap.Services
+@using Orchard.Media.Services
+@{
+    var homeUrl = Href("~/");
+    var themeSettings = WorkContext.Resolve<ISettingsService>().GetSettings();
+    var logo = themeSettings.Logo;
+    var logoUrl = "";
+    if (!string.IsNullOrEmpty(logo))
+    {
+        logoUrl = WorkContext.Resolve<IMediaService>().GetMediaPublicUrl("Logos", logo);
+    }
+}
+<a class="brand" href="@homeUrl">
+    @if (!string.IsNullOrEmpty(logoUrl))
+    {
+        <img src='@logoUrl?height=25' alt="logo" height="25" id="logo"/>
+    }
+    @WorkContext.CurrentSite.SiteName
+</a>

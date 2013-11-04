@@ -1,0 +1,32 @@
+﻿@model LETS.Models.MemberPart
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
+    
+    Script.Require("jQuery");
+    Script.Include("jQuery.validate.min.js").AtFoot();
+    Script.Include("jQuery.validate.unobtrusive.min.js").AtFoot();
+
+}
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.FirstName)">@T("First name")</label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.FirstName, new { @class = "required input-xlarge" })
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </div>
+</div>
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.LastName)">@T("Last name")</label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.LastName, new { @class = "required input-xlarge" })
+        @Html.ValidationMessageFor(model => model.LastName)
+    </div>
+</div>
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.Telephone)">@T("Telephone")</label>
+    <div class="controls">
+        @Html.TextBoxFor(model => model.Telephone, new { @class = "required input-xlarge" })
+        @Html.ValidationMessageFor(model => model.Telephone)
+    </div>
+</div>
+

@@ -1,0 +1,17 @@
+﻿@model Orchard.Core.Title.Models.TitlePart
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
+    Script.Require("jQuery");
+    Script.Include("jQuery.validate.min.js").AtFoot();
+    Script.Include("jQuery.validate.unobtrusive.min.js").AtFoot();
+}
+
+<div class="control-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.Title)">@T("Title")</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.Title, new { @class = "required input-xlarge", autofocus = "autofocus" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+</div>

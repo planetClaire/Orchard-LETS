@@ -1,0 +1,12 @@
+﻿@using (Script.Foot())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.alert-message').alert();
+        });
+    </script>
+}
+<div class="alert @((Model.Type).ToString() == "Error" ? "alert-error" : (Model.Type).ToString() == "Information" ? "alert-success" : "") fade in">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <strong>@Model.Message</strong>
+</div>

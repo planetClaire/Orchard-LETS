@@ -1,0 +1,37 @@
+﻿@model LETSBootstrap.ViewModels.SettingsViewModel
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    Html.ValidationSummary();
+	<fieldset>
+		<legend>@T("Theme Options for LETS Bootstrap")</legend>
+
+	    <div>
+	        <label for="@Html.FieldIdFor( m => m.BackgroundColor)">@T("Background color")</label>
+	        @Html.TextBoxFor(m => m.BackgroundColor, new { type="color"})
+	        <span class="hint">@T("Hex format, eg: #a6ad3c. Find nice colors at <a href='http://www.colourlovers.com' target='_blank'>http://www.colourlovers.com</a> or use Opera or Chrome for a built in colour picker.  Clear the box (in a non-Opera/Chrome browser) to revert to the default color.</span>")
+
+	    </div>
+        
+	    <div>
+	        <label for="@Html.FieldIdFor(m => m.Logo)">@T("Logo")</label>
+            <input id="Logo" type="file" name="Logo" accept="image/png,image/jpeg,image/gif"/>
+            @Model.Logo
+	        <span class="hint">@T("Only gif, jpg or png files please. Will be resized to fit the nav-bar. <strong>Please be sensible and only upload very small files (less than 20Kb)</strong>")</span>
+            @Html.ActionLink("Clear", "ClearLogo", "Admin")
+	    </div>
+	</fieldset>
+	<fieldset>
+		<button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
+	</fieldset>
+}
+
+@using(Script.Foot()) {
+<script type="text/javascript">
+//<![CDATA[
+    $('form')
+        .attr('enctype', 'multipart/form-data')
+        .attr('encoding', 'multipart/form-data'); // ie issue
+
+//]]>
+</script>
+}

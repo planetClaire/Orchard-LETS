@@ -1,0 +1,16 @@
+<Placement>
+  <!-- hide non essential fields on register form -->
+  <Match Path="~/Users/Account/RegisterMember/">
+    <Place Fields_Common_Text_Edit-Mobile="-"/>
+    <Place Fields_Common_Text_Edit-About="-"/>
+    <Place Fields_Link_Edit="-"/>
+    <Place Parts_MemberLinks_Edit="-" />
+    <Place Fields_AgileUploader_Edit="-"/>
+  </Match>
+  <Match ContentType="CarouselImage">
+    <Place Fields_Numeric-Priority="-"/>
+  </Match>
+  <Match DisplayType="Summary">
+    <Place Fields_Contrib_Image="Content:1"/>
+  </Match>
+</Placement>

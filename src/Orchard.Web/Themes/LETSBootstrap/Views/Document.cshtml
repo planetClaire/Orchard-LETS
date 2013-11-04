@@ -1,0 +1,36 @@
+﻿@using LETSBootstrap.Services
+@using Orchard.Mvc.Html;
+@using Orchard.UI.Resources;
+@{
+    string title = Convert.ToString(Model.Title);
+    string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
+    var themeSettings = WorkContext.Resolve<ISettingsService>().GetSettings();
+}
+<!DOCTYPE html> 
+<html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()"> 
+<head> 
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>@Html.Title(title, siteName)</title> 
+    @Display(Model.Head)
+    @*<script>        (function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script> *@
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1362291-10']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    </head> 
+    <body style="background-color: @themeSettings.BackgroundColor;">
+    @* Layout (template) is in the Body zone @ the default position (nothing, zero, zilch) *@
+    @Display(Model.Body)
+    @Display(Model.Tail)
+</body>
+</html>

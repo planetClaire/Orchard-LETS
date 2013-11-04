@@ -1,0 +1,15 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    string name = Model.ContentField.DisplayName;
+}
+    
+@if (HasText(name) && HasText(Model.Value)) {
+    <div class="row">
+        <div class="span2">
+            <h4>@name</h4>
+        </div>
+        <div class="span7">
+            @(new MvcHtmlString(Html.Encode((HtmlString)Model.Value).ReplaceNewLinesWith("<br />$1")))
+        </div>
+    </div>
+}
