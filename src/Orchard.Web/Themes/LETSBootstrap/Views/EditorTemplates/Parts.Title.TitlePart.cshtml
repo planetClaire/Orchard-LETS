@@ -1,11 +1,11 @@
 ﻿@model Orchard.Core.Title.Models.TitlePart
 @{
     HtmlHelper.ClientValidationEnabled = true;
-    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+    //HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 
     Script.Require("jQuery");
     Script.Include("jQuery.validate.min.js").AtFoot();
-    Script.Include("jQuery.validate.unobtrusive.min.js").AtFoot();
+    //Script.Include("jQuery.validate.unobtrusive.min.js").AtFoot();
 }
 
 <div class="control-group">

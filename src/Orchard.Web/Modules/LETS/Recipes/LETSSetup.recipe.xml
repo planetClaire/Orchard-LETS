@@ -11,34 +11,38 @@
     <Menu Id="/Identifier=bce106f35b8e4e9ebff06a3bd621e727" Status="Published">
       <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:46:13Z" PublishedUtc="2012-04-03T10:46:13Z" ModifiedUtc="2012-04-03T10:46:13Z" />
       <IdentityPart Identifier="bce106f35b8e4e9ebff06a3bd621e727" />
-      <AdvancedMenuPart Name="Navigation" />
+      <TitlePart Title="Navigation" />
     </Menu>
     <MenuWidget Id="/Identifier=0268e8a58b554620bc89376e114352c2" Status="Published">
       <CommonPart Owner="/User.UserName=admin@swanhillslets.org" Container="/Layer.LayerName=Default" CreatedUtc="2012-04-03T10:51:02Z" PublishedUtc="2012-04-03T10:51:02Z" ModifiedUtc="2012-04-03T10:51:02Z" />
       <IdentityPart Identifier="0268e8a58b554620bc89376e114352c2" />
       <WidgetPart Title="Navigation" Position="1" Zone="Navigation" RenderTitle="false" />
-      <MenuWidgetPart MenuName="Navigation" Mode="SiblingsExpanded" WrapChildrenInDiv="true" Levels="0" CutOrFlattenLower="false" />
+      <MenuWidgetPart Menu="/Identifier=ae189e1a215d499e9feaf812edb227d4" StartLevel="1" Levels="0" Breadcrumb="false" AddCurrentPage="false" AddHomePage="false" ShowFullMenu="false" />
     </MenuWidget>
-    <SimpleMenuItem Id="/Identifier=d0fe47f51e9c4811aad97b126b938411" Status="Published">
+    <MenuItem Id="/Identifier=d0fe47f51e9c4811aad97b126b938411" Status="Published">
       <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:47:01Z" PublishedUtc="2012-04-03T10:47:01Z" ModifiedUtc="2012-04-03T10:47:01Z" />
       <IdentityPart Identifier="d0fe47f51e9c4811aad97b126b938411" />
-      <AdvancedMenuItemPart Text="Browse categories" Position="2" Url="lets/notice/browse" MenuName="Navigation" DisplayText="true" DisplayHref="true" AuthenticationLevel="Any" IncludeReturnUrl="false" />
-    </SimpleMenuItem>
-    <SimpleMenuItem Id="/Identifier=ed5d0d736d7549dda3ad9a6b9be88176" Status="Published">
+      <MenuItemPart Url="/lets/notice/browse" />
+      <MenuPart Menu="/Identifier=bce106f35b8e4e9ebff06a3bd621e727" MenuText="Browse categories" MenuPosition="2" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=ed5d0d736d7549dda3ad9a6b9be88176" Status="Published">
       <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:49:49Z" PublishedUtc="2012-04-03T10:49:49Z" ModifiedUtc="2012-04-03T10:49:49Z" />
       <IdentityPart Identifier="ed5d0d736d7549dda3ad9a6b9be88176" />
-      <AdvancedMenuItemPart Text="Add a notice" Position="3" Url="/lets/notice/create" MenuName="Navigation" DisplayText="true" DisplayHref="true" AuthenticationLevel="Any" IncludeReturnUrl="false" />
-    </SimpleMenuItem>
-    <SimpleMenuItem Id="/Identifier=13b433f47a914733aeb3e72f9e7c8cac" Status="Published">
+      <MenuItemPart Url="/lets/notice/create" />
+      <MenuPart Menu="/Identifier=bce106f35b8e4e9ebff06a3bd621e727" MenuText="Add a notice" MenuPosition="3" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=13b433f47a914733aeb3e72f9e7c8cac" Status="Published">
       <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-03T10:50:17Z" PublishedUtc="2012-04-03T10:50:17Z" ModifiedUtc="2012-04-03T10:50:17Z" />
       <IdentityPart Identifier="13b433f47a914733aeb3e72f9e7c8cac" />
-      <AdvancedMenuItemPart Text="Members" Position="4" Url="/lets/member" MenuName="Navigation" DisplayText="true" DisplayHref="true" AuthenticationLevel="Any" IncludeReturnUrl="false" />
-    </SimpleMenuItem>
-    <SimpleMenuItem Id="/Identifier=2183e0372dac4fc1a4e0c1b507f65280" Status="Published">
+      <MenuItemPart Url="/lets/member" />
+      <MenuPart Menu="/Identifier=bce106f35b8e4e9ebff06a3bd621e727" MenuText="Members" MenuPosition="4" />
+    </MenuItem>
+    <MenuItem Id="/Identifier=2183e0372dac4fc1a4e0c1b507f65280" Status="Published">
       <CommonPart Owner="/User.UserName=admin@swanhillslets.org" CreatedUtc="2012-04-24T08:27:49Z" PublishedUtc="2012-04-24T08:27:49Z" ModifiedUtc="2012-04-24T08:27:49Z" />
       <IdentityPart Identifier="2183e0372dac4fc1a4e0c1b507f65280" />
-      <AdvancedMenuItemPart Text="Trading" Position="5" Url="/lets/transactions" MenuName="Navigation" DisplayText="true" DisplayHref="true" RequiresPermission="AccessMemberContent" AuthenticationLevel="Any" IncludeReturnUrl="false" />
-    </SimpleMenuItem>
+      <MenuItemPart Url="/lets/transactions" />
+      <MenuPart Menu="/Identifier=bce106f35b8e4e9ebff06a3bd621e727" MenuText="Trading" MenuPosition="5" />
+    </MenuItem>
     <Locality Id="/alias=kalamunda" Status="Published">
       <AutoroutePart Alias="kalamunda" UseCustomPattern="false" />
       <TitlePart Title="Kalamunda" />

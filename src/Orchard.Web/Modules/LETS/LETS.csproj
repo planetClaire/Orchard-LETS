@@ -59,7 +59,7 @@
     <Content Include="Data\testRecipe.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Data\LETSSetupRecipe.xml">
+    <Content Include="Recipes\LETSSetup.recipe.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\bootstrap-accordion.min.js" />
