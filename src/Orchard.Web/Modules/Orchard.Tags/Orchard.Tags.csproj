@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Orchard.Tags</RootNamespace>
     <AssemblyName>Orchard.Tags</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -21,6 +21,10 @@
     </UpgradeBackupLocation>
     <TargetFrameworkProfile />
     <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\..\OrchardBasicCorrectness.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,12 +45,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
@@ -56,15 +67,22 @@
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Drivers\TagCloudDriver.cs" />
+    <Compile Include="Feeds\TagsFeedItemBuilder.cs" />
+    <Compile Include="Handlers\TagCloudHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\ContentTagRecord.cs" />
+    <Compile Include="Models\TagCloudPart.cs" />
+    <Compile Include="Models\TagCount.cs" />
     <Compile Include="Models\TagsPartRecord.cs" />
     <Compile Include="Projections\TagsFilter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Projections\TagsFilterForms.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\ITagCloudService.cs" />
     <Compile Include="Services\ITagService.cs" />
+    <Compile Include="Services\TagCloudService.cs" />
     <Compile Include="Services\XmlRpcHandler.cs" />
     <Compile Include="ViewModels\EditTagsViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -80,6 +98,7 @@
     <Compile Include="ViewModels\TagsAdminCreateViewModel.cs" />
     <Compile Include="ViewModels\TagsAdminEditViewModel.cs" />
     <Compile Include="ViewModels\TagsAdminIndexViewModel.cs" />
+    <Compile Include="ViewModels\ShowTagsViewModel.cs" />
     <Compile Include="ViewModels\TagsSearchViewModel.cs" />
     <Compile Include="ViewModels\TagsIndexViewModel.cs" />
   </ItemGroup>
@@ -89,7 +108,6 @@
     <Content Include="Styles\images\menu.tags.png" />
     <Content Include="Styles\menu.tags-admin.css" />
     <Content Include="Styles\orchard-tags-admin.css" />
-    <Content Include="Views\Web.config" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Parts\Tags.ShowTags.cshtml" />
@@ -105,6 +123,10 @@
     <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Autoroute\Orchard.Autoroute.csproj">
+      <Project>{66FCCD76-2761-47E3-8D11-B45D0001DDAA}</Project>
+      <Name>Orchard.Autoroute</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +146,12 @@
   <ItemGroup>
     <Content Include="Scripts\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Parts\TagCloud.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\TagCloud.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
