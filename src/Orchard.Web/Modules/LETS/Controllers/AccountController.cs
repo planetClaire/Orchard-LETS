@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Orchard.Taxonomies.Services;
 using LETS.Models;
@@ -9,7 +8,6 @@ using Orchard;
 using System.Web.Mvc;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
-using Orchard.Core.Settings.Models;
 using Orchard.Localization;
 using Orchard.Mvc;
 using Orchard.Mvc.Extensions;
@@ -174,7 +172,7 @@ namespace LETS.Controllers
                 return View();
             }
 
-            var siteUrl = _orchardServices.WorkContext.CurrentSite.As<SiteSettings2Part>().BaseUrl;
+            var siteUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl;
             if (String.IsNullOrWhiteSpace(siteUrl))
             {
                 siteUrl = HttpContext.Request.ToRootUrlString();

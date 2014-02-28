@@ -1,11 +1,9 @@
-﻿using System.Web.Mvc;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
 using Orchard.Localization;
-using Orchard.Messaging.Services;
 using Orchard.Security;
 
 namespace LETS.Handlers
@@ -16,7 +14,7 @@ namespace LETS.Handlers
         private readonly IOrchardServices _orchardServices;
         public Localizer T { get; set; }
 
-        public NoticePartHandler(IRepository<NoticePartRecord> repository, IOrchardServices orchardServices, IMessageManager messageManager)
+        public NoticePartHandler(IRepository<NoticePartRecord> repository, IOrchardServices orchardServices)
         {
             Filters.Add(StorageFilter.For(repository));
 
