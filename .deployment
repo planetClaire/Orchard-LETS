@@ -1,2 +1,2 @@
 [config]
-project = src/Orchard.Web/Orchard.Web.csproj
+command = deploy.cmd
