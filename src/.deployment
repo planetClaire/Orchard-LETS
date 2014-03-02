@@ -1,2 +1,2 @@
 [config]
-project = .
+project = ./Orchard.Web/Orchard.Web.csproj
