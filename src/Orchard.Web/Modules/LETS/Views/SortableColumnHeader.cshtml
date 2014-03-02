@@ -1,4 +1,4 @@
-﻿@if (Model.Default.Equals(true) && Request.QueryString["orderby"] == null || Request.QueryString["orderby"] != null && Request.QueryString["orderby"].Equals(Model.Query))
+﻿@if (Model.Default != null && Request.QueryString["orderby"] == null || Request.QueryString["orderby"] != null && Request.QueryString["orderby"].Equals(Model.Query))
 {
     <a title="@T("Sort")" rel="tooltip" href="@Url.Action("Index", "Member", new { orderby = Model.Query + "Desc", area = "LETS" })">@Model.Label <i class="icon-arrow-down"></i></a>
 }

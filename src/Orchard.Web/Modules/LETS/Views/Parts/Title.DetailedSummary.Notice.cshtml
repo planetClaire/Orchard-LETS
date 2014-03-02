@@ -1,7 +1,7 @@
 ﻿@using LETS.Services
 @{
     Orchard.ContentManagement.ContentItem contentItem = Model.ContentPart.ContentItem;
-    string title = Model.Title.ToString();
+    string title = Model.Title;
     var noticeTypeTitle = WorkContext.Resolve<INoticeService>().GetNoticeTypeTitle(Model.ContentPart.Id);
 }
 <h2>@noticeTypeTitle - @Html.ItemDisplayLink(title, contentItem)</h2>
