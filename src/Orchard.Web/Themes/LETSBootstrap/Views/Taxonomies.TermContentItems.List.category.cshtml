@@ -1,9 +1,0 @@
-﻿@{
-    IEnumerable<object> contentItems = Model.ContentItems;
-    Model.ContentItems.Classes.Add("content-items");
-    Model.ContentItems.Classes.Add("term-content-items");
-}
-@Display(Model.ContentItems)
-@if (contentItems == null || contentItems.Count() < 1) {
-<p>@T("There are no notices here..., if you like you can add an offer or make a request by clicking 'Add a Notice' above")</p>
-}

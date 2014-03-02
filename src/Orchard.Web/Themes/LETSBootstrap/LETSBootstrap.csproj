@@ -252,7 +252,7 @@
     <Content Include="Content\Images\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Taxonomies.TermContentItems.List.category.cshtml" />
+    <Content Include="Views\Parts.TermPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Index.cshtml" />
