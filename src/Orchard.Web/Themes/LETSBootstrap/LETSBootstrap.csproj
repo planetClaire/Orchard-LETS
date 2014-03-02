@@ -252,7 +252,7 @@
     <Content Include="Content\Images\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts.TermPart.cshtml" />
+    <Content Include="Views\Parts.TermPart-Category.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Index.cshtml" />
