@@ -1,6 +1,4 @@
-﻿@using So.ImageResizer.Helpers
-
-@{
+﻿@{
     Style.Include("slimbox2.css");
     Script.Require("jQuery").AtFoot();
     Script.Include("slimbox2.js").AtFoot();
@@ -12,7 +10,7 @@
         {
             <a href="@fileName" rel="lightbox-gallery">
                 @{ var alternateText = string.IsNullOrEmpty(Model.ContentField.AlternateText) ? Path.GetFileNameWithoutExtension(fileName) : Model.ContentField.AlternateText; }
-                <img width="100" height="80" src='@string.Format("/resizedImage?url={0}&width=100&height=80&maxWidth=100&maxheight=80&cropMode={1}&scale={2}&stretchMode={3}", fileName, ResizeSettingType.CropMode.Auto, ResizeSettingType.ScaleMode.DownscaleOnly, ResizeSettingType.StretchMode.Proportionally)' alt="@alternateText"/>
+                <img alt="@alternateText" src='@Display.ResizeMediaUrl(Width: 250, Path: fileName)' />
             </a>
         }
     </div>
