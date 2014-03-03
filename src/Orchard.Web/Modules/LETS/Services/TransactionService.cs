@@ -251,74 +251,71 @@ namespace LETS.Services
             var demurrageStartDate = letsSettings.DemurrageStartDate ?? DateTime.MinValue;
             var steps = letsSettings.DemurrageStepsList.ToList();
             var demurrageTransactions = new List<DemurrageTransactionsViewModel>();
-            //using (var session = _sessionLocator.Value.For(null))
-            //{
             var session = _sessionLocator.Value.For(null);
-                var joinMemberTable = string.Empty;
-                var whereMember = string.Empty;
-                if (idMember != 0)
+            var joinMemberTable = string.Empty;
+            var whereMember = string.Empty;
+            if (idMember != 0)
+            {
+                joinMemberTable = " join LETS_MemberPartRecord m on m.id = t.SellerMemberPartRecord_Id ";
+                whereMember = string.Format(" and m.Id = '{0}' ", idMember);
+            }
+            //var queryTradesWithCreditValue = _session.CreateSQLQuery(string.Format(
+            var queryTradesWithCreditValue = session.CreateSQLQuery(string.Format(
+                @"
+                select t.Id, t.TransactionDate, t.SellerMemberPartRecord_Id, t.CreditValue, t.Description, t.TransactionType, t.Value, t.BuyerMemberPartRecord_Id from LETS_TransactionPartRecord t
+                {0}
+                where t.TransactionType != 'Demurrage'
+                and t.CreditValue > 0
+                {1}
+            ", joinMemberTable, whereMember));
+            DeleteTradesToSimulate(idMember);
+            CopyTradesToSimulate(RemoveUnpublishedResults(queryTradesWithCreditValue.List<object[]>()));
+            if (idMember != 0)
+            {
+                whereMember = string.Format(" and ts.SellerMemberPartRecord_Id = '{0}' ", idMember);
+            }
+            var queryDemurrageCreditUsages = session.CreateSQLQuery(string.Format(
+                @"
+                SELECT cu.Id, ts.Id as IdTransaction, cu.TransactionType, cu.Value, cu.RecordedDate, cu.IdTransactionSpent
+                FROM LETS_CreditUsageRecord cu
+                join LETS_TransactionRecordSimulation ts on ts.IdTransaction = cu.IdTransactionEarnt
+                WHERE cu.TransactionType = 'Demurrage'
+                {0}
+            ", whereMember));
+            DeleteDemurrageCreditUsagesToSimulate(session, idMember);
+            CopyDemurrageCreditUsagesToSimulate(queryDemurrageCreditUsages.List<object[]>());
+            var daysToBegin = (int)Math.Ceiling((demurrageStartDate - DateTime.Now).TotalDays) + demurrageDays;
+            if (daysToBegin < 0) daysToBegin = 0;
+            for (var day = 0; day <= (steps.Count + 1) * demurrageDays + daysToBegin; day++)
+            {
+                var today = DateTime.Now.AddDays(day);
+                var transactionsForDemurrageToZero = GetTransactionsForDemurrageToZero(session, demurrageDays, steps, demurrageStartDate, today, "LETS_TransactionRecordSimulation", "LETS_CreditUsageRecordSimulation").ToList();
+                var simulatedDemurrageTransactions = new List<DemurrageTransactionViewModel>();
+                var toBeDeducted = 0;
+                var tradeValue = 0;
+                var unspentCreditValue = 0;
+                if (transactionsForDemurrageToZero.Any())
                 {
-                    joinMemberTable = " join LETS_MemberPartRecord m on m.id = t.SellerMemberPartRecord_Id ";
-                    whereMember = string.Format(" and m.Id = '{0}' ", idMember);
+                    simulatedDemurrageTransactions.AddRange(SimulateDemurrageTransactions(transactionsForDemurrageToZero, null, today, out toBeDeducted, out tradeValue, out unspentCreditValue));
                 }
-                //var queryTradesWithCreditValue = _session.CreateSQLQuery(string.Format(
-                var queryTradesWithCreditValue = session.CreateSQLQuery(string.Format(
-                    @"
-                    select t.Id, t.TransactionDate, t.SellerMemberPartRecord_Id, t.CreditValue, t.Description, t.TransactionType, t.Value, t.BuyerMemberPartRecord_Id from LETS_TransactionPartRecord t
-                    {0}
-                    where t.TransactionType != 'Demurrage'
-                    and t.CreditValue > 0
-                    {1}
-                ", joinMemberTable, whereMember));
-                DeleteTradesToSimulate(idMember);
-                CopyTradesToSimulate(RemoveUnpublishedResults(queryTradesWithCreditValue.List<object[]>()));
-                if (idMember != 0)
+                for (var stepNumber = steps.Count - 1; stepNumber >= 0; stepNumber--)
                 {
-                    whereMember = string.Format(" and ts.SellerMemberPartRecord_Id = '{0}' ", idMember);
-                }
-                var queryDemurrageCreditUsages = session.CreateSQLQuery(string.Format(
-                    @"
-                    SELECT cu.Id, ts.Id as IdTransaction, cu.TransactionType, cu.Value, cu.RecordedDate, cu.IdTransactionSpent
-                    FROM LETS_CreditUsageRecord cu
-                    join LETS_TransactionRecordSimulation ts on ts.IdTransaction = cu.IdTransactionEarnt
-                    WHERE cu.TransactionType = 'Demurrage'
-                    {0}
-                ", whereMember));
-                DeleteDemurrageCreditUsagesToSimulate(session, idMember);
-                CopyDemurrageCreditUsagesToSimulate(queryDemurrageCreditUsages.List<object[]>());
-                var daysToBegin = (int)Math.Ceiling((demurrageStartDate - DateTime.Now).TotalDays) + demurrageDays;
-                if (daysToBegin < 0) daysToBegin = 0;
-                for (var day = 0; day <= (steps.Count + 1) * demurrageDays + daysToBegin; day++)
-                {
-                    var today = DateTime.Now.AddDays(day);
-                    var transactionsForDemurrageToZero = GetTransactionsForDemurrageToZero(session, demurrageDays, steps, demurrageStartDate, today, "LETS_TransactionRecordSimulation", "LETS_CreditUsageRecordSimulation").ToList();
-                    var simulatedDemurrageTransactions = new List<DemurrageTransactionViewModel>();
-                    var toBeDeducted = 0;
-                    var tradeValue = 0;
-                    var unspentCreditValue = 0;
-                    if (transactionsForDemurrageToZero.Any())
+                    var transactionsForDemurrageStep =
+                        GetTransactionsForDemurrageStep(session, demurrageDays, stepNumber, demurrageStartDate, today, "LETS_TransactionRecordSimulation", "LETS_CreditUsageRecordSimulation").ToList();
+                    if (transactionsForDemurrageStep.Any())
                     {
-                        simulatedDemurrageTransactions.AddRange(SimulateDemurrageTransactions(transactionsForDemurrageToZero, null, today, out toBeDeducted, out tradeValue, out unspentCreditValue));
+                        simulatedDemurrageTransactions.AddRange(SimulateDemurrageTransactions(transactionsForDemurrageStep, steps[stepNumber], today, out toBeDeducted, out tradeValue, out unspentCreditValue));
                     }
-                    for (var stepNumber = steps.Count - 1; stepNumber >= 0; stepNumber--)
-                    {
-                        var transactionsForDemurrageStep =
-                            GetTransactionsForDemurrageStep(session, demurrageDays, stepNumber, demurrageStartDate, today, "LETS_TransactionRecordSimulation", "LETS_CreditUsageRecordSimulation").ToList();
-                        if (transactionsForDemurrageStep.Any())
-                        {
-                            simulatedDemurrageTransactions.AddRange(SimulateDemurrageTransactions(transactionsForDemurrageStep, steps[stepNumber], today, out toBeDeducted, out tradeValue, out unspentCreditValue));
-                        }
-                    }
-                    demurrageTransactions.Add(new DemurrageTransactionsViewModel
-                        {
-                            DemurrageDate = today,
-                            ToBeDeducted = toBeDeducted,
-                            TradeValue = tradeValue,
-                            UnspentCreditValue = unspentCreditValue,
-                            DemurrageTransactions = simulatedDemurrageTransactions
-                        });
                 }
-            //}
+                demurrageTransactions.Add(new DemurrageTransactionsViewModel
+                    {
+                        DemurrageDate = today,
+                        ToBeDeducted = toBeDeducted,
+                        TradeValue = tradeValue,
+                        UnspentCreditValue = unspentCreditValue,
+                        DemurrageTransactions = simulatedDemurrageTransactions
+                    });
+            }
             return demurrageTransactions;
         }
 
@@ -446,18 +443,16 @@ namespace LETS.Services
             var demurrageDays = letsSettings.DemurrageTimeIntervalDays;
             var steps = letsSettings.DemurrageStepsList.ToList();
             _idDemurrageRecipient = letsSettings.IdDemurrageRecipient;
-            using (var session = _sessionLocator.Value.For(null))
+            var session = _sessionLocator.Value.For(null);
+            var resultsCreditsToZero = GetTransactionsForDemurrageToZero(session, demurrageDays, steps, demurrageStartDate, DateTime.Now, "LETS_TransactionPartRecord", "LETS_CreditUsageRecord");
+            var chargesRecorded = RecordDemurrageTransactions(RemoveUnpublishedResults(resultsCreditsToZero), null);
+            _notifier.Information(T("Credits zeroed from {0} transactions", chargesRecorded));
+            for (var stepNumber = steps.Count - 1; stepNumber >= 0; stepNumber--)
             {
-                var resultsCreditsToZero = GetTransactionsForDemurrageToZero(session, demurrageDays, steps, demurrageStartDate, DateTime.Now, "LETS_TransactionPartRecord", "LETS_CreditUsageRecord");
-                var chargesRecorded = RecordDemurrageTransactions(RemoveUnpublishedResults(resultsCreditsToZero), null);
-                _notifier.Information(T("Credits zeroed from {0} transactions", chargesRecorded));
-                for (var stepNumber = steps.Count - 1; stepNumber >= 0; stepNumber--)
-                {
-                    var resultsStep = GetTransactionsForDemurrageStep(session, demurrageDays, stepNumber, demurrageStartDate, DateTime.Now, "LETS_TransactionPartRecord", "LETS_CreditUsageRecord");
-                    chargesRecorded = RecordDemurrageTransactions(RemoveUnpublishedResults(resultsStep), steps[stepNumber]);
-                    _notifier.Information(T("Demurrage step {2}: charged on {0} transactions at the rate of {1}%",
-                                             chargesRecorded, steps[stepNumber], stepNumber + 1));
-                }
+                var resultsStep = GetTransactionsForDemurrageStep(session, demurrageDays, stepNumber, demurrageStartDate, DateTime.Now, "LETS_TransactionPartRecord", "LETS_CreditUsageRecord");
+                chargesRecorded = RecordDemurrageTransactions(RemoveUnpublishedResults(resultsStep), steps[stepNumber]);
+                _notifier.Information(T("Demurrage step {2}: charged on {0} transactions at the rate of {1}%",
+                                            chargesRecorded, steps[stepNumber], stepNumber + 1));
             }
         }
 
