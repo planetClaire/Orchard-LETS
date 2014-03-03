@@ -55,7 +55,7 @@
     <Match Path="~/LETS/Notice/*">
       <Place Parts_Common_Owner_Edit="-"/>
       <Place Parts_Autoroute_Edit="-"/>
-      <Place Fields_Contrib_TaxonomyField_Edit="-"/>
+      <Place Fields_TaxonomyField_Edit="-"/>
       <Place Parts_Title_Edit="Content:0"/>
       <Place Fields_Enumeration_Edit-Per="Content:1.7"/>
       <Place Fields_Enumeration_Edit-PaymentTerms="Content:1.8"/>

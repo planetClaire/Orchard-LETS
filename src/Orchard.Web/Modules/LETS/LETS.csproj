@@ -471,7 +471,7 @@
     <Content Include="Views\Parts\MembersMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Fields.Contrib.TaxonomyField.cshtml" />
+    <Content Include="Views\Fields.TaxonomyField.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts.Title-Category.cshtml" />

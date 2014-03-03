@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 using LETS.Models;
 using LETS.Services;
 using LETS.ViewModels;
@@ -12,16 +11,12 @@ using Orchard.ArchiveLater.Services;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
-using Orchard.Core.Feeds;
-using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Mvc;
 using Orchard.Security;
-using Orchard.Settings;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using Orchard.Themes;
-using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
 
 namespace LETS.Controllers
@@ -35,25 +30,19 @@ namespace LETS.Controllers
         private readonly ITaxonomyService _taxonomyService;
         private readonly INoticeService _noticeService;
         public Localizer T { get; set; }
-        dynamic Shape { get; set; }
 
-        private readonly ISiteService _siteService;
-        private readonly IFeedManager _feedManager;
         private readonly IAuthorizationService _authorizationService;
         private readonly IMemberService _memberService;
         private readonly ISignals _signals;
         private readonly IArchiveLaterService _archiveLaterService;
 
-        public NoticeController(IContentManager contentManager, IOrchardServices orchardServices, ITaxonomyService taxonomyService, INoticeService noticeService, ISiteService siteService, IFeedManager feedManager, IShapeFactory shapeFactory, IAuthorizationService authorizationService, IMemberService memberService, ISignals signals, IArchiveLaterService archiveLaterService)
+        public NoticeController(IContentManager contentManager, IOrchardServices orchardServices, ITaxonomyService taxonomyService, INoticeService noticeService, IAuthorizationService authorizationService, IMemberService memberService, ISignals signals, IArchiveLaterService archiveLaterService)
         {
             _contentManager = contentManager;
             _orchardServices = orchardServices;
             _taxonomyService = taxonomyService;
             _noticeService = noticeService;
-            _siteService = siteService;
-            _feedManager = feedManager;
             T = NullLocalizer.Instance;
-            Shape = shapeFactory;
             _authorizationService = authorizationService;
             _memberService = memberService;
             _signals = signals;
@@ -249,54 +238,6 @@ namespace LETS.Controllers
             _orchardServices.Notifier.Information(T("Your notice has been published"));
             return RedirectToAction("Member", new { id = idUser });
         }
-
-        ///// <summary>
-        ///// override Orchard.Taxonomies Homecontroller/Item to send different displayType
-        ///// todo can we instead extend that controller to avoid repeating all this code??
-        ///// </summary>
-        ///// <param name="termPath"></param>
-        ///// <param name="pagerParameters"></param>
-        ///// <returns></returns>
-        //public ActionResult TaxonomyItem(string termPath, PagerParameters pagerParameters)
-        //{
-        //    var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
-        //    var correctedPath = _termPathConstraint.FindPath(termPath);
-        //    if (correctedPath == null)
-        //        return HttpNotFound();
-
-        //    var termPart = _taxonomyService.GetTermByPath(correctedPath);
-
-        //    if (termPart == null)
-        //        return HttpNotFound();
-
-        //    var taxonomy = _taxonomyService.GetTaxonomy(termPart.TaxonomyId);
-        //    var totalItemCount = _taxonomyService.GetContentItemsCount(termPart);
-
-        //    var termContentItems = _taxonomyService.GetContentItems(termPart, pager.GetStartIndex(), pager.PageSize)
-        //        .Select(c => _contentManager.BuildDisplay(c, "DetailedSummary").Taxonomy(taxonomy).Term(termPart));
-
-        //    dynamic term = _contentManager.BuildDisplay(termPart);
-
-        //    var list = Shape.List();
-
-        //    list.AddRange(termContentItems);
-
-        //    term.Content.Add(
-        //        Shape.Taxonomies_TermContentItems_List(ContentItems: list)
-        //        .Taxonomy(taxonomy)
-        //        .Term(termPart), "5");
-
-        //    term.Content.Add(
-        //        Shape.Pager(pager)
-        //            .TotalItemCount(totalItemCount)
-        //            .Taxonomy(taxonomy)
-        //            .Term(termPart), "Content:after");
-
-        //    // generates a link to the RSS feed for this term
-        //    _feedManager.Register(termPart.Name, "rss", new RouteValueDictionary { { "term", termPart.Id } });
-
-        //    return new ShapeResult(this, term);
-        //}
 
         bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
         {
