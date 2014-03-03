@@ -160,9 +160,7 @@ namespace LETS.Controllers
             _signals.Trigger(string.Format("letsMemberNoticesChanged{0}", idOwner));
             _signals.Trigger(string.Format("letsMemberArchivedNoticesChanged{0}", idOwner));
             _signals.Trigger(string.Format("letsNoticesByLocalityChanged{0}", _memberService.GetMember(idOwner).As<AddressPart>().Locality.Id));
-            // ReSharper disable Mvc.AreaNotResolved
-            return RedirectToAction("Item", "Home", new { area = "Orchard.Taxonomies", termPath = term.Slug });
-            // ReSharper restore Mvc.AreaNotResolved
+            return Redirect(string.Format("~/{0}", term.Slug));
         }
 
         private NoticeCategoryViewModel GetNoticeCategoryViewModel(int idContentItem)
