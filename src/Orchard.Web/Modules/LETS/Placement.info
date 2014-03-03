@@ -74,7 +74,7 @@
       <Place Fields_Common_Text-Description="Content:0"/>
       <Place Parts_Notice_DetailedSummary="Content:1"></Place>
       <Place Parts_Comments_Count="Content:after:1" />
-      <Place Fields_Contrib_TaxonomyField="Content:after:1"/>
+      <Place Fields_TaxonomyField="Content:after:1"/>
     </Match>
   
   <!-- Summary display -->
@@ -83,7 +83,7 @@
     <Place Parts_Notice_Summary="Content:0"></Place>
     <Place Parts_Member_Summary="Content:0"></Place>
     <Place Parts_Comments_Count="Content:3" />
-    <Place Fields_Contrib_TaxonomyField="Content:after"/>
+    <Place Fields_TaxonomyField="Content:after"/>
   </Match>
   
   <!-- Detail display -->
@@ -92,7 +92,7 @@
     <Place Fields_Common_Text-Description="Content:0"/>
     <Place Parts_Notice="Content:1"></Place>
     <Place Parts_Member="Content:1"></Place>
-    <Place Fields_Contrib_TaxonomyField="Content:2.5"/>
+    <Place Fields_TaxonomyField="Content:2.5"/>
   </Match>
 
   <!-- Notice Type -->
