@@ -251,8 +251,9 @@ namespace LETS.Services
             var demurrageStartDate = letsSettings.DemurrageStartDate ?? DateTime.MinValue;
             var steps = letsSettings.DemurrageStepsList.ToList();
             var demurrageTransactions = new List<DemurrageTransactionsViewModel>();
-            using (var session = _sessionLocator.Value.For(null))
-            {
+            //using (var session = _sessionLocator.Value.For(null))
+            //{
+            var session = _sessionLocator.Value.For(null);
                 var joinMemberTable = string.Empty;
                 var whereMember = string.Empty;
                 if (idMember != 0)
@@ -260,6 +261,7 @@ namespace LETS.Services
                     joinMemberTable = " join LETS_MemberPartRecord m on m.id = t.SellerMemberPartRecord_Id ";
                     whereMember = string.Format(" and m.Id = '{0}' ", idMember);
                 }
+                //var queryTradesWithCreditValue = _session.CreateSQLQuery(string.Format(
                 var queryTradesWithCreditValue = session.CreateSQLQuery(string.Format(
                     @"
                     select t.Id, t.TransactionDate, t.SellerMemberPartRecord_Id, t.CreditValue, t.Description, t.TransactionType, t.Value, t.BuyerMemberPartRecord_Id from LETS_TransactionPartRecord t
@@ -316,7 +318,7 @@ namespace LETS.Services
                             DemurrageTransactions = simulatedDemurrageTransactions
                         });
                 }
-            }
+            //}
             return demurrageTransactions;
         }
 
