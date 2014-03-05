@@ -103,7 +103,7 @@ namespace LETS.Controllers
                 _contentManager.Publish(notice);
             }
             _orchardServices.Notifier.Information(T("Your Notice has been created."));
-            return RedirectToAction("Item", "Home", new { area = "Orchard.Taxonomies", termPath = term.Slug });
+            return Redirect(string.Format("~/{0}", term.Slug));
         }
 
         public ActionResult Edit(int id)
