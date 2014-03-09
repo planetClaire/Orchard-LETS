@@ -382,5 +382,26 @@ namespace LETS {
             return 1;
         }
 
+        public int UpdateFrom1() {
+            return 32;
+        }
+
+        public int UpdateFrom32() {
+            SchemaBuilder.CreateTable("DailyStatsRecord", table => table
+                    .Column<int>("Id", c => c.PrimaryKey().Identity())
+                    .Column<DateTime>("DateCollected")
+                    .Column<int>("TotalTurnover")
+                    .Column<int>("MemberCount")
+                    );
+            SchemaBuilder.CreateTable("NoticeStatsRecord", table => table
+                    .Column<int>("Id", c => c.PrimaryKey().Identity())
+                    .Column<DateTime>("DateCollected")
+                    .Column<int>("IdNoticeType")
+                    .Column<int>("NoticeCount")
+                    );
+
+            return 33;
+        }
+
     }
 }

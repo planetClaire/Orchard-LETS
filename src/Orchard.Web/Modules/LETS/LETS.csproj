@@ -130,6 +130,7 @@
     <Compile Include="Models\CommentsWidgetPart.cs" />
     <Compile Include="Models\CreditUsageRecord.cs" />
     <Compile Include="Models\CreditUsageRecordSimulation.cs" />
+    <Compile Include="Models\DailyStatsRecord.cs" />
     <Compile Include="Models\MemberAccessOnlyPart.cs" />
     <Compile Include="Models\MemberAccessOnlyPartRecord.cs" />
     <Compile Include="Models\MemberAdminPart.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Models\MemberLinksPart.cs" />
     <Compile Include="Models\MemberLinksPartRecord.cs" />
     <Compile Include="Models\MemberType.cs" />
+    <Compile Include="Models\NoticeStatsRecord.cs" />
     <Compile Include="Models\StatsWidgetPart.cs" />
     <Compile Include="Models\TransactionRecordSimulation.cs" />
     <Compile Include="Models\TransactionType.cs" />
@@ -151,7 +153,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Scheduling\DemurrageTasks.cs" />
+    <Compile Include="Scheduling\StatsTasks.cs" />
     <Compile Include="Services\ILETSService.cs" />
+    <Compile Include="Services\IStatsService.cs" />
     <Compile Include="Services\ITransactionService.cs" />
     <Compile Include="Drivers\LocalityPartDriver.cs" />
     <Compile Include="Drivers\TransactionPartDriver.cs" />
@@ -214,6 +218,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\NoticeService.cs" />
+    <Compile Include="Services\StatsService.cs" />
     <Compile Include="Services\TransactionService.cs" />
     <Compile Include="Services\MembersMapService.cs" />
     <Compile Include="Shapes\LETSShapes.cs">
