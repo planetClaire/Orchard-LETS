@@ -12,16 +12,17 @@
     var sevenDays = DateTime.Now.AddDays(7).ToString(shortDateFormat);
     var maxDate = DateTime.Now.AddDays(maxDays).ToString(shortDateFormat);
     // default value
-    if (archiveLater.ScheduledArchiveUtc == null) {
-        archiveLater.ScheduledArchiveDate = maxDate;
+    if (archiveLater.Editor.Date == null)
+    {
+        archiveLater.Editor.Date = maxDate;
     }
 }
 <div class="control-group">
     <input type="hidden" value="true" name="ArchiveLater.ArchiveLater">
-    <label class="required control-label" for="@Html.FieldIdFor(m => archiveLater.ScheduledArchiveDate)">@T("Expires")</label>
+    <label class="required control-label" for="@Html.FieldIdFor(m => archiveLater.Editor.Date)">@T("Expires")</label>
     <div class="controls">
             <div class="input-append">
-                @Html.TextBoxFor(m => archiveLater.ScheduledArchiveDate, new { @class = "input-small appendedPrependedInput date" })
+                @Html.TextBoxFor(m => archiveLater.Editor.Date, new { @class = "input-small appendedPrependedInput date" })
             </div>
             <div id="archiveQuickPick" class="help-inline btn-group" data-toggle="buttons-radio">
                 <a class="btn" href="#" id="aTwoDays">
@@ -57,7 +58,7 @@
             jQuery.validator.methods["date"] = function (value, element) { return true; }
             
             // activate the datepicker
-            var txtArchiveDate = $('#@Html.FieldIdFor(m => archiveLater.ScheduledArchiveDate)');
+            var txtArchiveDate = $('#@Html.FieldIdFor(m => archiveLater.Editor.Date)');
             txtArchiveDate.datepicker({ showAnim: "", minDate: 0, maxDate: @maxDays, showOn: "both", buttonImageOnly: false });
             // ensure the default value is sent if the user has manually wiped out the expiry date
             // obviously this won't work if js is disabled but this might not be a huge issue
@@ -66,7 +67,7 @@
             // todo may be a better way to do this but don't want to duplicate ArchiveLater code
             $("button:submit").click(function() {
                 if (txtArchiveDate.val() === '') {
-                    txtArchiveDate.val('@archiveLater.ScheduledArchiveDate');
+                    txtArchiveDate.val('@archiveLater.Editor.Date');
                 }
             });
             // quick pick, if bootstrap-button.js is present

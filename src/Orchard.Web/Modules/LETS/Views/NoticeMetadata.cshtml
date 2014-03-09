@@ -3,22 +3,22 @@
 @using Orchard.ContentManagement
 @using Orchard.Core.Common.Models
 @{
-    var createdUtc = (DateTime)Model.ContentPart.CreatedUtc;
-    var publishedUtc = (DateTime)Model.ContentPart.PublishedUtc;
+    var createdUtc = TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.CreatedUtc, WorkContext.CurrentTimeZone);
+    var publishedUtc = TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.PublishedUtc, WorkContext.CurrentTimeZone);
     var republished = (publishedUtc - createdUtc).Days > 1;
 }
 @if (republished)
 {
     <div class="published">
         <h6>
-            @T("Re-posted") @Display.PublishedState(createdDateTimeUtc: Model.ContentPart.PublishedUtc, publisheddateTimeUtc: Model.ContentPart.PublishedUtc)<br />
-            (@T("First posted") @Display.PublishedState(createdDateTimeUtc: Model.ContentPart.CreatedUtc, publisheddateTimeUtc: Model.ContentPart.PublishedUtc))
+            @T("Re-posted") @publishedUtc.ToString("d MMMM yyyy") at @publishedUtc.ToShortTimeString()<br />
+            (@T("First posted") @createdUtc.ToString("d MMMM yyyy"))
         </h6>
     </div>
 }
 else
 {
-    <div class="published"><h6>@T("Posted") @Display.PublishedState(createdDateTimeUtc: Model.ContentPart.CreatedUtc, publisheddateTimeUtc: Model.ContentPart.PublishedUtc)</h6></div>
+    <div class="published"><h6>@T("Posted") @publishedUtc.ToString("d MMMM yyyy") at @publishedUtc.ToShortTimeString()</h6></div>
 }
 @if (Helpers.IsPublished(Model.ContentItem))
 {

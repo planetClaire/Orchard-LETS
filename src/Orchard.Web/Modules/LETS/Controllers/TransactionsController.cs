@@ -10,9 +10,9 @@ using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Settings.Models;
-using Orchard.Core.Shapes.Localization;
 using Orchard.DisplayManagement;
 using Orchard.Localization;
+using Orchard.Localization.Services;
 using Orchard.Security;
 using Orchard.Themes;
 using Orchard.UI.Navigation;
@@ -27,13 +27,13 @@ namespace LETS.Controllers
         private readonly IMemberService _memberService;
         private readonly IContentManager _contentManager;
         private readonly ITransactionService _transactionService;
-        private readonly IDateTimeLocalization _dateTimeLocalization;
+        private readonly IDateTimeFormatProvider _dateTimeLocalization;
         private readonly IAuthorizationService _authorizationService;
         private readonly ISignals _signals;
         public Localizer T { get; set; }
         dynamic Shape { get; set; }
 
-        public TransactionsController(IOrchardServices orchardServices, IWorkContextAccessor workContext, IMemberService memberService, IContentManager contentManager, ITransactionService transactionService, IDateTimeLocalization dateTimeLocalization, IShapeFactory shapeFactory, IAuthorizationService authorizationService, ISignals signals)
+        public TransactionsController(IOrchardServices orchardServices, IWorkContextAccessor workContext, IMemberService memberService, IContentManager contentManager, ITransactionService transactionService, IDateTimeFormatProvider dateTimeLocalization, IShapeFactory shapeFactory, IAuthorizationService authorizationService, ISignals signals)
         {
             _orchardServices = orchardServices;
             _workContext = workContext;
@@ -91,7 +91,7 @@ namespace LETS.Controllers
             if (ModelState.IsValid)
             {
                 var newTransaction = memberTransactionsViewModel.NewTransaction;
-                newTransaction.TransactionTime = DateTime.Now.ToString(_dateTimeLocalization.ShortTimeFormat.Text); 
+                newTransaction.TransactionTime = DateTime.Now.ToString(_dateTimeLocalization.ShortTimeFormat); 
                 _transactionService.SaveTransaction(_contentManager.Create<TransactionPart>("Transaction").ContentItem, newTransaction);
                 _orchardServices.Notifier.Information(T("Your trade has been recorded."));
                 return RedirectToAction("Index");
