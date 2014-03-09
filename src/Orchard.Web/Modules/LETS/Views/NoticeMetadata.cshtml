@@ -1,0 +1,27 @@
+﻿@using LETS.Helpers
+@using Orchard.ArchiveLater.Models
+@using Orchard.ContentManagement
+@using Orchard.Core.Common.Models
+@{
+    var createdUtc = (DateTime)Model.ContentPart.CreatedUtc;
+    var publishedUtc = (DateTime)Model.ContentPart.PublishedUtc;
+    var republished = (publishedUtc - createdUtc).Days > 1;
+}
+@if (republished)
+{
+    <div class="published">
+        <h6>
+            @T("Re-posted") @Display.PublishedState(createdDateTimeUtc: Model.ContentPart.PublishedUtc, publisheddateTimeUtc: Model.ContentPart.PublishedUtc)<br />
+            (@T("First posted") @Display.PublishedState(createdDateTimeUtc: Model.ContentPart.CreatedUtc, publisheddateTimeUtc: Model.ContentPart.PublishedUtc))
+        </h6>
+    </div>
+}
+else
+{
+    <div class="published"><h6>@T("Posted") @Display.PublishedState(createdDateTimeUtc: Model.ContentPart.CreatedUtc, publisheddateTimeUtc: Model.ContentPart.PublishedUtc)</h6></div>
+}
+@if (Helpers.IsPublished(Model.ContentItem))
+{
+    var archiveDate = ((CommonPart)Model.ContentPart).As<ArchiveLaterPart>().ScheduledArchiveUtc.Value;
+    <div class="archived"><h6>@Display.ArchiveState(archiveDateTimeUtc: archiveDate)</h6></div>
+}

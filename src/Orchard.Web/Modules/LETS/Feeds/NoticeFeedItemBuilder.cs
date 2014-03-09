@@ -51,6 +51,11 @@ namespace LETS.Feeds
 
                 // add to known formats
                 var description = string.Format("<strong>{0} {1}</strong>", T("From"), notice.Member.FirstLastName);
+                var published = notice.As<CommonPart>().PublishedUtc.Value;
+                var created = notice.As<CommonPart>().CreatedUtc.Value;
+                if ((published - created).Days > 1) {
+                    description += string.Format("<br />This notice has been re-posted. It was first posted on {0}", notice.As<CommonPart>().CreatedUtc.Value.ToLongDateString());
+                }
                 var currencyUnit = _orchardServices.WorkContext.CurrentSite.As<LETSSettingsPart>().CurrencyUnit;
                 if (notice.Price > 0) {
                     var per = ((dynamic) notice).Per;
