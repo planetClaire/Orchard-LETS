@@ -441,7 +441,7 @@
     <Content Include="Views\MemberAdminList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts\Title.DetailedSummary.Notice.cshtml" />
+    <Content Include="Views\Parts\Title.DetailedSummaryArchived.Notice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\CommentsWidget.cshtml" />
@@ -499,6 +499,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Rules\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Title.DetailedSummary.Notice.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Notice.DetailedSummaryArchived.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

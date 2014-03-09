@@ -179,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Content.cshtml" />
+    <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
     <Content Include="Views\Parts.MailChimpForm.cshtml" />
     <Content Include="Views\TestView.cshtml" />

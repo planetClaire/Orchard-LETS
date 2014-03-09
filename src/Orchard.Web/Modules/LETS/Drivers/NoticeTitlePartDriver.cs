@@ -1,6 +1,4 @@
-﻿using System;
-using LETS.Models;
-using LETS.Services;
+﻿using LETS.Models;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Core.Title.Models;
 
@@ -11,10 +9,16 @@ namespace LETS.Drivers
         protected override DriverResult Display(TitlePart part, string displayType, dynamic shapeHelper) 
         {
             if (part.ContentItem.Has(typeof(NoticePart))) {
-                return ContentShape("Parts_Title_DetailedSummary_Notice",
-                                    () => shapeHelper.Parts_Title_DetailedSummary_Notice(
-                                        ContentPart: part
-                                              ));
+                return Combined(
+                    ContentShape("Parts_Title_DetailedSummary_Notice",
+                        () => shapeHelper.Parts_Title_DetailedSummary_Notice(
+                            ContentPart: part
+                            )),
+                    ContentShape("Parts_Title_DetailedSummaryArchived_Notice",
+                        () => shapeHelper.Parts_Title_DetailedSummaryArchived_Notice(
+                            ContentPart: part
+                            ))
+                    );
             }
             return null;
         }

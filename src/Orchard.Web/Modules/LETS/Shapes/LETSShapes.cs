@@ -37,7 +37,7 @@ namespace LETS.Shapes
                 });
             builder.Describe("Content").OnDisplaying(displaying =>
                 {
-                    if (displaying.ShapeMetadata.DisplayType.Equals("DetailedSummary"))
+                    if (displaying.ShapeMetadata.DisplayType.Equals("DetailedSummary") || displaying.ShapeMetadata.DisplayType.Equals("DetailedSummaryArchived"))
                     {
                         displaying.ShapeMetadata.Wrappers.Add("Content_DetailedSummaryWrapper");
                     }

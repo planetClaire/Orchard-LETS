@@ -174,7 +174,7 @@ namespace LETS.Services
             return GetMemberNotices(idUser).Select(contentItem => _contentManager.BuildDisplay(contentItem, displayType));
         }
 
-        public IEnumerable<dynamic> GetMemberArchivedNoticeShapes(int idUser, string displayType = "DetailedSummary")
+        public IEnumerable<dynamic> GetMemberArchivedNoticeShapes(int idUser, string displayType = "DetailedSummaryArchived")
         {
             return GetMemberArchivedNotices(idUser).Select(contentItem => _contentManager.BuildDisplay(contentItem, displayType));
         }

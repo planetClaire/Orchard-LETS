@@ -65,18 +65,31 @@
   </Match>
 
   <!-- Detailed Summary display -->
-    <Match DisplayType="DetailedSummary">
-      <Match ContentType="Notice">
-        <Place Parts_Title_DetailedSummary_Notice="Header:1"></Place>
-      </Match>
-      <Place Fields_AgileUploader="Header:after" />
-      <Place Parts_Common_Metadata="Content:before"/>
-      <Place Fields_Common_Text-Description="Content:0"/>
-      <Place Parts_Notice_DetailedSummary="Content:1"></Place>
-      <Place Parts_Comments_Count="Content:after:1" />
-      <Place Fields_TaxonomyField="Content:after:1"/>
+  <Match DisplayType="DetailedSummary">
+    <Match ContentType="Notice">
+      <Place Parts_Title_DetailedSummary_Notice="Header:1"></Place>
     </Match>
-  
+    <Place Fields_AgileUploader="Header:after" />
+    <Place Parts_Common_Metadata="Content:before"/>
+    <Place Fields_Common_Text-Description="Content:0"/>
+    <Place Parts_Notice_DetailedSummary="Content:1"></Place>
+    <Place Parts_Comments_Count="Content:after:1" />
+    <Place Fields_TaxonomyField="Content:after:1"/>
+  </Match>
+
+  <!-- Detailed Summary display -->
+  <Match DisplayType="DetailedSummaryArchived">
+    <Match ContentType="Notice">
+      <Place Parts_Title_DetailedSummaryArchived_Notice="Header:1"></Place>
+    </Match>
+    <Place Fields_AgileUploader="Header:after" />
+    <Place Parts_Common_Metadata="Content:before"/>
+    <Place Fields_Common_Text-Description="Content:0"/>
+    <Place Parts_Notice_DetailedSummaryArchived="Content:1"></Place>
+    <Place Parts_Comments_Count="-" />
+    <Place Fields_TaxonomyField="Content:after:1"/>
+  </Match>
+
   <!-- Summary display -->
   <Match DisplayType="Summary">
     <Place Fields_Common_Text-Description="-"/>
