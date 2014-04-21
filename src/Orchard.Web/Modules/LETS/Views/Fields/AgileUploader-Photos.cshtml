@@ -10,7 +10,8 @@
         {
             <a href="@fileName" rel="lightbox-gallery">
                 @{ var alternateText = string.IsNullOrEmpty(Model.ContentField.AlternateText) ? Path.GetFileNameWithoutExtension(fileName) : Model.ContentField.AlternateText; }
-                <img alt="@alternateText" src='@Display.ResizeMediaUrl(Width: 250, Path: fileName)' />
+                @*<img alt="@alternateText" src='@Display.ResizeMediaUrl(Width: 250, Path: fileName)' />*@
+                <img alt="@alternateText" src='@fileName?width=250' />
             </a>
         }
     </div>
