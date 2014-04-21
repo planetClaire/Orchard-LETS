@@ -85,6 +85,16 @@ namespace Orchard.Tokens.Tests {
                     set { throw new NotImplementedException(); }
                 }
 
+                public int MaxPageSize {
+                    get { throw new NotImplementedException(); }
+                    set { throw new NotImplementedException(); }
+                }
+
+                public int MaxPagedCount {
+                    get { throw new NotImplementedException(); }
+                    set { throw new NotImplementedException(); }
+                }
+
                 public string BaseUrl { get; set; }
 
                 public string SiteTimeZone {

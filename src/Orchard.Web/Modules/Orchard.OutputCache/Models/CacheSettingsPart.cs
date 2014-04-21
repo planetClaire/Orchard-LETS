@@ -5,7 +5,7 @@ namespace Orchard.OutputCache.Models {
         public const string CacheKey = "CacheSettingsPart";
 
         public int DefaultCacheDuration {
-            get { return this.Retrieve(x => x.DefaultCacheDuration); }
+            get { return this.Retrieve(x => x.DefaultCacheDuration, 300); }
             set { this.Store(x => x.DefaultCacheDuration, value); }
         }
 
@@ -37,6 +37,11 @@ namespace Orchard.OutputCache.Models {
         public bool DebugMode {
             get { return this.Retrieve(x => x.DebugMode); }
             set { this.Store(x => x.DebugMode, value); }
+        }
+
+        public bool IgnoreNoCache {
+            get { return this.Retrieve(x => x.IgnoreNoCache); }
+            set { this.Store(x => x.IgnoreNoCache, value); }
         }
     }
 }

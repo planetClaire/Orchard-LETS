@@ -14,6 +14,8 @@ namespace Orchard.Settings {
         string SiteCalendar { get; set; }
         ResourceDebugMode ResourceDebugMode { get; set; }
         int PageSize { get; set; }
+        int MaxPageSize { get; set; }
+        int MaxPagedCount { get; set; }
         string BaseUrl { get; }
         string SiteTimeZone { get; }
     }

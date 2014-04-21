@@ -191,6 +191,16 @@ namespace Orchard.Setup {
                 set { throw new NotImplementedException(); }
             }
 
+            public int MaxPageSize {
+                get { return SiteSettingsPart.DefaultPageSize; }
+                set { throw new NotImplementedException(); }
+            }
+
+            public int MaxPagedCount {
+                get { return 0; }
+                set { throw new NotImplementedException(); }
+            }
+
             public string BaseUrl {
                 get { return ""; }
             }

@@ -105,7 +105,8 @@ namespace Orchard.Core.Contents.Controllers {
                 .Select(ctd => new KeyValuePair<string, string>(ctd.Name, ctd.DisplayName))
                 .ToList().OrderBy(kvp => kvp.Value);
 
-            var pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
+            var maxPagedCount = _siteService.GetSiteSettings().MaxPagedCount;
+            var pagerShape = Shape.Pager(pager).TotalItemCount(maxPagedCount > 0 ? maxPagedCount : query.Count());
             var pageOfContentItems = query.Slice(pager.GetStartIndex(), pager.PageSize).ToList();
 
             var list = Shape.List();
@@ -121,7 +122,10 @@ namespace Orchard.Core.Contents.Controllers {
         }
 
         private IEnumerable<ContentTypeDefinition> GetCreatableTypes(bool andContainable) {
-            return _contentDefinitionManager.ListTypeDefinitions().Where(ctd => ctd.Settings.GetModel<ContentTypeSettings>().Creatable && (!andContainable || ctd.Parts.Any(p => p.PartDefinition.Name == "ContainablePart")));
+            return _contentDefinitionManager.ListTypeDefinitions().Where(ctd =>
+                Services.Authorizer.Authorize(Permissions.EditContent, _contentManager.New(ctd.Name)) &&
+                ctd.Settings.GetModel<ContentTypeSettings>().Creatable &&
+                (!andContainable || ctd.Parts.Any(p => p.PartDefinition.Name == "ContainablePart")));
         }
 
         [HttpPost, ActionName("List")]
