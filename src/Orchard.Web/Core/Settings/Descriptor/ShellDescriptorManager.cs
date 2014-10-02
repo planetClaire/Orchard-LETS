@@ -7,9 +7,11 @@ using Orchard.Environment.Descriptor;
 using Orchard.Environment.Descriptor.Models;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Localization;
+using Orchard.Logging;
+using System.Linq;
 
 namespace Orchard.Core.Settings.Descriptor {
-    public class ShellDescriptorManager : IShellDescriptorManager {
+    public class ShellDescriptorManager : Component, IShellDescriptorManager {
         private readonly IRepository<ShellDescriptorRecord> _shellDescriptorRepository;
         private readonly IShellDescriptorManagerEventHandler _events;
         private readonly ShellSettings _shellSettings;
@@ -21,10 +23,7 @@ namespace Orchard.Core.Settings.Descriptor {
             _shellDescriptorRepository = shellDescriptorRepository;
             _events = events;
             _shellSettings = shellSettings;
-            T = NullLocalizer.Instance;
         }
-
-        public Localizer T { get; set; }
 
         public ShellDescriptor GetShellDescriptor() {
             ShellDescriptorRecord shellDescriptorRecord = GetDescriptorRecord();
@@ -63,6 +62,8 @@ namespace Orchard.Core.Settings.Descriptor {
             if (priorSerialNumber != serialNumber)
                 throw new InvalidOperationException(T("Invalid serial number for shell descriptor").ToString());
 
+            Logger.Information("Updating shell descriptor for shell '{0}'...", _shellSettings.Name);
+
             if (shellDescriptorRecord == null) {
                 shellDescriptorRecord = new ShellDescriptorRecord { SerialNumber = 1 };
                 _shellDescriptorRepository.Create(shellDescriptorRecord);
@@ -75,6 +76,7 @@ namespace Orchard.Core.Settings.Descriptor {
             foreach (var feature in enabledFeatures) {
                 shellDescriptorRecord.Features.Add(new ShellFeatureRecord { Name = feature.Name, ShellDescriptorRecord = shellDescriptorRecord });
             }
+            Logger.Debug("Enabled features for shell '{0}' set: {1}.", _shellSettings.Name, String.Join(", ", enabledFeatures.Select(feature => feature.Name)));
 
 
             shellDescriptorRecord.Parameters.Clear();
@@ -86,6 +88,9 @@ namespace Orchard.Core.Settings.Descriptor {
                     ShellDescriptorRecord = shellDescriptorRecord
                 });
             }
+            Logger.Debug("Parameters for shell '{0}' set: {1}.", _shellSettings.Name, String.Join(", ", parameters.Select(parameter => parameter.Name + "-" + parameter.Value)));
+
+            Logger.Information("Shell descriptor updated for shell '{0}'.", _shellSettings.Name);
 
             _events.Changed(GetShellDescriptorFromRecord(shellDescriptorRecord), _shellSettings.Name);
         }
