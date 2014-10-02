@@ -47,7 +47,7 @@ namespace Orchard.Scripting.CSharp.Activities {
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {
             var script = activityContext.GetState<string>("Script");
 
-            script = "// #{ }" + System.Environment.NewLine + script;
+            script = "// #{ }" + System.Environment.NewLine;
 
             object outcome = null;
 

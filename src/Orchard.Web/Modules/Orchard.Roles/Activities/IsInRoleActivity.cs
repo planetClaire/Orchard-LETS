@@ -48,9 +48,8 @@ namespace Orchard.Roles.Activities {
             if (UserIsInRole(activityContext)) {
                 yield return T("Yes");
             }
-            else {
-                yield return T("No");
-            }
+            
+            yield return T("No");
         }
 
         private bool UserIsInRole(ActivityContext context) {

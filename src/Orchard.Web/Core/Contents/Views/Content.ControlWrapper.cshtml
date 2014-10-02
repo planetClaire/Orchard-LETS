@@ -1,12 +1,8 @@
 ﻿@using Orchard.ContentManagement;
 @using Orchard.Core.Contents;
-@{
-    var contentItem = (ContentItem)Model.ContentItem;
-    var authorizedFor = AuthorizedFor(Permissions.EditContent, contentItem);
-}
-@if (authorizedFor && Model.ContentItem.Id > 0) {
+@if (AuthorizedFor(Permissions.EditContent) && Model.ContentItem.Id > 0) {
     <div class="content-control">
-        <div class="manage-actions">@Html.ItemEditLinkWithReturnUrl(T("Edit").Text, contentItem)</div>
+        <div class="manage-actions">@Html.ItemEditLinkWithReturnUrl(T("Edit").Text, (ContentItem)Model.ContentItem)</div>
     @Display(Model.Child)
     </div>
 }

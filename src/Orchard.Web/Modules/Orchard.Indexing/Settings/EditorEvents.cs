@@ -12,8 +12,6 @@ namespace Orchard.Indexing.Settings {
         private readonly IIndexingTaskManager _indexingTaskManager;
         private readonly IContentManager _contentManager;
 
-        private const int PageSize = 50;
-
         public EditorEvents(IIndexingTaskManager indexingTaskManager, IContentManager contentManager){
             _indexingTaskManager = indexingTaskManager;
             _contentManager = contentManager;
@@ -65,23 +63,9 @@ namespace Orchard.Indexing.Settings {
         }
 
         private void CreateTasksForType(string type) {
-            var index = 0;
-            bool contentItemProcessed;
-
-            // todo: load ids only, or create a queued job
-
-            do {
-                contentItemProcessed = false;
-                var contentItemsToIndex = _contentManager.Query(VersionOptions.Published, new [] { type }).Slice(index, PageSize);
-
-                foreach (var contentItem in contentItemsToIndex) {
-                    contentItemProcessed = true;
-                    _indexingTaskManager.CreateUpdateIndexTask(contentItem);
-                }
-
-                index += PageSize;
-
-            } while (contentItemProcessed);
+            foreach (var contentItem in _contentManager.Query(VersionOptions.Published, new [] { type }).List()) {
+                _indexingTaskManager.CreateUpdateIndexTask(contentItem);
+            }
         }
     }
 }

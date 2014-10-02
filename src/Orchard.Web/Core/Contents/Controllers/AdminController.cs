@@ -252,7 +252,6 @@ namespace Orchard.Core.Contents.Controllers {
             _contentManager.Create(contentItem, VersionOptions.Draft);
 
             var model = _contentManager.UpdateEditor(contentItem, this);
-
             if (!ModelState.IsValid) {
                 _transactionManager.Cancel();
                 return View(model);

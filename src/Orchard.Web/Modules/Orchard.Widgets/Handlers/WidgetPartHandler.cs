@@ -13,6 +13,7 @@ namespace Orchard.Widgets.Handlers {
             Filters.Add(StorageFilter.For(widgetsRepository));
 
             OnInitializing<WidgetPart>((context, part) => part.RenderTitle = true);
+            OnIndexing<TitlePart>((context, part) => context.DocumentIndex.Add("title", part.Title).RemoveTags().Analyze());
         }
 
         protected override void GetItemMetadata(GetContentItemMetadataContext context) {

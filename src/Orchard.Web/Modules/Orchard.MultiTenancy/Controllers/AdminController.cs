@@ -9,6 +9,7 @@ using Orchard.MultiTenancy.Services;
 using Orchard.MultiTenancy.ViewModels;
 using Orchard.Security;
 using Orchard.UI.Notify;
+using Orchard.Utility.Extensions;
 
 namespace Orchard.MultiTenancy.Controllers {
     [ValidateInput(false)]
@@ -51,17 +52,11 @@ namespace Orchard.MultiTenancy.Controllers {
 
         [HttpPost, ActionName("Add")]
         public ActionResult AddPOST(TenantAddViewModel viewModel) {
-            if (!Services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Couldn't create tenant"))) {
+            if (!Services.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Couldn't create tenant")))
                 return new HttpUnauthorizedResult();
-            }
 
-            if (!EnsureDefaultTenant()) {
+            if (!EnsureDefaultTenant())
                 return new HttpUnauthorizedResult();
-            }
-
-            if (_tenantService.GetTenants().Any(tenant => string.Equals(tenant.Name, viewModel.Name, StringComparison.OrdinalIgnoreCase))) {
-                ModelState.AddModelError("Name", T("A tenant with the same name already exists.", viewModel.Name).Text);
-            }
 
             // ensure tenants name are valid
             if (!String.IsNullOrEmpty(viewModel.Name) && !Regex.IsMatch(viewModel.Name, @"^\w+$")) {

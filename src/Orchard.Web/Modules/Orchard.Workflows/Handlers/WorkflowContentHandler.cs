@@ -33,17 +33,9 @@ namespace Orchard.Workflows.Handlers {
                     () => new Dictionary<string, object> { { "Content", context.ContentItem } }));
 
             OnUpdated<ContentPart>(
-                (context, part) => {
-                    if(context.ContentItemRecord == null) {
-                        return;
-                    }
-
-                    workflowManager.TriggerEvent(
-                        "ContentUpdated",
-                        context.ContentItem,
-                        () => new Dictionary<string, object> { { "Content", context.ContentItem } }
-                    );
-                });
+                (context, part) =>
+                    workflowManager.TriggerEvent("ContentUpdated", context.ContentItem,
+                    () => new Dictionary<string, object> { { "Content", context.ContentItem } }));
         }
     }
 }

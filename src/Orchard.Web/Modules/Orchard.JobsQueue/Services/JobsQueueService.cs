@@ -21,12 +21,11 @@ namespace Orchard.JobsQueue.Services {
                 Parameters = JsonConvert.SerializeObject(parameters),
                 Message = message,
                 CreatedUtc = _clock.UtcNow,
-                Priority = priority
             };
 
             _messageRepository.Create(queuedJob);
 
             return queuedJob;
         }
-    }
+   }
 }

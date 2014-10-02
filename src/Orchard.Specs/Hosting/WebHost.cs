@@ -195,7 +195,6 @@ namespace Orchard.Specs.Hosting {
 
             sourceModule.ShallowCopy("*.txt", targetModule);
             sourceModule.ShallowCopy("*.info", targetModule);
-            sourceModule.ShallowCopy("*.config", targetModule);
 
             if ((deploymentOptions & ExtensionDeploymentOptions.SourceCode) == ExtensionDeploymentOptions.SourceCode) {
                 sourceModule.ShallowCopy("*.csproj", targetModule);
@@ -208,8 +207,6 @@ namespace Orchard.Specs.Hosting {
 
             if (sourceModule.Combine("Views").IsDirectory)
                 sourceModule.Combine("Views").DeepCopy(targetModule.Combine("Views"));
-
-            // don't copy content folders as they are useless in this headless scenario
         }
 
         public void CopyFile(string source, string destination) {

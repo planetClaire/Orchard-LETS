@@ -15,9 +15,11 @@ namespace Orchard.FileSystems.Dependencies {
     /// </summary>
     public class DynamicModuleVirtualPathProvider : VirtualPathProvider, ICustomVirtualPathProvider {
         private readonly IExtensionDependenciesManager _extensionDependenciesManager;
+        private readonly IEnumerable<IExtensionLoader> _loaders;
 
-        public DynamicModuleVirtualPathProvider(IExtensionDependenciesManager extensionDependenciesManager) {
+        public DynamicModuleVirtualPathProvider(IExtensionDependenciesManager extensionDependenciesManager, IEnumerable<IExtensionLoader> loaders) {
             _extensionDependenciesManager = extensionDependenciesManager;
+            _loaders = loaders;
             Logger = NullLogger.Instance;
         }
 

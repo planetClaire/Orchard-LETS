@@ -6,8 +6,7 @@
 Scenario: I can edit a default layer
     Given I have installed Orchard
     When I go to "Admin/Widgets"
-    Then I should see "<h1[^>]*>Widgets[^>]*>"
-    When I follow "Edit"
+        And I follow "Edit"
     Then I should see "<input[^>]*name="LayerPart.Name"[^>]*value="Default"[^>]*>"
     When I fill in
             | name | value |

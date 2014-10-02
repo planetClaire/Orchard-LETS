@@ -66,22 +66,20 @@ namespace Orchard.Tokens.Providers {
                 return String.Empty;
             }
 
-            int index = param.IndexOf(',');
-            int limit = index == -1 ? Int32.Parse(param) : Int32.Parse(param.Substring(0, index));
+            var index = param.IndexOf(',');
 
-            if (token.Length <= limit) {
-                // no limit
-                return token;
-            }
+            // no ellipsis
             if (index == -1) {
-                // no ellipsis
-                return token.Substring(0, limit);
+                var limit = Int32.Parse(param);
+                token = token.Substring(0, limit);
             }
             else {
-                // ellipsis
+                var limit = Int32.Parse(param.Substring(0, index));
                 var ellipsis = param.Substring(index + 1);
-                return token.Substring(0, limit) + ellipsis;
+                token = token.Substring(0, limit) + ellipsis;
             }
+
+            return token;
         }
 
     }

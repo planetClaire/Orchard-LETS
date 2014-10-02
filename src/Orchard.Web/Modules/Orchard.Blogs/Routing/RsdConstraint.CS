@@ -39,7 +39,6 @@ namespace Orchard.Blogs.Routing {
                     routeValues["action"] == "Item"
                     ;
 
-                return isBlog;
             }
 
             return false;

@@ -114,10 +114,6 @@ namespace Orchard.Mvc {
             public override Cache Cache {
                 get { return HttpRuntime.Cache; }
             }
-
-            public override object GetService(Type serviceType) {
-                return null;
-            }
         }
 
         private class HttpResponsePlaceholder : HttpResponseBase {

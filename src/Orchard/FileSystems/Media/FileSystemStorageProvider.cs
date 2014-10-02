@@ -298,10 +298,6 @@ namespace Orchard.FileSystems.Media {
         /// <returns>True if success; False otherwise.</returns>
         public bool TrySaveStream(string path, Stream inputStream) {
             try {
-                if (FileExists(path)) {
-                    return false;
-                }
-
                 SaveStream(path, inputStream);
             }
             catch {

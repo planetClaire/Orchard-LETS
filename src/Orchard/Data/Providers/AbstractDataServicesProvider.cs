@@ -54,9 +54,7 @@ namespace Orchard.Data.Providers {
                                     .SetProperty(NHibernate.Cfg.Environment.StatementFetchSize, "100")
                                     .SetProperty(NHibernate.Cfg.Environment.UseProxyValidator, Boolean.FalseString)
                                     .SetProperty(NHibernate.Cfg.Environment.UseSqlComments, Boolean.FalseString)
-                                    .SetProperty(NHibernate.Cfg.Environment.WrapResultSets, Boolean.TrueString)
-                                    .SetProperty(NHibernate.Cfg.Environment.BatchSize, "256")
-                                    ;
+                                    .SetProperty(NHibernate.Cfg.Environment.WrapResultSets, Boolean.TrueString);
 
                                cfg.EventListeners.LoadEventListeners = new ILoadEventListener[] {new OrchardLoadEventListener()};
                                cfg.EventListeners.PostLoadEventListeners = new IPostLoadEventListener[0];
@@ -91,7 +89,6 @@ namespace Orchard.Data.Providers {
                 .Conventions.Setup(x => x.Add(AutoImport.Never()))
                 .Conventions.Add(new RecordTableNameConvention(recordDescriptors))
                 .Conventions.Add(new CacheConventions(recordDescriptors))
-                .Conventions.Add(new UtcDateTimeConvention())
                 .Alterations(alt => {
                     foreach (var recordAssembly in recordDescriptors.Select(x => x.Type.Assembly).Distinct()) {
                         alt.Add(new AutoMappingOverrideAlteration(recordAssembly));

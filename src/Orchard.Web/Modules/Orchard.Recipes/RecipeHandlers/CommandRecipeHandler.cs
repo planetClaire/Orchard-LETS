@@ -67,9 +67,8 @@ namespace Orchard.Recipes.RecipeHandlers  {
             };
 
             foreach (var arg in args) {
-                if (arg.StartsWith("/")) {
-                    //If arg is not empty and starts with '/'
-
+                // Switch?
+                if (arg[0] == '/') {
                     int index = arg.IndexOf(':');
                     var switchName = (index < 0 ? arg.Substring(1) : arg.Substring(1, index - 1));
                     var switchValue = (index < 0 || index >= arg.Length ? string.Empty : arg.Substring(index + 1));

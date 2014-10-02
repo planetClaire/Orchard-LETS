@@ -2,7 +2,6 @@
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Core.Common.Models;
-using Orchard.Core.Common.Utilities;
 using Orchard.Core.Common.ViewModels;
 using Orchard.Localization;
 using Orchard.Localization.Services;
@@ -52,11 +51,7 @@ namespace Orchard.Core.Common.DateEditor {
 
                         var itemHasNeverBeenPublished = part.PublishedUtc == null;
                         var thisIsTheInitialVersionRecord = part.ContentItem.Version < 2;
-
-                        // Dates are assumed the same if the millisecond part is the only difference.
-                        // This is because SqlCe doesn't support high precision times (Datetime2) and the infoset does
-                        // implying some discrepancies between values read from different storage mechanism.
-                        var theDatesHaveNotBeenModified = DateUtils.DatesAreEquivalent(part.CreatedUtc, part.VersionCreatedUtc);
+                        var theDatesHaveNotBeenModified = part.CreatedUtc == part.VersionCreatedUtc;
 
                         var theEditorShouldBeBlank =
                             itemHasNeverBeenPublished &&
@@ -76,6 +71,7 @@ namespace Orchard.Core.Common.DateEditor {
                             try {
                                 var utcDateTime = _dateServices.ConvertFromLocalString(model.Editor.Date, model.Editor.Time);
                                 part.CreatedUtc = utcDateTime;
+                                part.VersionCreatedUtc = utcDateTime;
                             }
                             catch (FormatException) {
                                 updater.AddModelError(Prefix, T("'{0} {1}' could not be parsed as a valid date and time.", model.Editor.Date, model.Editor.Time));
@@ -91,6 +87,5 @@ namespace Orchard.Core.Common.DateEditor {
                     return model;
                 });
         }
-
     }
 }

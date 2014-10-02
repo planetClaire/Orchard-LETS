@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using Microsoft.ApplicationServer.Caching;
 using Orchard.Azure.Services.Environment.Configuration;
 using Orchard.Caching;
@@ -123,27 +122,12 @@ namespace Orchard.Azure.Services.Caching.Output {
                 return function.Invoke();
             }
             catch (DataCacheException) {
-                // applying http://blogs.msdn.com/b/cie/archive/2014/04/29/cache-retry-fails-what-next.aspx
-                try {
-                    DataCacheFactory cacheFactory;
-                    Logger.Debug("Retrying cache operation");
-                    if (_dataCacheFactories.TryRemove(CacheConfiguration, out cacheFactory)) {
-                        lock (_dataCacheFactories) {
-                            cacheFactory.Dispose();
-                            // Clear DataCacheFactory._connectionPool
-                            var coreAssembly = typeof(DataCacheItem).Assembly;
-                            var simpleSendReceiveModulePoolType = coreAssembly.
-                                GetType("Microsoft.ApplicationServer.Caching.SimpleSendReceiveModulePool", throwOnError: true);
-                            var connectionPoolField = typeof(DataCacheFactory).GetField("_connectionPool", BindingFlags.Static | BindingFlags.NonPublic);
-                            connectionPoolField.SetValue(null, Activator.CreateInstance(simpleSendReceiveModulePoolType));
-                        }
-                    }
-                    return Retry(function, times--);
+                DataCacheFactory cacheFactory;
+                Logger.Debug("Retrying cache operation");
+                if (_dataCacheFactories.TryRemove(CacheConfiguration, out cacheFactory)) {
+                    cacheFactory.Dispose();
                 }
-                catch (Exception e) {
-                    Logger.Error(e, "An unexpected error occured while releasing a DataCacheFactory.");
-                    return default(T);
-                }
+                return Retry(function, times--);
             }
         } 
 

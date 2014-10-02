@@ -53,7 +53,7 @@ var Orchard;
 
                             // "Raw" asset video file URLs from dynamic assets (in decending bitrate order).
                             _(this.assetData.DynamicVideoAssets).forEach(function (asset) {
-                                _((asset.EncoderMetadata && asset.EncoderMetadata.AssetFiles) || []).filter(function (assetFile) {
+                                _(asset.EncoderMetadata.AssetFiles).filter(function (assetFile) {
                                     return _(assetFile.VideoTracks).any();
                                 }).sort(function (assetFile) {
                                     return assetFile.Bitrate;
@@ -111,7 +111,7 @@ var Orchard;
                             _super.prototype.debug.call(this, "Html5Injector: " + message, args);
                         };
                         return Html5Injector;
-                    })(Injectors.Injector);
+                    })(Orchard.Azure.MediaServices.VideoPlayer.Injectors.Injector);
                     Injectors.Html5Injector = Html5Injector;
                 })(VideoPlayer.Injectors || (VideoPlayer.Injectors = {}));
                 var Injectors = VideoPlayer.Injectors;

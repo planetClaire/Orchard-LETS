@@ -284,14 +284,11 @@ namespace Orchard.ContentTypes.Controllers {
             if (typeViewModel == null)
                 return HttpNotFound();
 
-            var typePartNames = new HashSet<string>(typeViewModel.Parts.Select(tvm => tvm.PartDefinition.Name));
-
             var viewModel = new AddPartsViewModel {
                 Type = typeViewModel,
                 PartSelections = _contentDefinitionService.GetParts(false/*metadataPartsOnly*/)
-                    .Where(cpd => !typePartNames.Contains(cpd.Name) && cpd.Settings.GetModel<ContentPartSettings>().Attachable)
-                    .Select(cpd => new PartSelectionViewModel { PartName = cpd.Name, PartDisplayName = cpd.DisplayName, PartDescription = cpd.Description })
-                    .ToList()
+                    .Where(cpd => !typeViewModel.Parts.Any(p => p.PartDefinition.Name == cpd.Name) && cpd.Settings.GetModel<ContentPartSettings>().Attachable)
+                    .Select(cpd => new PartSelectionViewModel { PartName = cpd.Name, PartDisplayName = cpd.DisplayName, PartDescription = cpd.Description})
             };
 
             return View(viewModel);

@@ -2,6 +2,26 @@
 
     /* Helper functions
     **********************************************************************/
+    var parseTerms = function (text) {
+        var tuples = text.split(",");
+        var terms = [];
+
+        for (var i = 0; i < tuples.length; i++) {
+            var tuple = tuples[i].split("\t");
+            var value = parseInt(tuple[1]);
+            var levels = parseInt(tuple[2]);
+            var tag = {
+                label: tuple[0],
+                value: value,
+                levels: !isNaN(levels) ? levels : 0,
+                disabled: tuple[3] == "True"
+            };
+            terms.push(tag);
+        }
+
+        return terms;
+    };
+
     var addTag = function ($plugin, label) {
         $plugin.tagit("add", label);
     };
@@ -148,13 +168,13 @@
     /* Initialization
     **********************************************************************/
     $(".terms-editor").each(function () {
-        var allTerms = $(this).data("all-terms");
-        var selectedTerms = $(this).data("selected-terms");
+        var allTerms = parseTerms($(this).data("all-terms"));
+        var selectedTerms = parseTerms($(this).data("selected-terms"));
 
         var $tagit = $("> ul", this).tagit({
             tagSource: allTerms,
             initialTags: selectedTerms,
-            triggerKeys: ['enter', 'tab'], // default is ['enter', 'space', 'comma', 'tab'] but we remove comma and space to allow them in the terms
+            triggerKeys: ['enter', 'comma', 'tab'],
             allowNewTags: $(this).data("allow-new-terms"),
             tagsChanged: onTagsChanged,
             caseSensitive: false,

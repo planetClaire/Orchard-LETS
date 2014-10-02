@@ -19,20 +19,17 @@ namespace Orchard.Tags.Services {
         private readonly INotifier _notifier;
         private readonly IAuthorizationService _authorizationService;
         private readonly IOrchardServices _orchardServices;
-        private readonly ISessionFactoryHolder _sessionFactoryHolder;
 
         public TagService(IRepository<TagRecord> tagRepository,
                           IRepository<ContentTagRecord> contentTagRepository,
                           INotifier notifier,
                           IAuthorizationService authorizationService,
-                          IOrchardServices orchardServices,
-                          ISessionFactoryHolder sessionFactoryHolder) {
+                          IOrchardServices orchardServices) {
             _tagRepository = tagRepository;
             _contentTagRepository = contentTagRepository;
             _notifier = notifier;
             _authorizationService = authorizationService;
             _orchardServices = orchardServices;
-            _sessionFactoryHolder = sessionFactoryHolder;
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
         }
@@ -210,11 +207,6 @@ namespace Orchard.Tags.Services {
             }
 
             contentItem.As<TagsPart>().CurrentTags = tagNamesForContentItem;
-
-            var sessionFactory = _sessionFactoryHolder.GetSessionFactory();
-
-            if (sessionFactory != null)
-                sessionFactory.EvictCollection("Orchard.Tags.Models.TagsPartRecord.Tags", contentItem.As<TagsPart>().Record.Id);
         }
     }
 

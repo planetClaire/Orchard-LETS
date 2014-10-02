@@ -87,7 +87,7 @@ var Orchard;
                             _super.prototype.debug.call(this, "SmpInjector: " + message, args);
                         };
                         return SmpInjector;
-                    })(Injectors.Injector);
+                    })(Orchard.Azure.MediaServices.VideoPlayer.Injectors.Injector);
                     Injectors.SmpInjector = SmpInjector;
 
                     function onSmpBridgeCreated(playerElementId) {

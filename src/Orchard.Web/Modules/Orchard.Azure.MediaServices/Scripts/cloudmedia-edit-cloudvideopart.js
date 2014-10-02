@@ -13,9 +13,9 @@ var Orchard;
                     var corsSupported = hasCorsSupport();
 
                     if (corsSupported) {
-                        CloudVideoEdit.initializeUploadDirect();
+                        Orchard.Azure.MediaServices.CloudVideoEdit.initializeUploadDirect();
                     } else {
-                        CloudVideoEdit.initializeUploadProxied();
+                        Orchard.Azure.MediaServices.CloudVideoEdit.initializeUploadProxied();
                     }
 
                     var localStorage = window["localStorage"];

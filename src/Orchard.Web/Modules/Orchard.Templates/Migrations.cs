@@ -14,7 +14,8 @@ namespace Orchard.Templates {
                 .WithPart("CommonPart")
                 .WithPart("IdentityPart")
                 .WithPart("TitlePart")
-                .WithPart("ShapePart")
+                .WithPart("ShapePart", p => p
+                    .WithSetting("ShapePartSettings.Processor", "Razor"))
                 .Draftable());
             return 1;
         }

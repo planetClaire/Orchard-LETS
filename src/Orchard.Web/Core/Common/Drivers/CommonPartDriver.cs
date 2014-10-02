@@ -51,6 +51,11 @@ namespace Orchard.Core.Common.Drivers {
         }
 
         protected override DriverResult Editor(CommonPart part, IUpdateModel updater, dynamic shapeHelper) {
+            var currentUser = _authenticationService.GetAuthenticatedUser();
+            if (!_authorizationService.TryCheckAccess(StandardPermissions.SiteOwner, currentUser, part)) {
+                return null;
+            }
+
             var model = new ContainerEditorViewModel();
             if (part.Container != null)
                 model.ContainerId = part.Container.ContentItem.Id;

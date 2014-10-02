@@ -137,25 +137,28 @@
             var _this = $(this);
             var _controllees = $("[data-controllerid=" + _this.attr("id") + "]");
 
+            var hide = true;
+
+
             _controllees.each(function () {
                 var _controllee = $(this);
+                var hidden = _controllee.attr("data-defaultstate") == "hidden";
+                var _controlleeIsHidden = _controllee.is(":hidden");
 
-                var hiddenByDefault = _controllee.attr("data-defaultstate") == "hidden";
-                var checkedOrSelected = _this.is(":checked") || _this.is(":selected");
+                if (_this.is(":checked") || _this.is(":selected")) {
+                    hide = hidden;
+                }
+                else {
+                    hide = !hidden;
+                }
 
-                if (checkedOrSelected) {
-                    if (!hiddenByDefault) {
+                if (!hide) {
+                    if (_controlleeIsHidden) {
                         _controllee.hide().show(); // <- unhook this when the following comment applies
-                        // _controllees.slideUp(200); // <- hook this back up when chrome behaves, or when I care less...or when chrome behaves
-                    } else {
-                        _controllee.hide();
                     }
-                } else {
-                    if (!hiddenByDefault) {
-                        _controllee.hide();
-                    } else {
-                        _controllee.show();
-                    }
+                } else if (!_controlleeIsHidden) {
+                    // _controllees.slideUp(200); // <- hook this back up when chrome behaves, or when I care less...or when chrome behaves
+                    _controllee.hide()
                 }
             });
 
@@ -172,16 +175,26 @@
                 return;
             }
             controller.data("isControlling", 1);
+            if (!controller.is(":checked") && !controller.is(":selected")) {
+                $("[data-controllerid=" + controller.attr("id") + "]").hide();
+            }
             if (controller.is(":checkbox")) {
-                controller.click($(this).toggleWhatYouControl).each($(this).toggleWhatYouControl);
+                controller.click($(this).toggleWhatYouControl);
             } else if (controller.is(":radio")) {
                 $("[name=" + controller.attr("name") + "]").click(function () { $("[name=" + $(this).attr("name") + "]").each($(this).toggleWhatYouControl); });
             }
             else if (controller.is("option")) {
                 controller.parent().change(function () {
                     controller.toggleWhatYouControl();
-                }).each($(this).toggleWhatYouControl);
+                });
             }
+
+            // if data-defaultstate is 'hidden' hide it by default
+            var hidden = $(this).attr("data-defaultstate") == "hidden";
+            if (hidden) {
+                $(this).hide();
+            }
+
         });
     });
     // inline form link buttons (form.inline.link button) swapped out for a link that submits said form

@@ -7,7 +7,6 @@ using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Security;
-using System.Configuration;
 
 namespace Orchard.Email.Handlers {
     [UsedImplicitly]
@@ -48,8 +47,6 @@ namespace Orchard.Email.Handlers {
                 var encryptedPassword = String.IsNullOrWhiteSpace(value) ? String.Empty : Convert.ToBase64String(_encryptionService.Encode(Encoding.UTF8.GetBytes(value)));
                 part.Store(x => x.Password, encryptedPassword);
             });
-
-            part.AddressPlaceholderField.Loader(value => (string)((dynamic)ConfigurationManager.GetSection("system.net/mailSettings/smtp")).From);
         }
 
         public Localizer T { get; set; }

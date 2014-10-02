@@ -2,9 +2,9 @@
 AntiForgery: enabled
 Author: The Orchard Team
 Website: http://orchardproject.net
-Version: 1.8.1
+Version: 1.8
 OrchardVersion: 1.8
-Description: The roles module is adding the ability to assign roles to users. It's also providing a set of default roles for which other modules can define default permissions.
+Description: Provides anti-spam services to protect your content from malicious submissions.
 Features:
     Orchard.Roles:
 		Name: Roles
@@ -13,6 +13,6 @@ Features:
 		Dependencies: Orchard.Users
 	Orchard.Roles.Workflows:
 		Name: Roles Workflows Activities
-        Description: Provides a role based activities.
+        Description: Provides an anti-spam filter based on Akismet.
 		Category: Workflows
-		Dependencies: Orchard.Roles, Orchard.Workflows
+		Dependencies: Orchard.Workflows

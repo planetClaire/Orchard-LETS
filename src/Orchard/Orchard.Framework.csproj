@@ -107,8 +107,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http">
-      <Private>True</Private>
+    <Reference Include="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -175,7 +175,6 @@
     <Compile Include="ContentManagement\Utilities\ComputedField.cs" />
     <Compile Include="Data\AbstractSessionInterceptor.cs" />
     <Compile Include="Data\Bags\SArray.cs" />
-    <Compile Include="Data\Conventions\UtcDateTimeConvention.cs" />
     <Compile Include="Data\FetchRequest.cs" />
     <Compile Include="Data\Migration\Interpreters\MySqlCommandInterpreter.cs" />
     <Compile Include="Data\Providers\MySqlStatementProvider.cs" />
@@ -212,7 +211,6 @@
     <Compile Include="DisplayManagement\Implementation\IShapeDisplayEvents.cs" />
     <Compile Include="DisplayManagement\Implementation\IShapeFactoryEvents.cs" />
     <Compile Include="DisplayManagement\INamedEnumerable.cs" />
-    <Compile Include="DisplayManagement\IShapeBindingResolver.cs" />
     <Compile Include="DisplayManagement\IShapeDisplay.cs" />
     <Compile Include="DisplayManagement\ShapeDisplay.cs" />
     <Compile Include="DisplayManagement\Shapes\Composite.cs" />
@@ -261,7 +259,6 @@
     <Compile Include="FileSystems\Media\ConfigurationMimeTypeProvider.cs" />
     <Compile Include="FileSystems\Media\FileSystemStorageProvider.cs" />
     <Compile Include="FileSystems\Media\IMimeTypeProvider.cs" />
-    <Compile Include="FileSystems\Media\StorageProviderExtensions.cs" />
     <Compile Include="Indexing\ISearchBits.cs" />
     <Compile Include="Localization\Services\CurrentCalendarWorkContext.cs" />
     <Compile Include="Localization\Services\CurrentCultureWorkContext.cs" />

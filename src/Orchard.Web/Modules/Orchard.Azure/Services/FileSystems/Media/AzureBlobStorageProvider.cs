@@ -23,10 +23,6 @@ namespace Orchard.Azure.Services.FileSystems.Media {
 
         public bool TrySaveStream(string path, Stream inputStream) {
             try {
-                if (FileExists(path)) {
-                    return false;
-                }
-
                 SaveStream(path, inputStream);
             }
             catch {

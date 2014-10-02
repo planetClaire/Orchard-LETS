@@ -49,20 +49,18 @@ namespace Orchard.Core.Common.Handlers {
             OnPublishing<CommonPart>(AssignPublishingDates);
 
             OnIndexing<CommonPart>((context, commonPart) => {
-                var utcNow = _clock.UtcNow;
-
                 context.DocumentIndex
                     .Add("type", commonPart.ContentItem.ContentType).Store()
-                    .Add("created", commonPart.CreatedUtc ?? utcNow).Store()
-                    .Add("published", commonPart.PublishedUtc ?? utcNow).Store()
-                    .Add("modified", commonPart.ModifiedUtc ?? utcNow).Store();
+                    .Add("created", commonPart.CreatedUtc ?? _clock.UtcNow).Store()
+                    .Add("published", commonPart.PublishedUtc ?? _clock.UtcNow).Store()
+                    .Add("modified", commonPart.ModifiedUtc ?? _clock.UtcNow).Store();
 
                 if (commonPart.Container != null) {
                     context.DocumentIndex.Add("container-id", commonPart.Container.Id).Store();
                 }
 
                 if (commonPart.Owner != null) {
-                    context.DocumentIndex.Add("author", commonPart.Owner.UserName).Store();
+                    context.DocumentIndex.Add("author", commonPart.Owner.UserName).Analyze().Store();
                 }
             });
         }
@@ -95,7 +93,6 @@ namespace Orchard.Core.Common.Handlers {
         protected void AssignCreatingDates(InitializingContentContext context, CommonPart part) {
             // assign default create/modified dates
             var utcNow = _clock.UtcNow;
-
             part.CreatedUtc = utcNow;
             part.ModifiedUtc = utcNow;
             part.VersionCreatedUtc = utcNow;
@@ -104,7 +101,6 @@ namespace Orchard.Core.Common.Handlers {
 
         private void AssignUpdateDates(UpdateEditorContext context, CommonPart part) {
             var utcNow = _clock.UtcNow;
-
             part.ModifiedUtc = utcNow;
             part.VersionModifiedUtc = utcNow;
         }
@@ -120,17 +116,16 @@ namespace Orchard.Core.Common.Handlers {
             building.VersionPublishedUtc = null;
 
             // assign the created
-            building.CreatedUtc = existing.CreatedUtc ?? utcNow;
+            building.CreatedUtc = existing.CreatedUtc ?? _clock.UtcNow;
             // persist any published dates
             building.PublishedUtc = existing.PublishedUtc;
             // assign modified date for the new version
-            building.ModifiedUtc = utcNow;
+            building.ModifiedUtc = _clock.UtcNow;
         }
 
 
         protected void AssignPublishingDates(PublishContentContext context, CommonPart part) {
             var utcNow = _clock.UtcNow;
-            
             part.PublishedUtc = utcNow;
             part.VersionPublishedUtc = utcNow;
         }

@@ -4,7 +4,6 @@ using Orchard.ContentManagement;
 using Orchard.Core.Containers.Models;
 using Orchard.Core.Containers.Services;
 using Orchard.Localization;
-using Orchard.Security;
 using Orchard.UI.Navigation;
 using Orchard.Utility.Extensions;
 
@@ -12,19 +11,10 @@ namespace Orchard.Lists {
     public class AdminMenu : INavigationProvider {
         private readonly IContainerService _containerService;
         private readonly IContentManager _contentManager;
-        private readonly IAuthorizationService _authorizationService;
-        private readonly IWorkContextAccessor _workContextAccessor;
-
-        public AdminMenu(
-            IContainerService containerService, 
-            IContentManager contentManager,
-            IAuthorizationService authorizationService, 
-            IWorkContextAccessor workContextAccessor
-            ) {
+        
+        public AdminMenu(IContainerService containerService, IContentManager contentManager) {
             _containerService = containerService;
             _contentManager = contentManager;
-            _authorizationService = authorizationService;
-            _workContextAccessor = workContextAccessor;
         }
 
         public Localizer T { get; set; }
@@ -39,17 +29,12 @@ namespace Orchard.Lists {
 
         private void CreateListManagementMenuItem(NavigationBuilder builder) {
             builder.Add(T("Lists"), "11", item => item
-                .Action("Index", "Admin", new {area = "Orchard.Lists"}).Permission(Permissions.ManageLists)
+                .Action("Index", "Admin", new {area = "Orchard.Lists"})
             );
         }
 
         private void CreateListMenuItems(NavigationBuilder builder) {
-            var containers = _containerService
-                .GetContainersQuery(VersionOptions.Latest)
-                .Where<ContainerPartRecord>(x => x.ShowOnAdminMenu)
-                .List()
-                .Where(x => _authorizationService.TryCheckAccess(Orchard.Core.Contents.Permissions.EditContent, _workContextAccessor.GetContext().CurrentUser, x))
-                .ToList();
+            var containers = _containerService.GetContainersQuery(VersionOptions.Latest).Where<ContainerPartRecord>(x => x.ShowOnAdminMenu).List().ToList();
 
             foreach (var container in containers) {
                 var closureContainer = container;

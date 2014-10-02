@@ -38,7 +38,7 @@ namespace Orchard.Environment {
             IExtensionLoaderCoordinator extensionLoaderCoordinator,
             IExtensionMonitoringCoordinator extensionMonitoringCoordinator,
             ICacheManager cacheManager,
-            IHostLocalRestart hostLocalRestart) {
+            IHostLocalRestart hostLocalRestart ) {
             _shellSettingsManager = shellSettingsManager;
             _shellContextFactory = shellContextFactory;
             _runningShellTable = runningShellTable;
@@ -90,10 +90,8 @@ namespace Orchard.Environment {
 
             MonitorExtensions();
             BuildCurrent();
-
             var shellContext = CreateShellContext(shellSettings);
-            var workContext = shellContext.LifetimeScope.CreateWorkContextScope();
-            return new StandaloneEnvironmentWorkContextScopeWrapper(workContext, shellContext);
+            return shellContext.LifetimeScope.CreateWorkContextScope();
         }
 
         /// <summary>
@@ -155,17 +153,17 @@ namespace Orchard.Environment {
         /// Starts a Shell and registers its settings in RunningShellTable
         /// </summary>
         private void ActivateShell(ShellContext context) {
-            Logger.Debug("Activating context for tenant {0}", context.Settings.Name);
+            Logger.Debug("Activating context for tenant {0}", context.Settings.Name); 
             context.Shell.Activate();
 
             _shellContexts = (_shellContexts ?? Enumerable.Empty<ShellContext>())
                             .Where(c => c.Settings.Name != context.Settings.Name)
                             .Concat(new[] { context })
-                            .ToArray();
-
+                            .ToArray(); 
+            
             _runningShellTable.Add(context.Settings);
         }
-
+        
         /// <summary>
         /// Creates a transient shell for the default tenant's setup
         /// </summary>
@@ -216,7 +214,7 @@ namespace Orchard.Environment {
                     if (_shellContexts != null) {
                         foreach (var shellContext in _shellContexts) {
                             shellContext.Shell.Terminate();
-                            shellContext.Dispose();
+                            shellContext.LifetimeScope.Dispose();
                         }
                     }
                 }
@@ -277,25 +275,22 @@ namespace Orchard.Environment {
             // terminate the shell if the tenant was disabled
             else if (settings.State == TenantState.Disabled) {
                 shellContext.Shell.Terminate();
+                shellContext.LifetimeScope.Dispose();
                 _runningShellTable.Remove(settings);
 
-                // Forcing enumeration with ToArray() so a lazy execution isn't causing issues by accessing the disposed context.
-                _shellContexts = _shellContexts.Where(shell => shell.Settings.Name != settings.Name).ToArray();
-
-                shellContext.Dispose();
+                _shellContexts = _shellContexts.Where(shell => shell.Settings.Name != settings.Name);
             }
             // reload the shell as its settings have changed
             else {
                 // dispose previous context
                 shellContext.Shell.Terminate();
+                shellContext.LifetimeScope.Dispose();
 
                 var context = _shellContextFactory.CreateShellContext(settings);
 
-                // Sctivate and register modified context.
-                // Forcing enumeration with ToArray() so a lazy execution isn't causing issues by accessing the disposed shell context.
-                _shellContexts = _shellContexts.Where(shell => shell.Settings.Name != settings.Name).Union(new[] { context }).ToArray();
+                // activate and register modified context
+                _shellContexts = _shellContexts.Where(shell => shell.Settings.Name != settings.Name).Union(new[] { context });
 
-                shellContext.Dispose();
                 context.Shell.Activate();
 
                 _runningShellTable.Update(settings);
@@ -330,34 +325,6 @@ namespace Orchard.Environment {
 
             Logger.Debug("Adding tenant to restart: " + tenant);
             _tenantsToRestart.GetState().Add(context.Settings);
-        }
-
-        // To be used from CreateStandaloneEnvironment(), also disposes the ShellContext LifetimeScope.
-        private class StandaloneEnvironmentWorkContextScopeWrapper : IWorkContextScope {
-            private readonly ShellContext _shellContext;
-            private readonly IWorkContextScope _workContextScope;
-
-            public WorkContext WorkContext {
-                get { return _workContextScope.WorkContext; }
-            }
-
-            public StandaloneEnvironmentWorkContextScopeWrapper(IWorkContextScope workContextScope, ShellContext shellContext) {
-                _workContextScope = workContextScope;
-                _shellContext = shellContext;
-            }
-
-            public TService Resolve<TService>() {
-                return _workContextScope.Resolve<TService>();
-            }
-
-            public bool TryResolve<TService>(out TService service) {
-                return _workContextScope.TryResolve<TService>(out service);
-            }
-
-            public void Dispose() {
-                _workContextScope.Dispose();
-                _shellContext.Dispose();
-            }
         }
     }
 }
