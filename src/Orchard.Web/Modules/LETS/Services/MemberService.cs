@@ -5,12 +5,14 @@ using JetBrains.Annotations;
 using LETS.Helpers;
 using LETS.Models;
 using LETS.ViewModels;
+using NHibernate.Linq;
 using NogginBox.MailChimp.Models;
 using NogginBox.MailChimp.Services;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
+using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.Environment;
 using Orchard.Roles.Models;
@@ -166,25 +168,6 @@ namespace LETS.Services
         }
 
 
-        //public MemberViewModel GetMemberViewModel(MemberPart memberPart, MemberAdminPart memberAdminPart, AddressPart addressPart)
-        //{
-        //    return new MemberViewModel
-        //    {
-        //        Id = memberPart.Id,
-        //        UserName = memberPart.As<IUser>().UserName,
-        //        JoinDate = memberAdminPart.JoinDate != null ? (DateTime)memberAdminPart.JoinDate : DateTime.MinValue,
-        //        Balance = GetMemberBalance(memberPart.Id),
-        //        Turnover = GetMemberTurnover(memberPart.Id),
-        //        Email = memberPart.User.Email,
-        //        Fields = memberPart.Fields,
-        //        FirstName = memberPart.FirstName,
-        //        LastName = memberPart.LastName,
-        //        LastFirstName = string.Format("{0}, {1}", memberPart.LastName, memberPart.FirstName),
-        //        Telephone = memberPart.Telephone,
-        //        Locality = addressPart.Locality != null ? _addressService.GetLocality(addressPart.Locality.Id).Title : null
-        //    };
-        //}
-
         public MemberPart GetMember(int idMember)
         {
             return _contentManager.Get<MemberPart>(idMember);
@@ -225,47 +208,35 @@ namespace LETS.Services
 
         public IEnumerable<MemberViewModel> GetMemberList(MemberType memberType) {
             return _cacheManager.Get(string.Format("letsMemberList{0}", memberType), ctx => {
-                                                           ctx.Monitor(_signals.When("letsMemberListChanged"));
-                                                           var session = _sessionLocator.Value.For(null);
-                                                           var turnoverDays = _orchardServices.WorkContext.CurrentSite.As<LETSSettingsPart>().DefaultTurnoverDays;
-                                                           // direct query for performance sake (todo stored procedure?)
-                                                           var query = session.CreateSQLQuery(string.Format(@"
-                    SELECT m.Id
-                          ,u.Email
-                          ,ma.JoinDate
-                          ,(SELECT dbo.LETS_CalculateMemberBalance(m.id)) as 'Balance'
-                          ,(SELECT dbo.LETS_CalculateMemberTurnover(m.id, {0})) as 'Turnover'
-                          ,m.FirstName
-                          ,m.LastName
-                          ,m.Telephone
-                          ,l.Id as 'IdLocality'
-                          ,(select top 1 Title from  Title_TitlePartRecord where ContentItemRecord_id = l.Id) as 'Locality'
-                      FROM LETS_MemberPartRecord m
-                      join Orchard_Users_UserPartRecord u on u.Id = m.Id
-                      join LETS_MemberAdminPartRecord ma on ma.Id = m.Id
-                      join LETS_AddressPartRecord a on a.Id = m.Id
-                      join LETS_LocalityPartRecord l on l.Id = a.LocalityPartRecord_Id
-                      where ma.MemberType = '{1}'
-                      and u.EmailStatus = 'Approved'
-                      and u.RegistrationStatus = 'Approved'
-                ", turnoverDays, memberType));
-                                                           var list = query.List<object[]>()
-                                                               .Select(record => new MemberViewModel {
-                                                                   Id = (int) record[0],
-                                                                   UserName = (string) record[1],
-                                                                   JoinDate = (DateTime) record[2],
-                                                                   Balance = (int) record[3],
-                                                                   Turnover = (int) record[4],
-                                                                   FirstName = (string)record[5],
-                                                                   LastName = (string)record[6],
-                                                                   LastFirstName = string.Format("{0}, {1}", record[6], record[5]),
-                                                                   Telephone = (string) record[7],
-                                                                   IdLocality = (int)record[8],
-                                                                   Locality = (string)record[9]
-                                                               }
-                                                               ).ToList();
-                                                           return list;
-                                                       });
+                ctx.Monitor(_signals.When("letsMemberListChanged"));
+                var activeMembers = _contentManager
+                    .Query<UserPart, UserPartRecord>("User").Where(u => u.EmailStatus == UserStatus.Approved && u.RegistrationStatus == UserStatus.Approved)
+                    .Join<MemberAdminPartRecord>().Where(m => m.MemberType == memberType)
+                    .List();
+                var memberViewModels = new List<MemberViewModel>();
+                // do not convert this to a LINQ expression, it will cause lifetime exceptions in Orchard (because of the cache lambda)
+                foreach (var user in activeMembers) {
+                    var memberPart = user.As<MemberPart>();
+                    var memberAdminPart = user.As<MemberAdminPart>();
+                    var addressPart = user.As<AddressPart>();
+                    var locality = _contentManager.Get(addressPart.Locality.Id);
+                    memberViewModels.Add(new MemberViewModel
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        JoinDate = memberAdminPart.JoinDate.HasValue ? memberAdminPart.JoinDate.Value : DateTime.MinValue,
+                        Balance = GetMemberBalance(user.Id),
+                        Turnover = GetMemberTurnover(user.Id),
+                        FirstName = memberPart.FirstName,
+                        LastName = memberPart.LastName,
+                        LastFirstName = memberPart.LastFirstName,
+                        Telephone = memberPart.Telephone,
+                        IdLocality = addressPart.Locality.Id,
+                        Locality = locality != null ? locality.As<TitlePart>().Title : ""
+                    });
+                }
+                return memberViewModels;
+            });
         }
 
         public IEnumerable<GroupedSelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes) {
