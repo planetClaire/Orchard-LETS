@@ -9,7 +9,11 @@
     }
     
     var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
-    var author = ((UserPart) WorkContext.Resolve<IMembershipService>().GetUser(Model.ContentItem.CommonPart.Owner.UserName)).ContentItem.As<MemberPart>().FirstLastName;
+    var author = "";
+    var owner = Model.ContentItem.CommonPart.Owner;
+    if (owner != null) {
+        author = ((UserPart) WorkContext.Resolve<IMembershipService>().GetUser(owner.UserName)).ContentItem.As<MemberPart>().FirstLastName;
+    }
 }
 <article class="content-item @contentTypeClassName">
     <header class="page-header">
