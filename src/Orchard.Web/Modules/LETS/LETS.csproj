@@ -274,6 +274,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\MemberTransactionViewModel.cs" />
+    <Compile Include="Workflow\ContentUnpublishedActivity.cs" />
+    <Compile Include="Workflow\UnpublishHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Web.config" />
@@ -435,6 +437,10 @@
     <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
       <Project>{79AED36E-ABD0-4747-93D3-8722B042454B}</Project>
       <Name>Orchard.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Workflows\Orchard.Workflows.csproj">
+      <Project>{7059493C-8251-4764-9C1E-2368B8B485BC}</Project>
+      <Name>Orchard.Workflows</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
