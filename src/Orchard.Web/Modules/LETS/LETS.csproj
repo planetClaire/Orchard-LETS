@@ -126,6 +126,9 @@
     <Compile Include="Handlers\MemberLinksPartHandler.cs" />
     <Compile Include="Handlers\MembersMapPartHandler.cs" />
     <Compile Include="Helpers\JsonObject.cs" />
+    <Compile Include="Log4Net\ExceptionTypeFilter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\AuthNavigationWidgetPart.cs" />
     <Compile Include="Models\CommentsWidgetPart.cs" />
     <Compile Include="Models\CreditUsageRecord.cs" />
@@ -349,6 +352,10 @@
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\..\..\..\lib\autofac\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\log4net\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Dynamic">

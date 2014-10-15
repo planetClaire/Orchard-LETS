@@ -232,7 +232,7 @@ namespace LETS.Services
                         LastFirstName = memberPart.LastFirstName,
                         Telephone = memberPart.Telephone,
                         IdLocality = addressPart.Locality.Id,
-                        Locality = locality != null ? locality.As<TitlePart>().Title : ""
+                        Locality = locality != null ? locality.As<TitlePart>().Title : "na"
                     });
                 }
                 return memberViewModels;
