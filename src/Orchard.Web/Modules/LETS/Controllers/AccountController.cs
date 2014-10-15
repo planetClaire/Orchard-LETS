@@ -75,7 +75,6 @@ namespace LETS.Controllers
             if (usersRegisterResult is RedirectResult || usersRegisterResult is RedirectToRouteResult)
             {
                 // successful result, now update the new user with the parts
-                //_contentManager.Flush();
                 var newUser = _membershipService.GetUser(memberVM.Email);
                 if (newUser != null)
                 {
@@ -132,10 +131,6 @@ namespace LETS.Controllers
             }
 
             _authenticationService.SignIn(user, createPersistentCookie);
-            //foreach (var userEventHandler in _userEventHandlers)
-            //{
-            //    userEventHandler.LoggedIn(user);
-            //}
             _userEventHandlers.LoggedIn(user);
 
             return this.RedirectLocal(returnUrl);
@@ -231,11 +226,6 @@ namespace LETS.Controllers
             }
 
             _membershipService.SetPassword(user, newPassword);
-
-            //foreach (var userEventHandler in _userEventHandlers)
-            //{
-            //    userEventHandler.ChangedPassword(user);
-            //}
             _userEventHandlers.ChangedPassword(user);
 
             return RedirectToAction("ChangePasswordSuccessMember");

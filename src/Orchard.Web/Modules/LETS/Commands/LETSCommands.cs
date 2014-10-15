@@ -38,8 +38,6 @@ namespace LETS.Commands
         [OrchardSwitches("Title,SortOrder,RequiredCount")]
         public void Create()
         {
-            //_contentManager.Flush();
-
             var owner = _membershipService.GetUser(_siteService.GetSiteSettings().SuperUser);
             _authenticationService.SetAuthenticatedUserForRequest(owner);
 

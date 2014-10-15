@@ -9,34 +9,9 @@ namespace LETS
     [UsedImplicitly]
     public class Routes : IRouteProvider
     {
-        //private readonly ITermPathConstraint _termPathConstraint;
-
-        //public Routes(ITermPathConstraint termPathConstraint)
-        //{
-        //    _termPathConstraint = termPathConstraint;
-        //}
-
         public IEnumerable<RouteDescriptor> GetRoutes()
         {
             return new[] {
-                //new RouteDescriptor {
-                //    Priority = 100,
-                //    Route = new Route(
-                //        "{*termPath}",
-                //        new RouteValueDictionary {
-                //            {"area", "LETS"},
-                //            {"controller", "Notice"},
-                //            {"action", "TaxonomyItem"},
-                //            {"termPath", ""}
-                //        },
-                //        new RouteValueDictionary {
-                //                                    {"termPath", _termPathConstraint}
-                //                                },
-                //        new RouteValueDictionary {
-                //            {"area", "LETS"}
-                //        },
-                //        new MvcRouteHandler())
-                //    },
                 new RouteDescriptor {
                     Priority = 100,
                     Route = new Route(

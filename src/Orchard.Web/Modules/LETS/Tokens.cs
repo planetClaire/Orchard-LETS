@@ -1,8 +1,6 @@
-﻿using System;
-using Orchard.Taxonomies.Services;
+﻿using Orchard.Taxonomies.Services;
 using Orchard;
 using Orchard.ContentManagement;
-using Orchard.Events;
 using Orchard.Localization;
 using Orchard.Tokens;
 
@@ -38,9 +36,6 @@ namespace LETS
                                                     "NoticePart.Category.SingleTermId"];
                                             int idTerm;
                                             return int.TryParse(singleTermId, out idTerm) ? _taxonomyService.GetTerm(idTerm).Slug : null;
-                                            //return !string.IsNullOrEmpty(singleTermId)
-                                            //           ? _taxonomyService.GetTerm(int.Parse(singleTermId)).Slug
-                                            //           : null;
                                         });
         }
     }
