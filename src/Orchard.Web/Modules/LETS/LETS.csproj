@@ -92,7 +92,6 @@
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Commands\LETSCommands.cs" />
-    <Compile Include="ContainerModule.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\LocalityController.cs" />
     <Compile Include="Controllers\MemberAdminController.cs" />
