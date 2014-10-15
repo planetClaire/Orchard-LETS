@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using LETS.Models;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Core.Title.Models;
 using Orchard.Data;
 
 namespace LETS.Handlers
@@ -11,6 +12,8 @@ namespace LETS.Handlers
         public LocalityPartHandler(IRepository<LocalityPartRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
+            Filters.Add(new ActivatingFilter<LocalityPart>("Locality"));
+            Filters.Add(new ActivatingFilter<TitlePart>("Locality"));
         }
     }
 }
