@@ -9,7 +9,7 @@ namespace LETS.Handlers
         public MemberAdminPartHandler(IRepository<MemberAdminPartRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
-
+            Filters.Add(new ActivatingFilter<MemberAdminPart>("User"));
         }
     }
 }

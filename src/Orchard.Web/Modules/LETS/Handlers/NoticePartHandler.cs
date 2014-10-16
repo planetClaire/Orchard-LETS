@@ -2,6 +2,8 @@
 using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Core.Common.Models;
+using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.Localization;
 using Orchard.Security;
@@ -27,6 +29,10 @@ namespace LETS.Handlers
                     throw new OrchardSecurityException(T("attempt to access member content"));
                 }
             });
+
+            Filters.Add(new ActivatingFilter<NoticePart>("Notice"));
+            Filters.Add(new ActivatingFilter<TitlePart>("Notice"));
+            Filters.Add(new ActivatingFilter<CommonPart>("Notice"));
         }
 
     }

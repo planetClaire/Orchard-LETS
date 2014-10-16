@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Orchard.DisplayManagement;
+using Orchard.Logging;
 using Orchard.Taxonomies.Services;
 using LETS.Models;
 using LETS.Services;
@@ -31,9 +33,11 @@ namespace LETS.Controllers
         private readonly ITaxonomyService _taxonomyService;
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserEventHandler _userEventHandlers;
-        private readonly IUserService _userService;
 
-        public AccountController(IAuthenticationService authenticationService, IMembershipService membershipService, IUserService userService, IOrchardServices orchardServices, IUserEventHandler userEventHandlers, IContentManager contentManager, INoticeService noticeService, ITaxonomyService taxonomyService) 
+        private readonly IUserService _userService;
+        private readonly IShapeFactory _shapeFactory;
+
+        public AccountController(IAuthenticationService authenticationService, IMembershipService membershipService, IUserService userService, IOrchardServices orchardServices, IUserEventHandler userEventHandlers, IContentManager contentManager, INoticeService noticeService, ITaxonomyService taxonomyService, IShapeFactory shapeFactory) 
             : base(authenticationService, membershipService, userService, orchardServices, userEventHandlers)
         {
             _membershipService = membershipService;
@@ -41,6 +45,7 @@ namespace LETS.Controllers
             _contentManager = contentManager;
             _noticeService = noticeService;
             _taxonomyService = taxonomyService;
+            _shapeFactory = shapeFactory;
             _authenticationService = authenticationService;
             _userEventHandlers = userEventHandlers;
             _userService = userService;
@@ -57,12 +62,13 @@ namespace LETS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterMember(RegisterMemberViewModel memberVM, RegisterNoticeTypesViewModel noticeTypesVM)
+        public ActionResult RegisterMember(RegisterMemberViewModel memberViewModel, RegisterNoticeTypesViewModel noticeTypesViewModel)
         {
             ActionResult actionResult = null;
             // validate user with attached parts
             var dummyUser = _contentManager.New("User");
-            var registerShape = _orchardServices.New.Register();
+            //var registerShape = _orchardServices.New.Register();
+            dynamic registerShape = _shapeFactory.Create("Register");
             registerShape.UserProfile = _contentManager.UpdateEditor(dummyUser, this);
             if (!ModelState.IsValid)
             {
@@ -71,11 +77,11 @@ namespace LETS.Controllers
                 return new ShapeResult(this, registerShape);
             }
             // validated, proceed to register member
-            dynamic usersRegisterResult = Register(memberVM.Email, memberVM.Email, memberVM.Password, memberVM.ConfirmPassword);
+            dynamic usersRegisterResult = Register(memberViewModel.Email, memberViewModel.Email, memberViewModel.Password, memberViewModel.ConfirmPassword);
             if (usersRegisterResult is RedirectResult || usersRegisterResult is RedirectToRouteResult)
             {
                 // successful result, now update the new user with the parts
-                var newUser = _membershipService.GetUser(memberVM.Email);
+                var newUser = _membershipService.GetUser(memberViewModel.Email);
                 if (newUser != null)
                 {
                     _orchardServices.ContentManager.UpdateEditor(newUser, this);
@@ -83,10 +89,11 @@ namespace LETS.Controllers
                     actionResult = usersRegisterResult;
                     try
                     {
-                        SaveNoticeDrafts(noticeTypesVM, newUser);
+                        SaveNoticeDrafts(noticeTypesViewModel, newUser);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Logger.Error(ex, "Something went wrong drafting new member notices for user " + newUser.Id);
                         ModelState.AddModelError("NoticesFailed", "You have been registered, but something went wrong creating your notices, please try again after you have logged in");
                         registerShape.RequiredNoticeTypes = BuildRegisterNoticeTypesViewModel();
                         return new ShapeResult(this, registerShape);
@@ -173,7 +180,8 @@ namespace LETS.Controllers
                 siteUrl = HttpContext.Request.ToRootUrlString();
             }
 
-            var success = _userService.SendLostPasswordEmail(username, nonce => Url.MakeAbsolute(Url.Action("LostPasswordMember", "Account", new { Area = "LETS", nonce = nonce }), siteUrl));
+// ReSharper disable once Mvc.AreaNotResolved
+            var success = _userService.SendLostPasswordEmail(username, nonce => Url.MakeAbsolute(Url.Action("LostPasswordMember", "Account", new { Area = "LETS", nonce }), siteUrl));
 
             if (success)
             {
@@ -304,37 +312,37 @@ namespace LETS.Controllers
 
         private RegisterNoticeTypesViewModel BuildRegisterNoticeTypesViewModel()
         {
-            var noticeTypesVM = new RegisterNoticeTypesViewModel
+            var noticeTypesViewModel = new RegisterNoticeTypesViewModel
             {
                 CategoryTerms = _noticeService.GetCategoryTerms()
             };
             var requiredNoticeTypes = _noticeService.GetRequiredNoticeTypes();
             foreach (var noticeType in requiredNoticeTypes)
             {
-                var noticesVM = new RegisterNoticesViewModel(noticeType.RequiredCount)
+                var noticesViewModel = new RegisterNoticesViewModel(noticeType.RequiredCount)
                 {
                     IdNoticeType = noticeType.Id,
                     NoticeTypeName =
                         _contentManager.GetItemMetadata(noticeType).DisplayText
                 };
-                noticeTypesVM.NoticeTypes.Add(noticesVM);
+                noticeTypesViewModel.NoticeTypes.Add(noticesViewModel);
             }
-            return noticeTypesVM;
+            return noticeTypesViewModel;
         }
 
-        private void SaveNoticeDrafts(RegisterNoticeTypesViewModel noticeTypesVM, IUser newUser)
+        private void SaveNoticeDrafts(RegisterNoticeTypesViewModel noticeTypesViewModel, IUser newUser)
         {
-            foreach (var noticeTypeVM in noticeTypesVM.NoticeTypes)
+            foreach (var noticeTypeViewModel in noticeTypesViewModel.NoticeTypes)
             {
-                var noticeType = _noticeService.GetNoticeType(noticeTypeVM.IdNoticeType);
-                foreach (var noticeVM in noticeTypeVM.Notices)
+                var noticeType = _noticeService.GetNoticeType(noticeTypeViewModel.IdNoticeType);
+                foreach (var noticeViewModel in noticeTypeViewModel.Notices)
                 {
                     var noticePart = _contentManager.Create<NoticePart>("Notice", VersionOptions.Draft);
-                    noticePart.Title = noticeVM.Title;
+                    noticePart.Title = noticeViewModel.Title;
                     noticePart.As<CommonPart>().Owner = newUser;
                     noticePart.NoticeType = noticeType;
                     _taxonomyService.UpdateTerms(noticePart.ContentItem,
-                                                 new[] {_taxonomyService.GetTerm(noticeVM.IdCategoryTerm)}, "Category");
+                                                 new[] {_taxonomyService.GetTerm(noticeViewModel.IdCategoryTerm)}, "Category");
                 }
             }
         }
