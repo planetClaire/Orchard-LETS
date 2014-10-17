@@ -12,8 +12,6 @@ namespace LETS.Handlers
         public LocalityPartHandler(IRepository<LocalityPartRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
-            Filters.Add(new ActivatingFilter<LocalityPart>("Locality"));
-            Filters.Add(new ActivatingFilter<TitlePart>("Locality"));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace LETS.Handlers
             Filters.Add(StorageFilter.For(repository));
 
             _orchardServices = orchardServices;
-            T = NullLocalizer.Instance; 
+            T = NullLocalizer.Instance;
             OnGetDisplayShape<NoticePart>((context, part) =>
             {
                 if (context.DisplayType.StartsWith("Detail") && !_orchardServices.Authorizer.Authorize(Permissions.AccessMemberContent))
@@ -29,10 +29,6 @@ namespace LETS.Handlers
                     throw new OrchardSecurityException(T("attempt to access member content"));
                 }
             });
-
-            Filters.Add(new ActivatingFilter<NoticePart>("Notice"));
-            Filters.Add(new ActivatingFilter<TitlePart>("Notice"));
-            Filters.Add(new ActivatingFilter<CommonPart>("Notice"));
         }
 
     }

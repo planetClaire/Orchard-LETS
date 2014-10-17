@@ -11,7 +11,6 @@ namespace LETS.Handlers
         public NoticeTypePartHandler(IRepository<NoticeTypePartRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
-            Filters.Add(new ActivatingFilter<NoticeTypePart>("NoticeType"));
         }
     }
 }

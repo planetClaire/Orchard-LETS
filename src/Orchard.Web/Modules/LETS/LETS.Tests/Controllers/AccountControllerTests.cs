@@ -95,6 +95,18 @@ namespace LETS.Tests.Controllers
             builder.RegisterType<NoticeTypePartHandler>().As<IContentHandler>();
             builder.RegisterType<NoticePartHandler>().As<IContentHandler>();
             builder.RegisterType<TitlePartHandler>().As<IContentHandler>();
+            builder.RegisterType<LETSHandler>().As<IContentHandler>();
+        }
+
+        public class LETSHandler : ContentHandler {
+            public LETSHandler() {
+                Filters.Add(new ActivatingFilter<NoticePart>("Notice"));
+                Filters.Add(new ActivatingFilter<TitlePart>("Notice"));
+                Filters.Add(new ActivatingFilter<CommonPart>("Notice"));
+                Filters.Add(new ActivatingFilter<MemberAdminPart>("User"));
+                Filters.Add(new ActivatingFilter<MemberAdminPart>("User"));
+                Filters.Add(new ActivatingFilter<NoticeTypePart>("NoticeType"));
+            }
         }
 
         public override void Init()
@@ -206,6 +218,7 @@ namespace LETS.Tests.Controllers
             registrationSettings.UsersCanRegister = true;
             _userServiceMock.Setup(m => m.VerifyUserUnicity(email, email)).Returns(true);
             _noticeServiceMock.Setup(n => n.GetNoticeType(idNoticeType)).Returns(noticeType.Record);
+            
             _controller.RegisterMember(registerMemberViewModel, registerNoticeTypesViewModel);
 
             var member = _membershipService.GetUser(email);

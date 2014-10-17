@@ -53,6 +53,14 @@ namespace LETS.Tests.Services
             builder.RegisterType<LocalityPartHandler>().As<IContentHandler>();
             builder.RegisterType<TitlePartHandler>().As<IContentHandler>();
             builder.RegisterType<AddressService>().As<IAddressService>();
+            builder.RegisterType<LETSHandler>().As<IContentHandler>();
+        }
+
+        public class LETSHandler : ContentHandler {
+            public LETSHandler() {
+                Filters.Add(new ActivatingFilter<LocalityPart>("Locality"));
+                Filters.Add(new ActivatingFilter<TitlePart>("Locality"));                
+            }
         }
 
         public override void Init()

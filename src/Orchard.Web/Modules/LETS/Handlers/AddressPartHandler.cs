@@ -11,7 +11,6 @@ namespace LETS.Handlers
         public AddressPartHandler(IRepository<AddressPartRecord> repository)
         {
             Filters.Add(StorageFilter.For(repository));
-            Filters.Add(new ActivatingFilter<MemberAdminPart>("User"));
         }
     }
 }
