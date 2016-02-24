@@ -114,13 +114,11 @@ namespace LETS.Feeds
                 if (context.Format == "rss")
                 {
                     var link = new XElement("link");
-                    var guid = new XElement("guid", new XAttribute("isPermaLink", "false"));
                     context.Response.Contextualize(requestContext =>
                     {
                         var urlHelper = new UrlHelper(requestContext);
                         var uriBuilder = new UriBuilder(urlHelper.RequestContext.HttpContext.Request.ToRootUrlString()) { Path = urlHelper.RouteUrl(inspector.Link) };
                         link.Add(uriBuilder.Uri.OriginalString);
-                        guid.Add(uriBuilder.Uri.OriginalString);
                     });
 
                     feedItem.Element.SetElementValue("title", title);
@@ -130,7 +128,6 @@ namespace LETS.Feeds
                     if (publishedUtc != null) {
                         feedItem.Element.SetElementValue("pubDate", publishedUtc.Value.ToString("r"));
                     }
-                    feedItem.Element.Add(guid);
                 }
                 else
                 {

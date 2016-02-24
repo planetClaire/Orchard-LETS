@@ -46,20 +46,17 @@ namespace LETS.Feeds {
                 // add to known formats
                 if (context.Format == "rss") {
                     var link = new XElement("link");
-                    var guid = new XElement("guid", new XAttribute("isPermaLink", "false"));
                     context.Response.Contextualize(requestContext => {
                                                        var urlHelper = new UrlHelper(requestContext);
                                                        var uriBuilder = new UriBuilder(urlHelper.RequestContext.HttpContext.Request.ToRootUrlString()) {Path = urlHelper.RouteUrl(commentedOnInspector.Link)};
                                                        link.Add(string.Format("{0}#comments", uriBuilder.Uri.OriginalString));
-                                                       guid.Add(uriBuilder.Uri.OriginalString);
                                                    });
 
                     feedItem.Element.SetElementValue("title", title);
                     feedItem.Element.Add(link);
                     var commentText = Helpers.Helpers.Linkify(comment.Record.CommentText.ReplaceNewLinesWith("<br />"));
                     feedItem.Element.SetElementValue("description", commentText);
-                    feedItem.Element.SetElementValue("pubDate", comment.Record.CommentDateUtc); 
-                    feedItem.Element.Add(guid);
+                    feedItem.Element.SetElementValue("pubDate", comment.Record.CommentDateUtc.Value.ToString("r")); 
                 }
                 else {
                     var feedItem1 = feedItem;

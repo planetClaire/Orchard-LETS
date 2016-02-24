@@ -52,7 +52,6 @@ namespace LETS.Feeds
                     if (context.Format == "rss")
                     {
                         var link = new XElement("link");
-                        var guid = new XElement("guid", new XAttribute("isPermaLink", "true"));
 
                         context.Response.Contextualize(requestContext =>
                         {
@@ -63,7 +62,6 @@ namespace LETS.Feeds
                                     Path = urlHelper.RouteUrl(inspector.Link)
                                 };
                             link.Add(uriBuilder.Uri.OriginalString);
-                            guid.Add(uriBuilder.Uri.OriginalString);
                         });
 
                         feedItem.Element.SetElementValue("title", inspector.Title);
@@ -79,10 +77,9 @@ namespace LETS.Feeds
                             // is read-only. Therefore, it is always the same, regardless of the culture used or the format provider supplied.  
                             // The custom format string is "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'". When this standard format specifier is used,  
                             // the formatting or parsing operation always uses the invariant culture. 
-                            feedItem.Element.SetElementValue("pubDate", inspector.PublishedUtc);
+                            feedItem.Element.SetElementValue("pubDate", inspector.PublishedUtc.Value.ToString("r"));
                         }
 
-                        feedItem.Element.Add(guid);
                     }
                     else
                     {

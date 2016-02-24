@@ -4,8 +4,6 @@ using LETS.Services;
 using LETS.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
-using Orchard.DisplayManagement.Shapes;
-using Orchard.Mvc;
 using Orchard.Themes;
 
 namespace LETS.Controllers
