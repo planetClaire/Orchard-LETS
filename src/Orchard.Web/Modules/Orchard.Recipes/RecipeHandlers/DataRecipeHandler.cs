@@ -12,10 +12,12 @@ namespace Orchard.Recipes.RecipeHandlers {
     public class DataRecipeHandler : IRecipeHandler {
         private readonly IOrchardServices _orchardServices;
         private readonly ITransactionManager _transactionManager;
+        private readonly IRecipeJournal _recipeJournal;
 
-        public DataRecipeHandler(IOrchardServices orchardServices, ITransactionManager transactionManager) {
+        public DataRecipeHandler(IOrchardServices orchardServices, ITransactionManager transactionManager, IRecipeJournal recipeJournal) {
             _orchardServices = orchardServices;
             _transactionManager = transactionManager;
+            _recipeJournal = recipeJournal;
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
         }
@@ -37,7 +39,8 @@ namespace Orchard.Recipes.RecipeHandlers {
 
             //Populate import session with all identities to be imported
             foreach (var identity in elementDictionary.Keys) {
-                importContentSession.Set(identity.ToString(), elementDictionary[identity].Name.LocalName);
+                Logger.Debug("Importing {0}", identity);
+                importContentSession.Set(identity, elementDictionary[identity].Name.LocalName);
             }
 
             //Determine if the import is to be batched in multiple transactions
@@ -45,16 +48,21 @@ namespace Orchard.Recipes.RecipeHandlers {
             int batchSize = GetBatchSizeForDataStep(recipeContext.RecipeStep.Step);
 
             //Run the import
-            ContentIdentity nextIdentity = null;
             try {
                 while (startIndex < elementDictionary.Count) {
                     importContentSession.InitializeBatch(startIndex, batchSize);
 
                     //the session determines which items are included in the current batch
                     //so that dependencies can be managed within the same transaction
-                    nextIdentity = importContentSession.GetNextInBatch();
+                    var nextIdentity = importContentSession.GetNextInBatch();
                     while (nextIdentity != null) {
-                        _orchardServices.ContentManager.Import(elementDictionary[nextIdentity], importContentSession);
+                        if (!string.IsNullOrEmpty(recipeContext.ExecutionId) && elementDictionary[nextIdentity.ToString()].HasAttributes) {
+                            var itemId = elementDictionary[nextIdentity.ToString()].FirstAttribute.Value;
+                            _recipeJournal.WriteJournalEntry(recipeContext.ExecutionId, T("Data: Importing {0}.", itemId).Text);
+                        }
+                        _orchardServices.ContentManager.Import(
+                            elementDictionary[nextIdentity.ToString()],
+                            importContentSession);
                         nextIdentity = importContentSession.GetNextInBatch();
                     }
 
@@ -75,13 +83,14 @@ namespace Orchard.Recipes.RecipeHandlers {
             recipeContext.Executed = true;
         }
 
-        private Dictionary<ContentIdentity, XElement> CreateElementDictionary(XElement step) {
-            var elementDictionary = new Dictionary<ContentIdentity, XElement>(new ContentIdentity.ContentIdentityEqualityComparer());
+        private Dictionary<string, XElement> CreateElementDictionary(XElement step) {
+            var elementDictionary = new Dictionary<string, XElement>();
             foreach (var element in step.Elements()) {
-                if (element.Attribute("Id") == null || string.IsNullOrEmpty(element.Attribute("Id").Value))
+                if (element.Attribute("Id") == null
+                    || String.IsNullOrWhiteSpace(element.Attribute("Id").Value))
                     continue;
 
-                var identity = new ContentIdentity(element.Attribute("Id").Value);
+                var identity = new ContentIdentity(element.Attribute("Id").Value).ToString();
                 elementDictionary[identity] = element;
             }
             return elementDictionary;

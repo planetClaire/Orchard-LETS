@@ -53,7 +53,7 @@ namespace Orchard.Widgets.Drivers {
             
             // if there is a name, ensure it's unique
             if(!string.IsNullOrWhiteSpace(widgetPart.Name)) {
-                widgetPart.Name = widgetPart.Name.ToSafeName();
+                widgetPart.Name = widgetPart.Name.ToHtmlName();
 
                 var widgets = _contentManager.Query<WidgetPart, WidgetPartRecord>().Where(x => x.Name == widgetPart.Name && x.Id != widgetPart.Id).Count();
                 if(widgets > 0) {
@@ -67,6 +67,11 @@ namespace Orchard.Widgets.Drivers {
         }
 
         protected override void Importing(WidgetPart part, ContentManagement.Handlers.ImportContentContext context) {
+            // Don't do anything if the tag is not specified.
+            if (context.Data.Element(part.PartDefinition.Name) == null) {
+                return;
+            }
+
             var title = context.Attribute(part.PartDefinition.Name, "Title");
             if (title != null) {
                 part.Title = title;

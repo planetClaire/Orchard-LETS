@@ -31,6 +31,7 @@
         placeholder: 'navigation-placeholder',
         revert: 50,
         tabSize: 30,
+        rtl: window.isRTL,
         tolerance: 'pointer',
         toleranceElement: '> div',
 
@@ -41,7 +42,7 @@
 
             // display a message on leave if changes have been made
             window.onbeforeunload = function (e) {
-                return leaveConfirmation;
+                return $("<div/>").html(leaveConfirmation).text();
             };
 
             // cancel leaving message on save
@@ -51,6 +52,27 @@
         }
     });
 
-    
+    $(function () {
+        $(".navigation-menu-item > div").on("click", function () {
+            if ($(".navigation-menu-item > div.menu-item-selected").length) {
+                if ($(this).hasClass("menu-item-selected")) {
+                    $(this).removeClass("menu-item-selected");
+                }
+                else {
+                    $(".navigation-menu-item > div").removeClass("menu-item-selected");
+                    $(this).addClass("menu-item-selected")
+                }
+            }
+            else {
+                $(this).addClass("menu-item-selected");
+            }
+        });
+
+        $(".menu-item-actions > .button").on("click", function (e) {
+            if ($(".navigation-menu-item > div.menu-item-selected").length) {
+                e.originalEvent.currentTarget.href = $(this).attr("href") + "&parentMenuItemPosition=" + $(".navigation-menu-item > div.menu-item-selected > .navigation-position > input").val();
+            }
+        });
+    });
 
 })(jQuery);

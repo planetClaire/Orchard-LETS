@@ -11,6 +11,7 @@ using Orchard.Security.Permissions;
 using Orchard.UI;
 using Orchard.UI.Navigation;
 using Orchard.Utility;
+using Orchard.Exceptions;
 
 namespace Orchard.Core.Navigation.Services {
     public class NavigationManager : INavigationManager {
@@ -92,16 +93,15 @@ namespace Orchard.Core.Navigation.Services {
             var schemes = new[] { "http", "https", "tel", "mailto" };
             if (!string.IsNullOrEmpty(url) && _urlHelper.RequestContext.HttpContext != null &&
                 !(url.StartsWith("/") || schemes.Any(scheme => url.StartsWith(scheme + ":")))) {
-                if (url.StartsWith("~/")) {
-
-                    if (!String.IsNullOrEmpty(_shellSettings.RequestUrlPrefix)) {
-                        url = _shellSettings.RequestUrlPrefix + "/" + url.Substring(2);
-                    }
-                    else {
-                        url = url.Substring(2);
-                    }
-                }
                 if (!url.StartsWith("#")) {
+                    if (url.StartsWith("~/")) {
+                        if (!String.IsNullOrEmpty(_shellSettings.RequestUrlPrefix)) {
+                            url = _shellSettings.RequestUrlPrefix + "/" + url.Substring(2);
+                        }
+                        else {
+                            url = url.Substring(2);
+                        }
+                    }
                     var appPath = _urlHelper.RequestContext.HttpContext.Request.ApplicationPath;
                     if (appPath == "/")
                         appPath = "";
@@ -152,6 +152,9 @@ namespace Orchard.Core.Navigation.Services {
                         items = builder.Build();
                     }
                     catch (Exception ex) {
+                        if (ex.IsFatal()) {
+                            throw;
+                        } 
                         Logger.Error(ex, "Unexpected error while querying a navigation provider. It was ignored. The menu provided by the provider may not be complete.");
                     }
                     if (items != null) {
@@ -170,6 +173,9 @@ namespace Orchard.Core.Navigation.Services {
                     items = builder.Build();
                 }
                 catch (Exception ex) {
+                    if (ex.IsFatal()) {
+                        throw;
+                    } 
                     Logger.Error(ex, "Unexpected error while querying a menu provider. It was ignored. The menu provided by the provider may not be complete.");
                 }
                 if (items != null) {
@@ -188,6 +194,9 @@ namespace Orchard.Core.Navigation.Services {
                         imageSets = builder.BuildImageSets();
                     }
                     catch (Exception ex) {
+                        if (ex.IsFatal()) {
+                            throw;
+                        } 
                         Logger.Error(ex, "Unexpected error while querying a navigation provider. It was ignored. The menu provided by the provider may not be complete.");
                     }
                     if (imageSets != null) {

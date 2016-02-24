@@ -158,7 +158,7 @@ namespace Orchard.Indexing.Services {
 
                     // load all content items
                     var contentItems = _contentRepository
-                        .Table.Where(versionRecord => versionRecord.Published && versionRecord.Id > indexSettings.LastContentId)
+                    .Table.Where(versionRecord => versionRecord.Latest && versionRecord.Id > indexSettings.LastContentId)
                         .OrderBy(versionRecord => versionRecord.Id)
                         .Take(ContentItemsPerLoop)
                         .ToList()
@@ -174,9 +174,20 @@ namespace Orchard.Indexing.Services {
                     foreach (var item in contentItems) {
                         try {
 
-                            // skip items from types which are not indexed
                             var settings = GetTypeIndexingSettings(item);
+
+                            // skip items from types which are not indexed
                             if (settings.List.Contains(indexName)) {
+                                if (item.HasPublished()) {
+                                    var published = _contentManager.Get(item.Id, VersionOptions.Published);
+                                    IDocumentIndex documentIndex = ExtractDocumentIndex(published);
+
+                                    if (documentIndex != null && documentIndex.IsDirty) {
+                                        addToIndex.Add(documentIndex);
+                                    }
+                                }
+                            }
+                            else if (settings.List.Contains(indexName + ":latest")) {
                                 IDocumentIndex documentIndex = ExtractDocumentIndex(item);
 
                                 if (documentIndex != null && documentIndex.IsDirty) {
@@ -196,8 +207,7 @@ namespace Orchard.Indexing.Services {
                     }
                     else {
                         _transactionManager.RequireNew();
-                     }
-
+                    }
 
                 } while (loop);
             }
@@ -213,7 +223,7 @@ namespace Orchard.Indexing.Services {
                         .Take(ContentItemsPerLoop)
                         .ToList()
                         .GroupBy(x => x.ContentItemRecord.Id)
-                        .Select(group => new { TaskId = group.Max(task => task.Id), Delete = group.Last().Action == IndexingTaskRecord.Delete, Id = group.Key, ContentItem = _contentManager.Get(group.Key, VersionOptions.Published) })
+                    .Select(group => new { TaskId = group.Max(task => task.Id), Delete = group.Last().Action == IndexingTaskRecord.Delete, Id = group.Key, ContentItem = _contentManager.Get(group.Key, VersionOptions.Latest) })
                         .OrderBy(x => x.TaskId)
                         .ToArray();
 
@@ -227,7 +237,14 @@ namespace Orchard.Indexing.Services {
                                 // skip items from types which are not indexed
                                 var settings = GetTypeIndexingSettings(item.ContentItem);
                                 if (settings.List.Contains(indexName)) {
-                                    documentIndex = ExtractDocumentIndex(item.ContentItem);
+                                    if (item.ContentItem.HasPublished()) {
+                                        var published = _contentManager.Get(item.Id, VersionOptions.Published);
+                                        documentIndex = ExtractDocumentIndex(published);
+                                    }
+                                }
+                                else if (settings.List.Contains(indexName + ":latest")) {
+                                    var latest = _contentManager.Get(item.Id, VersionOptions.Latest);
+                                    documentIndex = ExtractDocumentIndex(latest);
                                 }
                             }
 
@@ -251,8 +268,8 @@ namespace Orchard.Indexing.Services {
                     else {
                         _transactionManager.RequireNew();
                     }
-                }
-                while (loop);
+
+                } while (loop);
             }
 
             // save current state of the index
@@ -322,7 +339,7 @@ namespace Orchard.Indexing.Services {
         /// </summary>
         private IDocumentIndex ExtractDocumentIndex(ContentItem contentItem) {
             // ignore deleted or unpublished items
-            if (contentItem == null || !contentItem.IsPublished()) {
+            if (contentItem == null || (!contentItem.IsPublished() && !contentItem.HasDraft())) {
                 return null;
             }
 

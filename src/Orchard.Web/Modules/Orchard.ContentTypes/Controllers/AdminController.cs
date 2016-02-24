@@ -390,6 +390,9 @@ namespace Orchard.ContentTypes.Controllers {
             if (!Services.Authorizer.Authorize(Permissions.EditContentTypes, T("Not allowed to create a content part.")))
                 return new HttpUnauthorizedResult();
 
+            if (_contentDefinitionManager.GetPartDefinition(viewModel.Name) != null)
+                ModelState.AddModelError("Name", T("Cannot add part named '{0}'. It already exists.", viewModel.Name).ToString());
+
             if (!ModelState.IsValid)
                 return View(viewModel);
 
@@ -621,8 +624,7 @@ namespace Orchard.ContentTypes.Controllers {
                 return HttpNotFound();
             }
 
-            field.DisplayName = viewModel.DisplayName;
-            _contentDefinitionManager.StorePartDefinition(partViewModel._Definition);
+            _contentDefinitionService.AlterField(partViewModel, viewModel);
 
             Services.Notifier.Information(T("Display name changed to {0}.", viewModel.DisplayName));
 

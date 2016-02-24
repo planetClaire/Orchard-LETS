@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using Orchard.ContentManagement;
@@ -36,12 +37,14 @@ namespace Orchard.MediaLibrary.Services {
         /// <returns>The public URL for the media.</returns>
         string GetMediaPublicUrl(string mediaPath, string fileName);
 
+        IMediaFolder GetRootMediaFolder();
+
         /// <summary>
         /// Retrieves the media folders within a given relative path.
         /// </summary>
         /// <param name="relativePath">The path where to retrieve the media folder from. null means root.</param>
         /// <returns>The media folder in the given path.</returns>
-        IEnumerable<MediaFolder> GetMediaFolders(string relativePath);
+        IEnumerable<IMediaFolder> GetMediaFolders(string relativePath);
 
         /// <summary>
         /// Retrieves the media files within a given relative path.
@@ -95,6 +98,15 @@ namespace Orchard.MediaLibrary.Services {
         void MoveFile(string currentPath, string filename, string newPath, string newFilename);
 
         /// <summary>
+        /// Moves a media file.
+        /// </summary>
+        /// <param name="currentPath">The path to the file's parent folder.</param>
+        /// <param name="filename">The file name.</param>
+        /// <param name="duplicatePath">The path where the file will be copied to.</param>
+        /// <param name="duplicateFilename">The new file name.</param>
+        void CopyFile(string currentPath, string filename, string duplicatePath, string duplicateFilename);
+
+        /// <summary>
         /// Uploads a media file based on a posted file.
         /// </summary>
         /// <param name="folderPath">The path to the folder where to upload the file.</param>
@@ -119,5 +131,31 @@ namespace Orchard.MediaLibrary.Services {
         /// <param name="inputStream">The stream with the file's contents.</param>
         /// <returns>The path to the uploaded file.</returns>
         string UploadMediaFile(string folderPath, string fileName, Stream inputStream);
+    }
+
+    public static class MediaLibrayServiceExtensions {
+        public static bool CanManageMediaFolder(this IMediaLibraryService service, string folderPath) {
+            // The current user can manage a media if he has access to the whole hierarchy
+            // or the media is under his personal storage folder.
+
+            var rootMediaFolder = service.GetRootMediaFolder();
+            if (rootMediaFolder == null) {
+                return true;
+            }
+
+            var mediaPath = folderPath + "\\";
+            var rootPath = rootMediaFolder.MediaPath + "\\";
+
+            return mediaPath.StartsWith(rootPath, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static string GetRootedFolderPath(this IMediaLibraryService service, string folderPath) {
+            var rootMediaFolder = service.GetRootMediaFolder();
+            if (rootMediaFolder != null) {
+                return Path.Combine(rootMediaFolder.MediaPath, folderPath ?? "");
+            }
+
+            return folderPath;
+        }
     }
 }

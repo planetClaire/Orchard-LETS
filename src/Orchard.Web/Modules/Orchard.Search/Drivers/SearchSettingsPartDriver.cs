@@ -32,19 +32,19 @@ namespace Orchard.Search.Drivers {
         protected override DriverResult Editor(SearchSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {
             return ContentShape("Parts_Search_SiteSettings", () => {
                 var model = new SearchSettingsViewModel();
-                String[] searchedFields = part.SearchedFields;
+                var searchFields = part.SearchFields;
+
+                model.DisplayType = part.DisplayType;
 
                 if (updater != null) {
-                    // submitting: rebuild model from form data
                     if (updater.TryUpdateModel(model, Prefix, null, null)) {
-                        // update part if successful
                         part.SearchIndex = model.SelectedIndex;
-                        part.SearchedFields = model.Entries.First(e => e.Index == model.SelectedIndex).Fields.Where(e => e.Selected).Select(e => e.Field).ToArray();
+                        part.SearchFields = model.Entries.ToDictionary(x => x.Index, x => x.Fields.Where(e => e.Selected).Select(e => e.Field).ToArray());
                         part.FilterCulture = model.FilterCulture;
+                        part.DisplayType = model.DisplayType;
                     }
                 }
                 else if (_indexManager.HasIndexProvider()) {
-                    // viewing editor: build model from part
                     model.FilterCulture = part.FilterCulture;
                     model.SelectedIndex = part.SearchIndex;
                     model.Entries = _indexManager.GetSearchIndexProvider().List().Select(x => {
@@ -53,7 +53,7 @@ namespace Orchard.Search.Drivers {
                             Fields = new List<SearchSettingsEntry>()
                         };
                         foreach (var field in _indexManager.GetSearchIndexProvider().GetFields(x)) {
-                            indexSettings.Fields.Add(new SearchSettingsEntry {Field = field, Selected = (x == part.SearchIndex && searchedFields.Contains(field))});
+                            indexSettings.Fields.Add(new SearchSettingsEntry {Field = field, Selected = (searchFields.ContainsKey(x) && searchFields[x].Contains(field))});
                         }
 
                         return indexSettings;
@@ -65,17 +65,21 @@ namespace Orchard.Search.Drivers {
         }
 
         protected override void Exporting(SearchSettingsPart part, ExportContentContext context) {
-            context.Element(part.PartDefinition.Name).Add(new XAttribute("SearchedFields", string.Join(",", part.SearchedFields)));
+            var searchFields = part.Retrieve<string>("SearchFields");
+            if(!String.IsNullOrWhiteSpace(searchFields)) {
+                context.Element(part.PartDefinition.Name).Add(new XAttribute("SearchFields", searchFields));
+            }            
         }
 
         protected override void Importing(SearchSettingsPart part, ImportContentContext context) {
-            var xElement = context.Data.Element(part.PartDefinition.Name);
-            if (xElement == null) return;
-            
-            var searchedFields = xElement.Attribute("SearchedFields");
-            searchedFields.Remove();
+            // Don't do anything if the tag is not specified.
+            if (context.Data.Element(part.PartDefinition.Name) == null) {
+                return;
+            }
 
-            part.SearchedFields = searchedFields.Value.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            context.ImportAttribute(part.PartDefinition.Name, "SearchFields", value => {
+                part.Store("SearchFields", value);
+            });
         }
     }
 }

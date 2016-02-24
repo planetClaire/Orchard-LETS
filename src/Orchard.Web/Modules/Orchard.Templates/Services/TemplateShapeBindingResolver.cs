@@ -1,5 +1,6 @@
 ﻿using Orchard.Caching;
 using Orchard.ContentManagement;
+using Orchard.ContentManagement.MetaData;
 using Orchard.DisplayManagement.Implementation;
 using Orchard.Templates.Models;
 using System;
@@ -15,17 +16,20 @@ namespace Orchard.Templates.Services {
         private ICacheManager _cacheManager;
         private ISignals _signals;
         private IContentManager _contentManager;
+        private IContentDefinitionManager _contentDefinitionManager;
         private ITemplateService _templateService;
 
         public TemplateShapeBindingResolver(
             ICacheManager cacheManager,
             ISignals signals,
             IContentManager contentManager,
+            IContentDefinitionManager contentDefinitionManager,
             ITemplateService templateService
             ) {
             _cacheManager = cacheManager;
             _signals = signals;
             _contentManager = contentManager;
+            _contentDefinitionManager = contentDefinitionManager;
             _templateService = templateService;
         }
 
@@ -38,8 +42,9 @@ namespace Orchard.Templates.Services {
                     BindingName = "Templates",
                     Binding = ctx => CoerceHtmlString(_templateService.Execute(
                         templateResult.Template, 
-                        templateResult.Name, 
-                        templateResult.Processor, ctx.Value))
+                        templateResult.Name,
+                        templateResult.Processor, ctx.Value)),
+                    ShapeDescriptor = new ShapeDescriptor { ShapeType = shapeType }
                 };
 
                 return true;
@@ -50,22 +55,22 @@ namespace Orchard.Templates.Services {
         }
 
         private IDictionary<string, TemplateResult> BuildShapeProcessors() {
-            return _cacheManager.Get("Template.ShapeProcessors", ctx => {
+            return _cacheManager.Get("Template.ShapeProcessors", true, ctx => {
                 ctx.Monitor(_signals.When(DefaultTemplateService.TemplatesSignal));
 
-                var allTemplates = _contentManager.Query<ShapePart>().List();
+                // select all name of types which contains ShapePart
+                var typesWithShapePart = _contentDefinitionManager
+                    .ListTypeDefinitions()
+                    .Where(ct => ct.Parts.Any(cp => cp.PartDefinition.Name == "ShapePart"))
+                    .Select(ct => ct.Name)
+                    .ToArray();
 
-                return allTemplates.Select(x => {
-                    var name = x.Name;
-                    var template = x.Template;
-                    var processorName = x.ProcessorName;
+                var allTemplates = _contentManager.Query<ShapePart>(typesWithShapePart).List();
 
-                    return new TemplateResult {
-                        Name = x.Name,
-                        Template = x.Template,
-                        Processor = x.ProcessorName
-                    };
-
+                return allTemplates.Select(x => new TemplateResult {
+                    Name = x.Name,
+                    Template = x.Template,
+                    Processor = x.ProcessorName
                 }).ToDictionary(x => x.Name, x => x);
             });
         }

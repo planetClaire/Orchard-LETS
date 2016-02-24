@@ -1,9 +1,9 @@
 using System;
 using System.Globalization;
-using System.Linq;
-using System.Web;
 using Orchard.Localization.Services;
 using Orchard.Logging;
+using System.Web;
+using System.Linq;
 
 namespace Orchard.Localization {
     public class Text : IText {
@@ -29,9 +29,15 @@ namespace Orchard.Localization {
 		        var currentCulture = workContext.CurrentCulture;
 		        var localizedFormat = _localizedStringManager.GetLocalizedString(_scope, textHint, currentCulture);
 
+                // localization arguments are HTML-encoded unless they implement IHtmlString
+
 				return args.Length == 0
 				? new LocalizedString(localizedFormat, _scope, textHint, args)
-				: new LocalizedString(string.Format(GetFormatProvider(currentCulture), localizedFormat, args), _scope, textHint, args);
+				: new LocalizedString(
+                    String.Format(GetFormatProvider(currentCulture), localizedFormat, args.Select(Encode).ToArray()), 
+                    _scope, 
+                    textHint, 
+                    args);
 	        }
 
 			return new LocalizedString(textHint, _scope, textHint, args);
@@ -39,11 +45,20 @@ namespace Orchard.Localization {
 
         private static IFormatProvider GetFormatProvider(string currentCulture) {
             try {
-                return CultureInfo.GetCultureInfoByIetfLanguageTag(currentCulture);
+                return CultureInfo.GetCultureInfo(currentCulture);
             }
             catch {
                 return null;
             }
+        }
+
+        static object Encode(object arg)
+        {
+            if (arg is IFormattable || arg is IHtmlString) {
+                return arg;
+            }
+
+            return HttpUtility.HtmlEncode(arg);
         }
     }
 }

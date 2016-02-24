@@ -38,7 +38,7 @@ namespace Orchard.Core.Navigation.Drivers {
 
         protected override DriverResult Editor(AdminMenuPart part, dynamic shapeHelper) {
             // todo: we need a 'ManageAdminMenu' too?
-            if (!_authorizationService.TryCheckAccess(Permissions.ManageMainMenu, _orchardServices.WorkContext.CurrentUser, part)) {
+            if (!_authorizationService.TryCheckAccess(Permissions.ManageMenus, _orchardServices.WorkContext.CurrentUser, part)) {
                 return null;
             }
 
@@ -51,7 +51,7 @@ namespace Orchard.Core.Navigation.Drivers {
         }
 
         protected override DriverResult Editor(AdminMenuPart part, IUpdateModel updater, dynamic shapeHelper) {
-            if (!_authorizationService.TryCheckAccess(Permissions.ManageMainMenu, _orchardServices.WorkContext.CurrentUser, part))
+            if (!_authorizationService.TryCheckAccess(Permissions.ManageMenus, _orchardServices.WorkContext.CurrentUser, part))
                 return null;
 
             updater.TryUpdateModel(part, Prefix, null, null);
@@ -73,20 +73,22 @@ namespace Orchard.Core.Navigation.Drivers {
         }
 
         protected override void Importing(AdminMenuPart part, ContentManagement.Handlers.ImportContentContext context) {
-            var adminMenuText = context.Attribute(part.PartDefinition.Name, "AdminMenuText");
-            if (adminMenuText != null) {
-                part.AdminMenuText = adminMenuText;
+            // Don't do anything if the tag is not specified.
+            if (context.Data.Element(part.PartDefinition.Name) == null) {
+                return;
             }
 
-            var position = context.Attribute(part.PartDefinition.Name, "AdminMenuPosition");
-            if (position != null) {
-                part.AdminMenuPosition = position;
-            }
+            context.ImportAttribute(part.PartDefinition.Name, "AdminMenuText", adminMenuText =>
+                part.AdminMenuText = adminMenuText
+            );
 
-            var onAdminMenu = context.Attribute(part.PartDefinition.Name, "OnAdminMenu");
-            if (onAdminMenu != null) {
-                part.OnAdminMenu = Convert.ToBoolean(onAdminMenu);
-            }
+            context.ImportAttribute(part.PartDefinition.Name, "AdminMenuPosition", position =>
+                part.AdminMenuPosition = position
+            );
+
+            context.ImportAttribute(part.PartDefinition.Name, "OnAdminMenu", onAdminMenu =>
+                part.OnAdminMenu = Convert.ToBoolean(onAdminMenu)
+            );
         }
 
         protected override void Exporting(AdminMenuPart part, ContentManagement.Handlers.ExportContentContext context) {

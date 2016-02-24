@@ -188,9 +188,9 @@ namespace Orchard.Projections {
                     .WithPart("CommonPart")
                     .WithPart("TitlePart")
                      .WithPart("AutoroutePart", builder => builder
-                        .WithSetting("AutorouteSettings.AllowCustomPattern", "true")
-                        .WithSetting("AutorouteSettings.AutomaticAdjustmentOnEdit", "false")
-                        .WithSetting("AutorouteSettings.PatternDefinitions", "[{Name:'Title', Pattern: '{Content.Slug}', Description: 'my-projections'}]")
+                        .WithSetting("AutorouteSettings.AllowCustomPattern", "True")
+                        .WithSetting("AutorouteSettings.AutomaticAdjustmentOnEdit", "False")
+                        .WithSetting("AutorouteSettings.PatternDefinitions", "[{\"Name\":\"Title\",\"Pattern\":\"{Content.Slug}\",\"Description\":\"my-projections\"}]")
                         .WithSetting("AutorouteSettings.DefaultPatternIndex", "0"))
                     .WithPart("MenuPart")
                     .WithPart("ProjectionPart")
@@ -261,6 +261,8 @@ namespace Orchard.Projections {
                     .WithSetting("Stereotype", "MenuItem")
                 );
 
+            ContentDefinitionManager.AlterTypeDefinition("ProjectionPage", cfg => cfg.Listable());
+
             return 3;
         }
 
@@ -271,6 +273,15 @@ namespace Orchard.Projections {
                             );
 
             return 3;
+        }
+
+        public int UpdateFrom3() {
+            ContentDefinitionManager.AlterTypeDefinition("NavigationQueryMenuItem",
+                cfg => cfg
+                    .WithPart("IdentityPart")
+                );
+
+            return 4;
         }
     }
 }

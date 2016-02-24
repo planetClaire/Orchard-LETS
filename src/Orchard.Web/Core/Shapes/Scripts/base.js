@@ -178,9 +178,10 @@
                 $("[name=" + controller.attr("name") + "]").click(function () { $("[name=" + $(this).attr("name") + "]").each($(this).toggleWhatYouControl); });
             }
             else if (controller.is("option")) {
-                controller.parent().change(function () {
+                controller.parent().change(function() {
                     controller.toggleWhatYouControl();
-                }).each($(this).toggleWhatYouControl);
+                });
+                controller.each($(this).toggleWhatYouControl);
             }
         });
     });
@@ -210,7 +211,7 @@
     $(function () {
         var magicToken = $("input[name=__RequestVerificationToken]").first();
         if (!magicToken) { return; } // no sense in continuing if form POSTS will fail
-        $("body").on("click", "a[itemprop~=UnsafeUrl]", function() {
+        $("body").on("click", "a[itemprop~=UnsafeUrl], a[data-unsafe-url]", function() {
             var _this = $(this);
             var hrefParts = _this.attr("href").split("?");
             var form = $("<form action=\"" + hrefParts[0] + "\" method=\"POST\" />");
@@ -226,8 +227,22 @@
             form.css({ "position": "absolute", "left": "-9999em" });
             $("body").append(form);
 
+            var unsafeUrlPrompt = _this.data("unsafe-url");
+
+            if (unsafeUrlPrompt && unsafeUrlPrompt.length > 0) {
+                if (!confirm(unsafeUrlPrompt)) {
+                    return false;
+                }
+            }
+
             if (_this.filter("[itemprop~='RemoveUrl']").length == 1) {
-                if (!confirm(confirmRemoveMessage)) {
+            	// use a custom message if its set in data-message
+            	var dataMessage = _this.data('message');
+            	if (dataMessage === undefined) {
+            		dataMessage = confirmRemoveMessage;
+            	}
+
+                if (!confirm(dataMessage)) {
                     return false;
                 }
             }
