@@ -62,7 +62,7 @@ namespace LETS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterMember(RegisterMemberViewModel memberViewModel, RegisterNoticeTypesViewModel noticeTypesViewModel)
+        public ActionResult RegisterMember(RegisterMemberViewModel memberVM, RegisterNoticeTypesViewModel noticeTypesViewModel)
         {
             ActionResult actionResult = null;
             // validate user with attached parts
@@ -77,11 +77,11 @@ namespace LETS.Controllers
                 return new ShapeResult(this, registerShape);
             }
             // validated, proceed to register member
-            dynamic usersRegisterResult = Register(memberViewModel.Email, memberViewModel.Email, memberViewModel.Password, memberViewModel.ConfirmPassword);
+            dynamic usersRegisterResult = Register(memberVM.Email, memberVM.Email, memberVM.Password, memberVM.ConfirmPassword);
             if (usersRegisterResult is RedirectResult || usersRegisterResult is RedirectToRouteResult)
             {
                 // successful result, now update the new user with the parts
-                var newUser = _membershipService.GetUser(memberViewModel.Email);
+                var newUser = _membershipService.GetUser(memberVM.Email);
                 if (newUser != null)
                 {
                     _orchardServices.ContentManager.UpdateEditor(newUser, this);
