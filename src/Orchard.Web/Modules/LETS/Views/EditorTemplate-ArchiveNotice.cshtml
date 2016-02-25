@@ -4,7 +4,14 @@
 @using System.Web.Mvc.Html;
 @using Orchard.ArchiveLater.ViewModels
 @{
-    var archiveLater = (ArchiveLaterViewModel) Model.Model;
+    Style.Require("jQueryCalendars_Picker");
+    Style.Require("jQueryUI_Calendars_Picker");
+    Style.Require("jQueryDateTimeEditor");
+
+    Script.Require("jQueryCalendars_All").AtFoot();
+    Script.Require("jQueryCalendars_Picker_Ext").AtFoot();
+
+    var archiveLater = (ArchiveLaterViewModel)Model.Model;
     var maxDays = WorkContext.CurrentSite.As<LETSSettingsPart>().MaximumNoticeAgeDays;
     var cultureInfo = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
     var shortDateFormat = cultureInfo.DateTimeFormat.ShortDatePattern;
@@ -45,21 +52,31 @@
     </div>  
 </div>
 
+@Display.CalendarsPickerLocalization()
+
 @using (Script.Foot())
 {
-    @* generates the localization script *@
-    @Display.DatePickerLocalization()
-
-    <script type="text/javascript">    
+    <script type="text/javascript">
     //<![CDATA[
+
         $(function () {
-            
+
             // need this for unobtrusive date validation to work in chrome http://stackoverflow.com/questions/6906725/unobtrusive-validation-in-chrome-wont-validate-with-dd-mm-yyyy
             jQuery.validator.methods["date"] = function (value, element) { return true; }
-            
+
             // activate the datepicker
             var txtArchiveDate = $('#@Html.FieldIdFor(m => archiveLater.Editor.Date)');
-            txtArchiveDate.datepicker({ showAnim: "", minDate: 0, maxDate: @maxDays, showOn: "both", buttonImageOnly: false });
+            txtArchiveDate.calendarsPicker({ 
+                showAnim: "", 
+                minDate: 0, 
+                maxDate: @maxDays, 
+                showOn: "both", 
+                buttonImageOnly: false,
+                renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
+                    picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
+                    month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
+                })
+            });
             // ensure the default value is sent if the user has manually wiped out the expiry date
             // obviously this won't work if js is disabled but this might not be a huge issue
             // also, the user could manually type a date out of range
@@ -74,10 +91,10 @@
             if ($().button) {
                 if (txtArchiveDate.val() === '@maxDate') {
                     $("#aMaxDays").button('toggle');
-                } 
+                }
                 else if (txtArchiveDate.val() === '@twoDays') {
                     $("#aTwoDays").button('toggle');
-                } 
+                }
                 else if (txtArchiveDate.val() === '@sevenDays') {
                     $("#aSevenDays").button('toggle');
                 }
@@ -85,9 +102,9 @@
             $("#archiveQuickPick a.btn").click(function(event) {
                 event.preventDefault();
                 var days = $(this).children("input:hidden").val();
-                txtArchiveDate.datepicker( "setDate" , "+" + days);
+                txtArchiveDate.calendarsPicker( "setDate" , "+" + days);
             });
         })
-    //]]>
+        //]]>
 </script>
 }

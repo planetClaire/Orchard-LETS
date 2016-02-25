@@ -477,3 +477,6 @@ li.tagCloud-tag { display: inline; }
     border-bottom: solid 1px #eeeeee;
     margin-bottom: 15px;
 }
+.ui-datepicker select, .ui-datepicker-inline select{
+    height: auto;
+}
