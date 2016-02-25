@@ -77,14 +77,10 @@
                     month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
                 })
             });
-            // ensure the default value is sent if the user has manually wiped out the expiry date
-            // obviously this won't work if js is disabled but this might not be a huge issue
-            // also, the user could manually type a date out of range
-            // probably just something to monitor
-            // todo may be a better way to do this but don't want to duplicate ArchiveLater code
+            // ensure the default value is sent if date has no value
             $("button:submit").click(function() {
                 if (txtArchiveDate.val() === '') {
-                    txtArchiveDate.val('@archiveLater.Editor.Date');
+                    txtArchiveDate.val('@maxDate');
                 }
             });
             // quick pick, if bootstrap-button.js is present
