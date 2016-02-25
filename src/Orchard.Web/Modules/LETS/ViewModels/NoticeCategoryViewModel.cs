@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using LETS.Helpers;
+using System.Web.Mvc;
 
 namespace LETS.ViewModels
 {
@@ -10,7 +10,7 @@ namespace LETS.ViewModels
         [Required, DisplayName("Category")]
         public int IdCategory { get; set; }
 
-        public IEnumerable<GroupedSelectListItem> Categories { get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; }
 
     }
 }

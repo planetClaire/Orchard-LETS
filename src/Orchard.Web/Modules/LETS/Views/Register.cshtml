@@ -60,7 +60,7 @@
                     @for (var j = 0; j < noticeTypesVM.NoticeTypes[i].RequiredCount; j++)
                     {
                         <div class="control-group">
-                            @Html.DropDownGroupListFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm, noticeTypesVM.CategoryTerms, "Choose a category...")
+                            @Html.DropDownListFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm, noticeTypesVM.CategoryTerms, "Choose a category...")
                             @Html.TextBoxFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title, new { placeholder = string.Format("Type your {0} here...", noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower()), @class = "wide input-xlarge" })
                             <div class="registerNoticeError">
                                 @Html.ValidationMessageFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm)

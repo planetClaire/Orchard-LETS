@@ -1,5 +1,4 @@
-﻿@using LETS.Helpers
-@using LETS.Models
+﻿@using LETS.Models
 @using Orchard.ContentManagement
 @using Orchard.Security
 @model LETS.ViewModels.EditTransactionViewModel
@@ -34,7 +33,7 @@
     <div class="control-group">
         <label class="required control-label" for="@Html.FieldIdFor(m => m.IdSeller)">@T("Seller")</label>
         <div class="controls noticeTypesRadioList">
-            @Html.DropDownGroupListFor(model => model.IdSeller, Model.Members, @T("Choose a seller").ToString())
+            @Html.DropDownListFor(model => model.IdSeller, Model.Members, @T("Choose a seller").ToString())
             @Html.ValidationMessageFor(model => model.IdSeller)
         </div>
     </div>
@@ -47,7 +46,7 @@ else {
 <div class="control-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.IdBuyer)">@T("Buyer")</label>
     <div class="controls noticeTypesRadioList">
-        @Html.DropDownGroupListFor(model => model.IdBuyer, Model.Members, @T("Choose a buyer").ToString())
+        @Html.DropDownListFor(model => model.IdBuyer, Model.Members, @T("Choose a buyer").ToString())
         @Html.ValidationMessageFor(model => model.IdBuyer)
     </div>
 </div>

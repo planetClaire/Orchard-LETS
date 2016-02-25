@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using LETS.Helpers;
 using LETS.Models;
 using LETS.ViewModels;
@@ -28,8 +29,8 @@ namespace LETS.Services
         MemberAdminPart GetMemberAdmin(int idMember);
         Dictionary<string, object> GetMergeVarsForMailChimp(MemberPart member, string idList);
         IEnumerable<MemberViewModel> GetMemberList(MemberType memberType);
-        IEnumerable<GroupedSelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes);
-        IEnumerable<GroupedSelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes, int idMemberToExclude);
+        IEnumerable<SelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes);
+        IEnumerable<SelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes, int idMemberToExclude);
         IEnumerable<dynamic> GetMembersByLocality(int idLocality);
     }
 

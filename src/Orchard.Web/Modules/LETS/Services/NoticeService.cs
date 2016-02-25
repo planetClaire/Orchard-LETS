@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web.Mvc;
 using Orchard.Taxonomies.Helpers;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using JetBrains.Annotations;
-using LETS.Helpers;
 using LETS.Models;
 using LETS.ViewModels;
 using Orchard;
@@ -121,17 +121,16 @@ namespace LETS.Services
             return _contentManager.GetMany<NoticePart>(list, VersionOptions.Published, QueryHints.Empty).Select(contentItem => _contentManager.BuildDisplay(contentItem, "DetailedSummary")); 
         }
 
-        public IEnumerable<GroupedSelectListItem> GetCategoryTerms()
+        public IEnumerable<SelectListItem> GetCategoryTerms()
         {
             var terms = _taxonomyService.GetTerms(_orchardServices.WorkContext.CurrentSite.As<LETSSettingsPart>().IdTaxonomyNotices);
             var topLevelTerms = terms.Where(termPart => termPart.GetLevels().Equals(0));
-            var groupedTerms = new List<GroupedSelectListItem>();
-            foreach (var topLevelTerm in topLevelTerms)
-            {
-                groupedTerms.AddRange(_taxonomyService.GetChildren(topLevelTerm).Select(term => new GroupedSelectListItem
+            var groupedTerms = new List<SelectListItem>();
+            foreach (var topLevelTerm in topLevelTerms) {
+                var group = new SelectListGroup {Name = topLevelTerm.Name};
+                groupedTerms.AddRange(_taxonomyService.GetChildren(topLevelTerm).Select(term => new SelectListItem
                 {
-                    GroupName = topLevelTerm.Name,
-                    GroupKey = topLevelTerm.Id.ToString(CultureInfo.InvariantCulture),
+                    Group = group,
                     Text = term.Name,
                     Value = term.Id.ToString(CultureInfo.InvariantCulture)
                 }));

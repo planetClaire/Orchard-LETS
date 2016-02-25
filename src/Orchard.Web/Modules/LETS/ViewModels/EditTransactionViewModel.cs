@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using LETS.Helpers;
 using LETS.Models;
 
@@ -24,7 +25,7 @@ namespace LETS.ViewModels
         [Required(ErrorMessage = "The Buyer is required")]
         public int? IdBuyer { get; set; }
 
-        public IEnumerable<GroupedSelectListItem> Members { get; set; }
+        public IEnumerable<SelectListItem> Members { get; set; }
 
         public string CurrencyUnit { get; set; }
 

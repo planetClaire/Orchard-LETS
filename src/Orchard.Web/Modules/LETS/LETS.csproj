@@ -165,7 +165,6 @@
     <Compile Include="Handlers\AddressPartHandler.cs" />
     <Compile Include="Handlers\LocalityPartHandler.cs" />
     <Compile Include="Handlers\TransactionPartHandler.cs" />
-    <Compile Include="Helpers\GroupedSelectListItem.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\NoticeTypePart.cs">

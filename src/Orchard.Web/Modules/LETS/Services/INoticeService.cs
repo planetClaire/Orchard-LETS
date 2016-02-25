@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Web.Mvc;
 using Orchard.Taxonomies.Models;
-using LETS.Helpers;
 using LETS.Models;
 using LETS.ViewModels;
 using Orchard;
@@ -17,7 +17,7 @@ namespace LETS.Services
         IContentQuery<NoticePart, NoticePartRecord> GetNotices();
         IContentQuery<NoticePart> GetNotices(int idNoticeType);
         IEnumerable<dynamic> GetNoticesByLocality(int idLocality);
-        IEnumerable<GroupedSelectListItem> GetCategoryTerms();
+        IEnumerable<SelectListItem> GetCategoryTerms();
         IEnumerable<TermPart> GetTopLevelCategories();
         NoticeTypePartRecord GetNoticeType(int? id);
         string GetNoticeTypeTitle(int idNoticeType);

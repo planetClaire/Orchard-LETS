@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using JetBrains.Annotations;
-using LETS.Helpers;
 using LETS.Models;
 using LETS.ViewModels;
-using NHibernate.Linq;
 using NogginBox.MailChimp.Models;
 using NogginBox.MailChimp.Services;
 using Orchard;
@@ -29,19 +28,17 @@ namespace LETS.Services
         private readonly IOrchardServices _orchardServices;
         private readonly IContentManager _contentManager;
         private readonly IMailChimpService _mailchimpService;
-        private readonly IAddressService _addressService;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
         private readonly Work<ISessionLocator> _sessionLocator;
         private readonly IRepository<TransactionPartRecord> _transactionRepository;
 
-        public MemberService(IRoleService roleService, IOrchardServices orchardServices, IContentManager contentManager, IMailChimpService mailchimpService, IAddressService addressService, ICacheManager cacheManager, ISignals signals, Work<ISessionLocator> sessionLocator, IRepository<TransactionPartRecord> transactionRepository)
+        public MemberService(IRoleService roleService, IOrchardServices orchardServices, IContentManager contentManager, IMailChimpService mailchimpService, ICacheManager cacheManager, ISignals signals, Work<ISessionLocator> sessionLocator, IRepository<TransactionPartRecord> transactionRepository)
         {
             _roleService = roleService;
             _orchardServices = orchardServices;
             _contentManager = contentManager;
             _mailchimpService = mailchimpService;
-            _addressService = addressService;
             _cacheManager = cacheManager;
             _signals = signals;
             _sessionLocator = sessionLocator;
@@ -239,35 +236,36 @@ namespace LETS.Services
             });
         }
 
-        public IEnumerable<GroupedSelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes) {
-            var groupedMembers = new List<GroupedSelectListItem>();
+        IEnumerable<SelectListItem> IMemberService.GetGroupedMembers(IEnumerable<MemberType> memberTypes) {
+            var groupedMembers = new List<SelectListItem>();
+            foreach (var memberType in memberTypes) {
+                PopulateGroupedMembers(memberType, groupedMembers, GetMemberParts(memberType));
+            }
+            return groupedMembers;
+        }
+
+        IEnumerable<SelectListItem> IMemberService.GetGroupedMembers(IEnumerable<MemberType> memberTypes, int idMemberToExclude) {
+            var groupedMembers = new List<SelectListItem>();
             foreach (var memberType in memberTypes)
             {
-                groupedMembers.AddRange(GetMemberParts(memberType).Select(member => new GroupedSelectListItem
-                {
-                    GroupName = Convert.ToString(memberType),
-                    GroupKey = Convert.ToString(memberType),
-                    Text = member.LastFirstName,
-                    Value = Convert.ToString(member.Id)
-                }));
+                PopulateGroupedMembers(memberType, groupedMembers, GetMemberParts(memberType, idMemberToExclude));
             }
             return groupedMembers;
         }
 
-        public IEnumerable<GroupedSelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes, int idMemberToExclude) {
-            var groupedMembers = new List<GroupedSelectListItem>();
-            foreach (var memberType in memberTypes) {
-                groupedMembers.AddRange(GetMemberParts(memberType, idMemberToExclude).Select(member => new GroupedSelectListItem {
-                    GroupName = Convert.ToString(memberType),
-                    GroupKey = Convert.ToString(memberType),
-                    Text = member.LastFirstName,
-                    Value = Convert.ToString(member.Id)
-                }));
-            }
-            return groupedMembers;
+        private static void PopulateGroupedMembers(MemberType memberType, List<SelectListItem> groupedMembers, IEnumerable<MemberPart> memberParts)
+        {
+            var group = new SelectListGroup { Name = Convert.ToString(memberType) };
+            groupedMembers.AddRange(memberParts.Select(member => new SelectListItem
+            {
+                Text = member.LastFirstName,
+                Value = Convert.ToString(member.Id),
+                Group = @group
+            }));
         }
 
-        public IEnumerable<dynamic> GetMembersByLocality(int idLocality) {
+        public IEnumerable<dynamic> GetMembersByLocality(int idLocality)
+        {
 
             return _contentManager.Query<MemberPart>().Join<AddressPartRecord>().Where(a => a.LocalityPartRecord.Id.Equals(idLocality)).List<MemberPart>().Select(member => _contentManager.BuildDisplay(member, "Summary"));
         }

@@ -1,5 +1,4 @@
-﻿@using LETS.Helpers
-@using LETS.ViewModels
+﻿@using LETS.ViewModels
 @{
     Layout.Title = T("Edit Notice").ToString();
     var noticeCategoryVM = (NoticeCategoryViewModel) Model.NoticeCategoryViewModel;
@@ -18,7 +17,7 @@
         <div class="control-group">
             <label class="control-label">@T("Category")</label>
             <div class="controls">
-                @Html.DropDownGroupListFor(m => noticeCategoryVM.IdCategory, noticeCategoryVM.Categories, "Choose a category...")
+                @Html.DropDownListFor(m => noticeCategoryVM.IdCategory, noticeCategoryVM.Categories, "Choose a category...")
                 @Html.ValidationMessageFor(m => noticeCategoryVM.IdCategory)
             </div>
         </div>

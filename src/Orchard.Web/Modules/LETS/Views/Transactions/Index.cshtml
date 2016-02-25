@@ -1,5 +1,4 @@
 ﻿@using System.Globalization
-@using LETS.Helpers
 @using LETS.Models
 @using Orchard.ContentManagement
 @model LETS.ViewModels.MemberTransactionsViewModel
@@ -51,7 +50,7 @@
                     @Html.ValidationMessageFor(m => m.NewTransaction.TransactionDate, @T("The trade date is required").ToString(), new { @class = "help-block" })
                 </td>
                 <td>
-                    @Html.DropDownGroupListFor(model => model.NewTransaction.IdBuyer, Model.NewTransaction.Members, @T("Choose a buyer").ToString())
+                    @Html.DropDownListFor(model => model.NewTransaction.IdBuyer, Model.NewTransaction.Members, @T("Choose a buyer").ToString())
                     @Html.ValidationMessageFor(model => model.NewTransaction.IdBuyer, @T("The buyer is required").ToString(), new { @class = "help-block" })
                 </td>
                 <td></td>

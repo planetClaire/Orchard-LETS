@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using LETS.Helpers;
+using System.Web.Mvc;
 
 namespace LETS.ViewModels
 {
@@ -14,7 +14,7 @@ namespace LETS.ViewModels
 
         public List<RegisterNoticesViewModel> NoticeTypes { get; set; }
 
-        public IEnumerable<GroupedSelectListItem> CategoryTerms { get; set; }
+        public IEnumerable<SelectListItem> CategoryTerms { get; set; }
     }
 
     public class RegisterNoticesViewModel
