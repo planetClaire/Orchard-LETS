@@ -28,6 +28,7 @@ using Orchard.DisplayManagement;
 using Orchard.DisplayManagement.Descriptors;
 using Orchard.DisplayManagement.Implementation;
 using Orchard.Environment;
+using Orchard.Environment.Configuration;
 using Orchard.Mvc;
 using Orchard.Security;
 using Orchard.Settings;
@@ -96,6 +97,9 @@ namespace LETS.Tests.Controllers
             builder.RegisterType<NoticePartHandler>().As<IContentHandler>();
             builder.RegisterType<TitlePartHandler>().As<IContentHandler>();
             builder.RegisterType<LETSHandler>().As<IContentHandler>();
+            builder.RegisterInstance(new Mock<IAppConfigurationAccessor>().Object);
+            builder.RegisterInstance(new Work<IEnumerable<IShapeTableEventHandler>>(resolve => _container.Resolve<IEnumerable<IShapeTableEventHandler>>())).AsSelf();
+             
         }
 
         public class LETSHandler : ContentHandler {

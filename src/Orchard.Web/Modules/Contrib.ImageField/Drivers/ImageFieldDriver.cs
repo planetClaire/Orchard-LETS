@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using JetBrains.Annotations;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -19,7 +18,6 @@ using System.Drawing;
 using Orchard.Utility.Extensions;
 
 namespace Contrib.ImageField.Drivers {
-    [UsedImplicitly]
     public class ImageFieldDriver : ContentFieldDriver<Fields.ImageField> {
         private const string TemplateName = "Fields/Contrib.Image"; // EditorTemplates/Fields/Contrib.Image.cshtml
         private const string TokenContentType = "{content-type}";

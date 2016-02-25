@@ -42,8 +42,14 @@ namespace LETS.Events
         {
         }
 
+        public void LoggingIn(string userNameOrEmail, string password) {
+        }
+
         public void LoggedIn(IUser user)
         {
+        }
+
+        public void LogInFailed(string userNameOrEmail, string password) {
         }
 
         public void LoggedOut(IUser user)
