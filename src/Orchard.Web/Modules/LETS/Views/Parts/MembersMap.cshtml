@@ -1,6 +1,6 @@
 ﻿@{
     Script.Require("jQuery");
-    Script.Include(string.Format("http://maps.googleapis.com/maps/api/js?key={0}&sensor=false", Model.MembersMap.ApiKey));
+    Script.Include(string.Format("https://maps.googleapis.com/maps/api/js?key={0}&sensor=false", Model.MembersMap.ApiKey));
     Script.Include("MembersMap.js");
     Style.Include("common.css");
     var markers = new MvcHtmlString(Model.MemberMarkers);
