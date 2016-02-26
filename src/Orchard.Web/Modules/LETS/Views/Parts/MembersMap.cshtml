@@ -1,7 +1,6 @@
 ﻿@{
     Script.Require("jQuery");
     Script.Include(string.Format("https://maps.googleapis.com/maps/api/js?key={0}&sensor=false", Model.MembersMap.ApiKey));
-    Script.Include("MembersMap.js");
     Style.Include("common.css");
     var markers = new MvcHtmlString(Model.MemberMarkers);
 }
@@ -11,12 +10,35 @@
 @using (Script.Head()) {
     <script type="text/javascript">
         var map;
-        var infoWindow;
 
-        $(document).ready(function() {
-            initializeMap(@Model.MembersMap.Latitude, @Model.MembersMap.Longitude, @Model.MembersMap.ZoomLevel);
-            addMarkers();
-       });
+        function initializeMap(latitude, longitude, zoomLevel) {
+            var mapOptions = {
+                center: new google.maps.LatLng(latitude, longitude),
+                zoom: zoomLevel,
+                maxZoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+        }
+
+        function AddMarker(objMarker) {
+
+            var latlng = objMarker.LatLong.split(",");
+            var position = new window.google.maps.LatLng(latlng[0], latlng[1]);
+            var marker = new window.google.maps.Marker({
+                position: position,
+                map: map,
+                title: "Please click me!"
+            });
+            var infoWindow = new google.maps.InfoWindow({
+                content: objMarker.InfoHtml
+            });
+            window.google.maps.event.addListener(marker, 'click', function () {
+                infoWindow.content = objMarker.InfoHtml;
+                infoWindow.open(map, marker);
+            });
+        }
 
         function addMarkers() {
             var markers = @markers;
@@ -24,6 +46,11 @@
                 AddMarker(markers[i]);
             }
         }
+
+        $(document).ready(function() {
+            initializeMap(@Model.MembersMap.Latitude, @Model.MembersMap.Longitude, @Model.MembersMap.ZoomLevel);
+            addMarkers();
+        });
 
     </script>
 }

@@ -73,7 +73,6 @@
     </Content>
     <Content Include="Scripts\bootstrap-accordion.min.js" />
     <Content Include="Scripts\slimbox2.js" />
-    <Content Include="Scripts\MembersMap.js" />
     <Content Include="Styles\bootstrap-accordion.min.css" />
     <Content Include="Styles\common.css" />
     <Content Include="Styles\menu.LETS-admin.css" />
@@ -82,7 +81,9 @@
     <Content Include="Views\Parts\Locality.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
