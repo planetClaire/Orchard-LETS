@@ -13,3 +13,6 @@ table#tableDemurrageForecast td.currency {
 table.sub td.date {
     width: 90px;
 }
+.email-verified-False {
+    color: red !important;
+}

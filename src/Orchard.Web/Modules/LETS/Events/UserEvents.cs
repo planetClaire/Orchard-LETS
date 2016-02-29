@@ -80,6 +80,7 @@ namespace LETS.Events
                 _noticeService.PublishMemberNotices(user.Id);
                 SubscribeToMailChimp(user);
                 _signals.Trigger("letsMemberListChanged");
+                _signals.Trigger("letsDisabledMemberListChanged");
             }
         }
 
@@ -90,6 +91,7 @@ namespace LETS.Events
                 _noticeService.PublishMemberNotices(user.Id);
                 SubscribeToMailChimp(user);
                 _signals.Trigger("letsMemberListChanged");
+                _signals.Trigger("letsDisabledMemberListChanged");
             }
         }
 
@@ -112,6 +114,7 @@ namespace LETS.Events
         {
             _noticeService.DeleteMemberNotices(user.Id);
             _signals.Trigger("letsMemberListChanged");
+            _signals.Trigger("letsDisabledMemberListChanged");
             UnsubscribeMailchimp(user);
         }
 
@@ -119,6 +122,7 @@ namespace LETS.Events
         {
             _noticeService.DeleteMemberNotices(user.Id);
             _signals.Trigger("letsMemberListChanged");
+            _signals.Trigger("letsDisabledMemberListChanged");
             UnsubscribeMailchimp(user);
         }
 

@@ -217,22 +217,48 @@ namespace LETS.Services
                     var memberAdminPart = user.As<MemberAdminPart>();
                     var addressPart = user.As<AddressPart>();
                     var locality = _contentManager.Get(addressPart.Locality.Id);
-                    memberViewModels.Add(new MemberViewModel
-                    {
-                        Id = user.Id,
-                        UserName = user.UserName,
-                        JoinDate = memberAdminPart.JoinDate.HasValue ? memberAdminPart.JoinDate.Value : DateTime.MinValue,
-                        Balance = GetMemberBalance(user.Id),
-                        Turnover = GetMemberTurnover(user.Id),
-                        FirstName = memberPart.FirstName,
-                        LastName = memberPart.LastName,
-                        LastFirstName = memberPart.LastFirstName,
-                        Telephone = memberPart.Telephone,
-                        IdLocality = addressPart.Locality.Id,
-                        Locality = locality != null ? locality.As<TitlePart>().Title : "na"
-                    });
+                    AddMemberViewModel(memberViewModels, user, memberAdminPart, memberPart, addressPart, locality);
                 }
                 return memberViewModels;
+            });
+        }
+
+        public IEnumerable<MemberViewModel> GetDisabledMemberList() {
+            return _cacheManager.Get(string.Format("letsDisabledMemberList"), ctx => {
+                ctx.Monitor(_signals.When("letsDisabledMemberListChanged"));
+                var disabledMembers = _contentManager
+                    .Query<UserPart, UserPartRecord>("User").Where(u => u.RegistrationStatus == UserStatus.Pending)
+                    //.Join<MemberAdminPartRecord>().Where(m => m.MemberType == memberType)
+                    .List();
+                var memberViewModels = new List<MemberViewModel>();
+                // do not convert this to a LINQ expression, it will cause lifetime exceptions in Orchard (because of the cache lambda)
+                foreach (var user in disabledMembers)
+                {
+                    var memberPart = user.As<MemberPart>();
+                    var memberAdminPart = user.As<MemberAdminPart>();
+                    var addressPart = user.As<AddressPart>();
+                    var locality = _contentManager.Get(addressPart.Locality.Id);
+                    AddMemberViewModel(memberViewModels, user, memberAdminPart, memberPart, addressPart, locality);
+                }
+                return memberViewModels;
+            });
+        }
+
+        private void AddMemberViewModel(List<MemberViewModel> memberViewModels, UserPart user, MemberAdminPart memberAdminPart, MemberPart memberPart, AddressPart addressPart, ContentItem locality) {
+            memberViewModels.Add(new MemberViewModel {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                EmailStatus = user.EmailStatus,
+                JoinDate = memberAdminPart.JoinDate.HasValue ? memberAdminPart.JoinDate.Value : DateTime.MinValue,
+                Balance = GetMemberBalance(user.Id),
+                Turnover = GetMemberTurnover(user.Id),
+                FirstName = memberPart.FirstName,
+                LastName = memberPart.LastName,
+                LastFirstName = memberPart.LastFirstName,
+                Telephone = memberPart.Telephone,
+                IdLocality = addressPart.Locality.Id,
+                Locality = locality != null ? locality.As<TitlePart>().Title : "na"
             });
         }
 

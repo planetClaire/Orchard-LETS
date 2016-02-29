@@ -29,6 +29,7 @@ namespace LETS.Services
         MemberAdminPart GetMemberAdmin(int idMember);
         Dictionary<string, object> GetMergeVarsForMailChimp(MemberPart member, string idList);
         IEnumerable<MemberViewModel> GetMemberList(MemberType memberType);
+        IEnumerable<MemberViewModel> GetDisabledMemberList();
         IEnumerable<SelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes);
         IEnumerable<SelectListItem> GetGroupedMembers(IEnumerable<MemberType> memberTypes, int idMemberToExclude);
         IEnumerable<dynamic> GetMembersByLocality(int idLocality);

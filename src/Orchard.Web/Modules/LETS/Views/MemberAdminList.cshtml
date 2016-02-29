@@ -1,4 +1,5 @@
-﻿@Html.AntiForgeryTokenOrchard()
+﻿@using Orchard.Users.Models
+@Html.AntiForgeryTokenOrchard()
 
 <h1>@Model.MemberType</h1>
 <table class="items" >
@@ -24,10 +25,18 @@
     </thead>
     @foreach (var member in Model.Members)
     {
+        var emailTitle = "Verified";
+        var emailVerified = true;
+        if (member.EmailStatus.Equals(UserStatus.Pending)) {
+            emailVerified = false;
+            emailTitle = "Email address un-verified";
+        }
     <tr>
         <td>@member.LastName</td>
         <td>@member.FirstName</td>
-        <td>@member.Email</td>
+        <td>
+            <a href='@string.Format("mailto:{0}", member.Email)' class='@string.Format("email-verified-{0}", emailVerified)' title='@emailTitle'>@member.Email</a>
+        </td>
         <td>@member.JoinDate.ToShortDateString()</td>
         <td>@member.Balance</td>
         <td>@member.Turnover</td>
@@ -39,11 +48,17 @@
             </div>
         </td>
         <td>
-            @if (Model.MemberType.Equals("Members"))
-            {
-                @Html.ActionLink("Disable", "Disable", new { area = "LETS", Controller = "MemberAdmin", id = member.Id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl", data_message = "Are you sure? This will permanently delete all the member's notices.  Disabling a member means you can re-enable them later." })
+            @if (Model.MemberType.Equals("Members")) {
+                @Html.ActionLink("Disable", "Disable", new {area = "LETS", Controller = "MemberAdmin", id = member.Id}, new {@class = "edit", itemprop = "UnsafeUrl RemoveUrl", data_message = "Are you sure? This will permanently delete all the member's notices.  Disabling a member means you can re-enable them later."})
+            }
+            @if (Model.MemberType.Equals("Disabled Members") ) {
+                @(emailVerified 
+                ? Html.ActionLink("Enable", "Enable", new {area = "LETS", Controller = "MemberAdmin", id = member.Id}, new {@class = "edit", itemprop = "UnsafeUrl", data_message = "Are you sure you want to approve/enable this member?"}) 
+                : Html.ActionLink("Send verification email", "SendVerificationEmail", new {area = "LETS", Controller = "MemberAdmin", id = member.Id}, new {@class = "edit", itemprop = "UnsafeUrl", data_message = "Are you sure?  The member was already sent an email when they signed up.  Send another one if they've lost it."}))
+            }
+            @if (Model.MemberType.Equals("Members") || Model.MemberType.Equals("Disabled Members")) {
                 @: |
-                @Html.ActionLink("Delete", "Delete", new { area = "LETS", Controller = "MemberAdmin", id = member.Id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl", data_message = "Are you sure? This will permanently delete this member and all the member\'s notices.  This is permanent." })
+                @Html.ActionLink("Delete", "Delete", new {area = "LETS", Controller = "MemberAdmin", id = member.Id}, new {@class = "edit", itemprop = "UnsafeUrl RemoveUrl", data_message = "Are you sure? This is permanent."})
             }
         </td>
     </tr>

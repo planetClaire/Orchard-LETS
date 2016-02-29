@@ -8,6 +8,7 @@ using LETS.Services;
 using LETS.ViewModels;
 using Orchard;
 using System.Web.Mvc;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
 using Orchard.Localization;
@@ -36,8 +37,9 @@ namespace LETS.Controllers
 
         private readonly IUserService _userService;
         private readonly IShapeFactory _shapeFactory;
+        private readonly ISignals _signals;
 
-        public AccountController(IAuthenticationService authenticationService, IMembershipService membershipService, IUserService userService, IOrchardServices orchardServices, IUserEventHandler userEventHandlers, IContentManager contentManager, INoticeService noticeService, ITaxonomyService taxonomyService, IShapeFactory shapeFactory) 
+        public AccountController(IAuthenticationService authenticationService, IMembershipService membershipService, IUserService userService, IOrchardServices orchardServices, IUserEventHandler userEventHandlers, IContentManager contentManager, INoticeService noticeService, ITaxonomyService taxonomyService, IShapeFactory shapeFactory, ISignals signals) 
             : base(authenticationService, membershipService, userService, orchardServices, userEventHandlers)
         {
             _membershipService = membershipService;
@@ -49,6 +51,7 @@ namespace LETS.Controllers
             _authenticationService = authenticationService;
             _userEventHandlers = userEventHandlers;
             _userService = userService;
+            _signals = signals;
         }
 
         public ActionResult RegisterMember()
@@ -62,7 +65,7 @@ namespace LETS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterMember(RegisterMemberViewModel memberVM, RegisterNoticeTypesViewModel noticeTypesViewModel)
+        public ActionResult RegisterMember(RegisterMemberViewModel memberVM, RegisterNoticeTypesViewModel noticeTypesVM)
         {
             ActionResult actionResult = null;
             // validate user with attached parts
@@ -86,10 +89,11 @@ namespace LETS.Controllers
                 {
                     _orchardServices.ContentManager.UpdateEditor(newUser, this);
                     newUser.As<MemberAdminPart>().JoinDate = DateTime.Now;
+                    _signals.Trigger("letsDisabledMemberListChanged");
                     actionResult = usersRegisterResult;
                     try
                     {
-                        SaveNoticeDrafts(noticeTypesViewModel, newUser);
+                        SaveNoticeDrafts(noticeTypesVM, newUser);
                     }
                     catch (Exception ex)
                     {

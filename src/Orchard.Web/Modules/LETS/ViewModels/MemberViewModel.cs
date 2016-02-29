@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using LETS.Models;
+using Orchard.Users.Models;
 
 namespace LETS.ViewModels
 {
@@ -19,5 +19,6 @@ namespace LETS.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Locality { get; set; }
+        public UserStatus EmailStatus { get; set; }
     }
 }

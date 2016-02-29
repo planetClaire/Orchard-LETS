@@ -9,11 +9,14 @@ using NogginBox.MailChimp.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Localization;
+using Orchard.Mvc.Extensions;
 using Orchard.Security;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
+using Orchard.Users.Services;
+using Orchard.Utility.Extensions;
 
 namespace LETS.Controllers
 {
@@ -27,8 +30,9 @@ namespace LETS.Controllers
         private readonly INoticeService _noticeService;
         private readonly ITransactionService _transactionService;
         private readonly IUserEventHandler _userEventHandlers;
+        private readonly IUserService _userService;
 
-        public MemberAdminController(IMemberService memberService, IMailChimpService mailchimpService, IOrchardServices orchardServices, INoticeService noticeService, ITransactionService transactionService, IUserEventHandler userEventHandlers)
+        public MemberAdminController(IMemberService memberService, IMailChimpService mailchimpService, IOrchardServices orchardServices, INoticeService noticeService, ITransactionService transactionService, IUserEventHandler userEventHandlers, IUserService userService)
         {
             _memberService = memberService;
             _mailchimpService = mailchimpService;
@@ -37,6 +41,7 @@ namespace LETS.Controllers
             _transactionService = transactionService;
             _userEventHandlers = userEventHandlers;
             T = NullLocalizer.Instance;
+            _userService = userService;
         }
  
         public ActionResult Index() {
@@ -44,12 +49,14 @@ namespace LETS.Controllers
             var adminMemberList = new MemberListViewModel { Members = _memberService.GetMemberList(MemberType.Admin).OrderBy(m => m.LastName).ThenBy(m => m.FirstName), MemberType = @T("Admin Members").ToString() };
             var letsSytemList = new MemberListViewModel { Members = _memberService.GetMemberList(MemberType.LETSystem).OrderBy(m => m.LastName).ThenBy(m => m.FirstName), MemberType = @T("Other LETS Systems").ToString() };
             var sinkingFundList = new MemberListViewModel { Members = _memberService.GetMemberList(MemberType.SinkingFund).OrderBy(m => m.LastName).ThenBy(m => m.FirstName), MemberType = @T("Sinking Fund").ToString() };
+            var disabledList = new MemberListViewModel{ Members = _memberService.GetDisabledMemberList().OrderBy(m => m.LastName).ThenBy(m => m.FirstName), MemberType = @T("Disabled Members").ToString() };
             var archivedList = new MemberListViewModel { Members = _memberService.GetMemberList(MemberType.Archived).OrderBy(m => m.LastName).ThenBy(m => m.FirstName), MemberType = @T("Archived").ToString() };
             var model = new MemberListsViewModel();
             model.MemberLists.Add(memberList);
             model.MemberLists.Add(adminMemberList);
             model.MemberLists.Add(letsSytemList);
             model.MemberLists.Add(sinkingFundList);
+            model.MemberLists.Add(disabledList);
             model.MemberLists.Add(archivedList);
             return View(model);
         }
@@ -207,6 +214,32 @@ namespace LETS.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult Enable(int id) {
+            var user = _orchardServices.ContentManager.Get<IUser>(id);
+            if (user != null)
+            {
+                user.As<UserPart>().RegistrationStatus = UserStatus.Approved;
+                _orchardServices.Notifier.Information(T("Member {0} approved/enabled", user.UserName));
+                _userEventHandlers.Approved(user);
+            }
 
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SendVerificationEmail(int id) {
+            var user = _orchardServices.ContentManager.Get<IUser>(id);
+            if (user != null && user.As<UserPart>().EmailStatus.Equals(UserStatus.Pending)) {
+                var siteUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl;
+                if(String.IsNullOrWhiteSpace(siteUrl)) {
+                    siteUrl = HttpContext.Request.ToRootUrlString();
+                }
+                _userService.SendChallengeEmail(user.As<UserPart>(), nonce => Url.MakeAbsolute(Url.Action("ChallengeEmail", "Account", new {Area = "Orchard.Users", nonce = nonce}), siteUrl));
+                _orchardServices.Notifier.Information(T("Sent verification email"));
+                _userEventHandlers.SentChallengeEmail(user);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
