@@ -2,6 +2,8 @@
 @model LETS.ViewModels.MailchimpSyncViewModel
 
 <h2>@T("Mailchimp")</h2>
+<p>Members are added to the mailchimp mailing list when they are approved AND they have verified their email address.</p>
+<p><strong>Important: </strong>Members are not automatically unsubscribed if they are disabled or deleted.  Remove them on the Mailchimp website. </p>
 
 <h3>@T("Approved & verified members missing from Mailchimp list")</h3>
 @if (Model == null || Model.MissingListMembers.Count().Equals(0))
