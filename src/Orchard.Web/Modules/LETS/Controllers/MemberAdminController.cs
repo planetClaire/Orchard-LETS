@@ -63,28 +63,29 @@ namespace LETS.Controllers
 
         public ActionResult Alerts()
         {
-            // verify total credit value is equal to any credit balance for all members
+            var alerts = new List<AdminAlertViewModel>();
             var members = _memberService.GetMemberParts();
             var memberParts = members as IList<MemberPart> ?? members.ToList();
-            var alerts = (from member in memberParts
-                          let memberBalance = _memberService.GetMemberBalance(member.Id, true)
-                          let memberCreditValueTotal = _memberService.GetCreditValueTotal(member.Id)
-                          where memberBalance > 0 && !memberBalance.Equals(memberCreditValueTotal) || memberBalance <= 0 && memberCreditValueTotal != 0
-                          select new AdminAlertViewModel
-                                     {
-                                         Message = T("Total credit value ({0}) not equal to the credit balance ({1}) of the member", memberCreditValueTotal, memberBalance), 
-                                         ReferenceLinkText = new LocalizedString(member.FirstLastName), 
-                                         ReferenceLinkHref = Url.Action("List", "TransactionsAdmin", new {area = "LETS", id = member.Id}), 
-                                         ActionLinkText = T("Fix it (bring the credit value in line with the member balance)"), 
-                                         ActionLinkHref = Url.Action("CorrectCreditValues", "TransactionsAdmin", new {area = "LETS", id = member.Id})
-                                     }).ToList();
+            if (_orchardServices.WorkContext.CurrentSite.As<LETSSettingsPart>().UseDemurrage)
+            {
+                // verify total credit value is equal to any credit balance for all members
+                alerts = (from member in memberParts
+                    let memberBalance = _memberService.GetMemberBalance(member.Id, true)
+                    let memberCreditValueTotal = _memberService.GetCreditValueTotal(member.Id)
+                    where memberBalance > 0 && !memberBalance.Equals(memberCreditValueTotal) || memberBalance <= 0 && memberCreditValueTotal != 0
+                    select new AdminAlertViewModel {
+                        Message = T("Total credit value ({0}) not equal to the credit balance ({1}) of the member", memberCreditValueTotal, memberBalance),
+                        ReferenceLinkText = new LocalizedString(member.FirstLastName),
+                        ReferenceLinkHref = Url.Action("List", "TransactionsAdmin", new {area = "LETS", id = member.Id}),
+                        ActionLinkText = T("Fix it (bring the credit value in line with the member balance)"),
+                        ActionLinkHref = Url.Action("CorrectCreditValues", "TransactionsAdmin", new {area = "LETS", id = member.Id})
+                    }).ToList();
 
-            // find any demurrage credit usages that don't have corresponding transactions
-            // perhaps the transactions have been deleted without removing the corresponding credit usage record
-            // this will mean that demurrage will be incorrectly charged on that transaction in future
-            var orphanedDemurrageCreditUsages = _transactionService.FindOrphanedDemurrageCreditUsages();
-            alerts.AddRange(orphanedDemurrageCreditUsages.Select(orphan => new AdminAlertViewModel
-                {
+                // find any demurrage credit usages that don't have corresponding transactions
+                // perhaps the transactions have been deleted without removing the corresponding credit usage record
+                // this will mean that demurrage will be incorrectly charged on that transaction in future
+                var orphanedDemurrageCreditUsages = _transactionService.FindOrphanedDemurrageCreditUsages();
+                alerts.AddRange(orphanedDemurrageCreditUsages.Select(orphan => new AdminAlertViewModel {
                     Message =
                         T(
                             "Orphaned demurrage credit usage record (demurrage transaction has probably been deleted without proper cleanup), idTransactionEarnt is {0}",
@@ -92,7 +93,7 @@ namespace LETS.Controllers
                     ActionLinkHref = Url.Action("DeleteCreditUsage", "MemberAdmin", new {area = "LETS", id = orphan.Id}),
                     ActionLinkText = T("Delete the orphan")
                 }));
-
+            }
             // find members who don't meet the minimum notice requirements
             var noticeTypes = _noticeService.GetRequiredNoticeTypes();
             foreach (var noticeType in noticeTypes)
