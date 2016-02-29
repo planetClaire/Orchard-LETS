@@ -1,4 +1,7 @@
 ﻿using System.Web.Routing;
+using LETS.Models;
+using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Environment;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
@@ -8,15 +11,17 @@ namespace LETS
     public class AdminMenu : INavigationProvider
     {
         private readonly Work<RequestContext> _requestContextAccessor;
+        private readonly IOrchardServices _orchardServices;
 
         public string MenuName
         {
             get { return "admin"; }
         }
 
-        public AdminMenu(Work<RequestContext> requestContextAccessor)
+        public AdminMenu(Work<RequestContext> requestContextAccessor, IOrchardServices orchardServices)
         {
             _requestContextAccessor = requestContextAccessor;
+            _orchardServices = orchardServices;
             T = NullLocalizer.Instance;
         }
 
@@ -53,15 +58,16 @@ namespace LETS
             builder.Add(T("Alerts"), "1.2", menu =>
                      menu.Action("Alerts", "MemberAdmin", new { area = "LETS" }).Permission(Permissions.AdminMemberContent)
                      );
+            if (_orchardServices.WorkContext.CurrentSite.As<LETSSettingsPart>().UseDemurrage) {
+             
+                builder.Add(T("Demurrage"), "1.3", menu =>
+                    menu.Action("Demurrage", "TransactionsAdmin", new {area = "LETS"}).Permission(Permissions.AdminMemberContent)
+                    );
 
-            builder.Add(T("Demurrage"), "1.3", menu =>
-                     menu.Action("Demurrage", "TransactionsAdmin", new { area = "LETS" }).Permission(Permissions.AdminMemberContent)
-                     );
-
-            builder.Add(T("Demurrage Forecast"), "1.3", menu =>
-                     menu.Action("DemurrageForecast", "TransactionsAdmin", new { area = "LETS" }).Permission(Permissions.AdminMemberContent)
-                     );
-
+                builder.Add(T("Demurrage Forecast"), "1.3", menu =>
+                    menu.Action("DemurrageForecast", "TransactionsAdmin", new {area = "LETS"}).Permission(Permissions.AdminMemberContent)
+                    );
+            }
 
         }
 
