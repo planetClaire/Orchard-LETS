@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LETS.Models;
@@ -11,6 +12,7 @@ using Orchard.Localization;
 using Orchard.Security;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
+using Orchard.Users.Events;
 using Orchard.Users.Models;
 
 namespace LETS.Controllers
@@ -24,14 +26,16 @@ namespace LETS.Controllers
         public readonly Localizer T;
         private readonly INoticeService _noticeService;
         private readonly ITransactionService _transactionService;
+        private readonly IUserEventHandler _userEventHandlers;
 
-        public MemberAdminController(IMemberService memberService, IMailChimpService mailchimpService, IOrchardServices orchardServices, INoticeService noticeService, ITransactionService transactionService)
+        public MemberAdminController(IMemberService memberService, IMailChimpService mailchimpService, IOrchardServices orchardServices, INoticeService noticeService, ITransactionService transactionService, IUserEventHandler userEventHandlers)
         {
             _memberService = memberService;
             _mailchimpService = mailchimpService;
             _orchardServices = orchardServices;
             _noticeService = noticeService;
             _transactionService = transactionService;
+            _userEventHandlers = userEventHandlers;
             T = NullLocalizer.Instance;
         }
  
@@ -154,5 +158,55 @@ namespace LETS.Controllers
             _transactionService.DeleteCreditUsage(id);
             return RedirectToAction("Alerts");
         }
+
+        [HttpPost]
+        public ActionResult Disable(int id)
+        {
+            var user = _orchardServices.ContentManager.Get<IUser>(id);
+
+            if (user != null)
+            {
+                if (String.Equals(_orchardServices.WorkContext.CurrentUser.UserName, user.UserName, StringComparison.Ordinal))
+                {
+                    _orchardServices.Notifier.Error(T("You can't disable your own account. Please log in with another account"));
+                }
+                else
+                {
+                    user.As<UserPart>().RegistrationStatus = UserStatus.Pending;
+                    _userEventHandlers.Moderated(user);
+                    _orchardServices.Notifier.Information(T("Member {0} disabled", user.UserName));
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var user = _orchardServices.ContentManager.Get<IUser>(id);
+
+            if (user != null)
+            {
+                if (String.Equals(_orchardServices.WorkContext.CurrentSite.SuperUser, user.UserName, StringComparison.Ordinal))
+                {
+                    _orchardServices.Notifier.Error(T("The Super user can't be removed. "));
+                }
+                else if (String.Equals(_orchardServices.WorkContext.CurrentUser.UserName, user.UserName, StringComparison.Ordinal))
+                {
+                    _orchardServices.Notifier.Error(T("You can't delete your own account. Please log in with another account."));
+                }
+                else
+                {
+                    _userEventHandlers.Deleting(user);
+                    _orchardServices.ContentManager.Remove(user.ContentItem);
+                    _orchardServices.Notifier.Information(T("Member {0} deleted", user.UserName));
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }

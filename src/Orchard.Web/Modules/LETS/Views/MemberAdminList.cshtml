@@ -1,4 +1,6 @@
-﻿<h1>@Model.MemberType</h1>
+﻿@Html.AntiForgeryTokenOrchard()
+
+<h1>@Model.MemberType</h1>
 <table class="items" >
     <colgroup>
         <col id="Col1" />
@@ -17,6 +19,7 @@
             <th scope="col">@T("Balance")</th>
             <th scope="col">@T("Turnover")</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     @foreach (var member in Model.Members)
@@ -34,6 +37,14 @@
                 <a href="@Url.Action("List", "TransactionsAdmin", new { area = "LETS", id = member.Id })" title="@T("Transactions")">@T("Transactions")</a> |
                 <a href="@Url.Action("List", "NoticesAdmin", new { area = "LETS", id = member.Id })" title="@T("Notices")">@T("Notices")</a>
             </div>
+        </td>
+        <td>
+            @if (Model.MemberType.Equals("Members"))
+            {
+                @Html.ActionLink("Disable", "Disable", new { area = "LETS", Controller = "MemberAdmin", id = member.Id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl", data_message = "Are you sure? This will permanently delete all the member's notices.  Disabling a member means you can re-enable them later." })
+                @: |
+                @Html.ActionLink("Delete", "Delete", new { area = "LETS", Controller = "MemberAdmin", id = member.Id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl", data_message = "Are you sure? This will permanently delete this member and all the member\'s notices.  This is permanent." })
+            }
         </td>
     </tr>
     } 
