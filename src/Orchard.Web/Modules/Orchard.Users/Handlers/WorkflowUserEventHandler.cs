@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Orchard.Environment.Extensions;
+using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Workflows.Services;
 
@@ -76,6 +77,18 @@ namespace Orchard.Users.Handlers {
             _workflowManager.TriggerEvent("UserApproved",
                                          user,
                                          () => new Dictionary<string, object> {{"User", user}});
+        }
+
+        public void Deleting(IUser user) {
+            _workflowManager.TriggerEvent("UserDeleting",
+                                         user,
+                                         () => new Dictionary<string, object> { { "User", user } });
+        }
+
+        public void Moderated(IUser user) {
+            _workflowManager.TriggerEvent("UserModerated",
+                                         user,
+                                         () => new Dictionary<string, object> { { "User", user } });
         }
     }
 }

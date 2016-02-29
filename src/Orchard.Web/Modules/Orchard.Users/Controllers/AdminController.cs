@@ -280,7 +280,8 @@ namespace Orchard.Users.Controllers {
                 else if (String.Equals(Services.WorkContext.CurrentUser.UserName, user.UserName, StringComparison.Ordinal)) {
                     Services.Notifier.Error(T("You can't remove your own account. Please log in with another account."));
                 }
-                else{
+                else {
+                    _userEventHandlers.Deleting(user);
                     Services.ContentManager.Remove(user.ContentItem);
                     Services.Notifier.Information(T("User {0} deleted", user.UserName));
                 }
@@ -339,6 +340,7 @@ namespace Orchard.Users.Controllers {
                 }
                 else {
                     user.As<UserPart>().RegistrationStatus = UserStatus.Pending;
+                    _userEventHandlers.Moderated(user);
                     Services.Notifier.Information(T("User {0} disabled", user.UserName));
                 }
             }
