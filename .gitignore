@@ -190,3 +190,4 @@ src/Orchard.Azure/Orchard.Azure.CloudService/Staging/
 src/Orchard.sln.DotSettings
 */.vs/*
 src/Orchard.Web/imagecache*
+src/Orchard.Web/Config/log4net.Release.config
