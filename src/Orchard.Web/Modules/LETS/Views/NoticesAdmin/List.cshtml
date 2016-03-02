@@ -1,1 +1,25 @@
-﻿notices admin
+﻿@model LETS.ViewModels.MemberNoticesViewModel
+
+<h1>@string.Format("{0}'s {1}", @Model.Member.FirstLastName, T("notices"))</h1>
+@if (Model.Notices.Count().Equals(0))
+{
+    <p>@T("This member doesn't have any active notices")</p>
+}
+@foreach (var notice in Model.Notices)
+{
+    @Display(notice)
+}
+@{
+    <div id="archivedNotices">
+        <h2>@T("Archived notices")</h2>
+        <p><strong>@T("Expired notices will show up here until they are deleted or re-activated by publishing them.")</strong></p>
+        <p>@T("Notices can also be archived if you don't want to delete them yet")</p>
+        @if (Model.ArchivedNotices.Any())
+        {
+            foreach (var archivedNotice in Model.ArchivedNotices)
+            {
+                @Display(archivedNotice)
+            }
+        }
+    </div>
+}
