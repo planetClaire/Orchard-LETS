@@ -1,5 +1,17 @@
-﻿<p>
-    Date: @Model.ContentPart.TransactionDate <br />
-    Description: @Model.ContentPart.Description<br />
-    Type: @Model.ContentPart.TransactionType
+﻿@{
+    var seller = Model.ContentPart.Seller;
+    var buyer = Model.ContentPart.Buyer;
+}
+<p>
+    <strong>Date</strong>: @Model.ContentPart.TransactionDate <br />
+    <strong>Description</strong>: @Model.ContentPart.Description<br />
+    <strong>Type</strong>: @Model.ContentPart.TransactionType<br />
+    @if (seller != null)
+    {
+        <span><strong>Seller</strong>: @seller.FirstName @seller.LastName</span><br />
+    }
+    @if (buyer != null)
+    {
+        <span><strong>Buyer</strong>: @buyer.FirstName @buyer.LastName</span><br />
+    }
 </p>
