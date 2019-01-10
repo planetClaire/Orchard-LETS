@@ -3,9 +3,9 @@
 @using Orchard.ContentManagement
 @using Orchard.Core.Common.Models
 @{
-    var createdUtc = TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.CreatedUtc, WorkContext.CurrentTimeZone);
-    var publishedUtc = TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.PublishedUtc, WorkContext.CurrentTimeZone);
-    var republished = (publishedUtc - createdUtc).Days > 1;
+    var createdUtc = Model.ContentPart.CreatedUtc != null ? TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.CreatedUtc, WorkContext.CurrentTimeZone) : null;
+    var publishedUtc = Model.ContentPart.PublishedUtc != null ? TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.PublishedUtc, WorkContext.CurrentTimeZone) : null;
+    var republished = publishedUtc != null && createdUtc != null ?? (publishedUtc - createdUtc).Days > 1;
 }
 @if (republished)
 {
@@ -16,7 +16,7 @@
         </h6>
     </div>
 }
-else
+else if (publishedUtc != null)
 {
     <div class="published"><h6>@T("Posted") @publishedUtc.ToString("d MMMM yyyy") at @publishedUtc.ToShortTimeString()</h6></div>
 }
