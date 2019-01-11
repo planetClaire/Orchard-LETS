@@ -442,7 +442,7 @@ namespace LETS.Services
             }
             var demurrageDays = letsSettings.DemurrageTimeIntervalDays;
             var steps = letsSettings.DemurrageStepsList.ToList();
-            _idDemurrageRecipient = letsSettings.IdDemurrageRecipient;
+            _idDemurrageRecipient = letsSettings.IdDemurrageRecipient.Value;
             var session = _sessionLocator.Value.For(null);
             var resultsCreditsToZero = GetTransactionsForDemurrageToZero(session, demurrageDays, steps, demurrageStartDate, DateTime.Now, "LETS_TransactionPartRecord", "LETS_CreditUsageRecord");
             var chargesRecorded = RecordDemurrageTransactions(RemoveUnpublishedResults(resultsCreditsToZero), null);

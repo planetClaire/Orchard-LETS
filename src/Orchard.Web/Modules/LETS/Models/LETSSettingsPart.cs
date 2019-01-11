@@ -37,7 +37,7 @@ namespace LETS.Models
         }
 
         [Required, Range(1, 90000, ErrorMessage = "Please enter a number between 1 and 90000")]
-        public int OldestRecordableTransactionDays 
+        public int OldestRecordableTransactionDays
         {
             get { return Record.OldestRecordableTransactionDays; }
             set { Record.OldestRecordableTransactionDays = value; }
@@ -75,8 +75,7 @@ namespace LETS.Models
             set { Record.DemurrageSteps = value; }
         }
 
-        [Required]
-        public int IdDemurrageRecipient
+        public int? IdDemurrageRecipient
         {
             get { return Record.IdDemurrageRecipient; }
             set { Record.IdDemurrageRecipient = value; }
@@ -153,7 +152,7 @@ namespace LETS.Models
             }
         }
 
-        public IEnumerable<int>  DemurrageStepsList
+        public IEnumerable<int> DemurrageStepsList
         {
             get
             {

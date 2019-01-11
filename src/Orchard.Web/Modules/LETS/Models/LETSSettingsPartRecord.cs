@@ -15,7 +15,7 @@ namespace LETS.Models
         public virtual DateTime? DemurrageStartDate { get; set; }
         public virtual int DemurrageTimeIntervalDays { get; set; }
         public virtual string DemurrageSteps { get; set; }
-        public virtual int IdDemurrageRecipient { get; set; }
+        public virtual int? IdDemurrageRecipient { get; set; }
         public virtual string IdMailChimpList { get; set; }
         public virtual string MemberLinksZone { get; set; }
         public virtual string MemberLinksPosition { get; set; }

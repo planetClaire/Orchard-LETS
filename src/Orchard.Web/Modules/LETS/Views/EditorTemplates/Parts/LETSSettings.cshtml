@@ -71,11 +71,11 @@
     </div>
 
     <div >
-        <label class="required control-label" for="@Html.FieldIdFor(m => m.LETSSettings.IdDemurrageRecipient)">@T("Demurrage recipient")</label>
+        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.IdDemurrageRecipient)">@T("Demurrage recipient")</label>
         <select id="@Html.FieldIdFor(m => m.LETSSettings.IdDemurrageRecipient)" name="@Html.FieldNameFor(m => m.LETSSettings.IdDemurrageRecipient)">
             @if (Model.LETSSettings.IdDemurrageRecipient.Equals(0))
             {
-                <option>@T("Please select")</option>
+                <option value="0">@T("Please select")</option>
             }
             @foreach ( var member in Model.AdminMembers) {
                 <option @if(Model.LETSSettings.IdTaxonomyNotices == member.Id) { <text>selected="selected"</text> } value="@member.Id">@member.FirstLastName</option>
@@ -99,12 +99,12 @@
     </div>
 
     <div>
-        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberNoticesZone)">@T("Member profile notices zone (eg: 'AsideSecond')")</label>
+        <label class="required control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberNoticesZone)">@T("Member profile notices zone (eg: 'AsideSecond')")</label>
         @Html.TextBoxFor(m => m.LETSSettings.MemberNoticesZone)
     </div>
 
     <div>
-        <label class="control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberNoticesPosition)">@T("Member profile notices position (eg: '2' or 'after')")</label>
+        <label class="required control-label" for="@Html.FieldIdFor(m => m.LETSSettings.MemberNoticesPosition)">@T("Member profile notices position (eg: '2' or 'after')")</label>
         @Html.TextBoxFor(m => m.LETSSettings.MemberNoticesPosition)
     </div>
 
