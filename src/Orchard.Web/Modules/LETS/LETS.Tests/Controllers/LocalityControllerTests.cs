@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using Autofac;
 using LETS.Controllers;
-using LETS.Handlers;
-using LETS.Models;
-using LETS.Services;
-using LETS.ViewModels;
 using Moq;
 using NUnit.Framework;
 using Orchard;
@@ -17,37 +12,19 @@ using Orchard.ContentManagement.FieldStorage.InfosetStorage;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.Records;
-using Orchard.Core.Common.Handlers;
 using Orchard.Core.Common.Models;
-using Orchard.Core.Settings.Handlers;
 using Orchard.Core.Settings.Metadata;
-using Orchard.Core.Settings.Services;
-using Orchard.Core.Title.Handlers;
-using Orchard.Core.Title.Models;
 using Orchard.Data;
-using Orchard.DisplayManagement;
-using Orchard.DisplayManagement.Descriptors;
-using Orchard.DisplayManagement.Implementation;
 using Orchard.Environment;
-using Orchard.Mvc;
-using Orchard.Security;
-using Orchard.Settings;
-using Orchard.Taxonomies.Services;
 using Orchard.Tests.Modules;
-using Orchard.Tests.Modules.Indexing;
 using Orchard.Tests.Stubs;
 using Orchard.Tests.Utility;
-using Orchard.Users.Handlers;
-using Orchard.Users.Models;
-using Orchard.Users.Services;
 
 namespace LETS.Tests.Controllers
 {
     [TestFixture]
     public class LocalityControllerTests : DatabaseEnabledTestsBase
     {
-        private IContentManager _contentManager;
-
         private LocalityController _controller;
         private Mock<IOrchardServices> _orchardServicesMock;
 

@@ -26,6 +26,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -219,6 +221,7 @@
     <Compile Include="Services\MemberService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\MissingSettingsBanner.cs" />
     <Compile Include="Services\NoticeService.cs" />
     <Compile Include="Services\StatsService.cs" />
     <Compile Include="Services\TransactionService.cs" />
@@ -253,7 +256,6 @@
     <Compile Include="Permissions.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\MissingSettingsBanner.cs" />
     <Compile Include="ViewModels\EditTransactionViewModel.cs" />
     <Compile Include="ViewModels\LETSSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\LocalityNoticesMembersViewModel.cs" />
