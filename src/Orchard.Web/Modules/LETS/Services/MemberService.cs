@@ -14,6 +14,7 @@ using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.Environment;
+using Orchard.Logging;
 using Orchard.Roles.Models;
 using Orchard.Roles.Services;
 using Orchard.Security;
@@ -33,6 +34,8 @@ namespace LETS.Services
         private readonly Work<ISessionLocator> _sessionLocator;
         private readonly IRepository<TransactionPartRecord> _transactionRepository;
 
+        public ILogger Logger { get; set; }
+
         public MemberService(IRoleService roleService, IOrchardServices orchardServices, IContentManager contentManager, IMailChimpService mailchimpService, ICacheManager cacheManager, ISignals signals, Work<ISessionLocator> sessionLocator, IRepository<TransactionPartRecord> transactionRepository)
         {
             _roleService = roleService;
@@ -43,6 +46,7 @@ namespace LETS.Services
             _signals = signals;
             _sessionLocator = sessionLocator;
             _transactionRepository = transactionRepository;
+            Logger = NullLogger.Instance;
         }
 
         public RoleRecord GetMemberRole()
@@ -216,7 +220,15 @@ namespace LETS.Services
                     var memberPart = user.As<MemberPart>();
                     var memberAdminPart = user.As<MemberAdminPart>();
                     var addressPart = user.As<AddressPart>();
-                    var locality = _contentManager.Get(addressPart.Locality.Id);
+                    ContentItem locality = null;
+                    if (addressPart.Locality != null)
+                    {
+                        locality = _contentManager.Get(addressPart.Locality.Id);
+                    }
+                    else
+                    {
+                        Logger.Error("A member {0} has no locality", memberPart.Id);
+                    }
                     AddMemberViewModel(memberViewModels, user, memberAdminPart, memberPart, addressPart, locality);
                 }
                 return memberViewModels;
@@ -257,7 +269,7 @@ namespace LETS.Services
                 LastName = memberPart.LastName,
                 LastFirstName = memberPart.LastFirstName,
                 Telephone = memberPart.Telephone,
-                IdLocality = addressPart.Locality.Id,
+                IdLocality = locality != null ? addressPart.Locality.Id : 0,
                 Locality = locality != null ? locality.As<TitlePart>().Title : "na"
             });
         }
