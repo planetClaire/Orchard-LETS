@@ -13,5 +13,5 @@ A LETS accounting system based on Orchard https://github.com/OrchardCMS/Orchard
 8. Enable the LETS Bootstrap theme
 9. Go to taxonomies and add some terms to the Category taxonomy.  You can import some suggested categories from the file in src\Orchard.Web\Modules\LETS\Data\categories.txt
 10. Go to Navigation & add links to Offers, Requests & Announcements as follows:
-  1. Open /Admin/Contents/List/NoticeType in a new tab and hover over the items for Offer, Request, Announcement to discover their ids. Supposing the Offer notice type has and id of 13, add a Custom Link to the navigation with the Menu text of 'Offers' and a Url /lets/noticetype/list/13.  Do the same for the other 2 notice types.
+    1. Open /Admin/Contents/List/NoticeType in a new tab and hover over the items for Offer, Request, Announcement to discover their ids. Supposing the Offer notice type has and id of 13, add a Custom Link to the navigation with the Menu text of 'Offers' and a Url /lets/noticetype/list/13.  Do the same for the other 2 notice types.
 
