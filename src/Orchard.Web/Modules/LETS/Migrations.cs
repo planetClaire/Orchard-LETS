@@ -360,7 +360,7 @@ namespace LETS {
 
             SchemaBuilder.ExecuteSql("CREATE PROCEDURE LETS_GetMemberTransactions @idMember int, @pageSize int, @pageNumber int AS BEGIN "
                 + "CREATE TABLE #memberTransactions (Id int, TransactionDate datetime, Value int, CreditValue int, IdTradingPartner int, Description nvarchar(255), TransactionType nvarchar(255))"
-                + "INSERT INTO #memberTransactions"
+                + "INSERT INTO #memberTransactions "
                 + "SELECT t.Id, TransactionDate, Value, CreditValue, BuyerMemberPartRecord_Id as 'IdTradingPartner', Description, TransactionType "
                 + "FROM LETS_TransactionPartRecord t JOIN Orchard_Framework_ContentItemVersionRecord v on v.ContentItemRecord_id = t.Id "
                 + "WHERE SellerMemberPartRecord_Id = @idMember AND v.Published = 1 "
