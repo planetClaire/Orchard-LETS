@@ -6,6 +6,8 @@
     var turnoverTotal = 0;
     var memberCount = ((IEnumerable<object>)Model.Members).Count();
 }
+@if (memberCount > 0)
+{
 <header class="page-header">
     <h1>@Model.MemberType - @memberCount</h1>
 </header>
@@ -62,4 +64,4 @@
             <td colspan="7"></td>
         </tr>
     </table>
- 
+}
