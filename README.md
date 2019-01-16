@@ -7,13 +7,24 @@ A LETS accounting system based on Orchard https://github.com/OrchardCMS/Orchard
 1. Download or clone & build
 2. Create a database & ensure access
 3. Navigate to the website at /src/Orchard.web, select the Default recipe & cook
-### Set up the LETS module
+### Configure the LETS module
 1. Go to the Dashboard, and enable the LETS module
 2. Configure settings as per alerts
 3. Enable the LETS Bootstrap theme
 4. Optionally set the background color & logo in the theme settings
 
-### Set up the LETS system itself
+### Configure user settings
+In Settings, Users, set the following:
+1. Check "Users can create new accounts on the site"
+2. Check "Display a link to enable users to reset their password"
+3. Check "Users must verify their email address"
+4. Add a website public name
+5. Add a contact us email address
+6. Check "Users must be approved before they can log in"
+7. Check "Send a notification when a user needs moderation"
+8. Add the admin email address to the Moderators box
+
+### Configure the LETS system itself
 1. Create 3 notice types - Offer, Request, Announcement
 2. Create some localities
 3. Go to taxonomies and add some terms to the Category taxonomy.  You can import some suggested categories from the file in src\Orchard.Web\Modules\LETS\Data\categories.txt. After importing the suggested categories, edit each root category so it's not selectable. 
