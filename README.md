@@ -11,6 +11,7 @@ A LETS accounting system based on Orchard https://github.com/OrchardCMS/Orchard
 1. Go to the Dashboard, and enable the LETS module
 2. Configure settings as per alerts
 3. Enable the LETS Bootstrap theme
+4. Optionally set the background color & logo in the theme settings
 
 ### Set up the LETS system itself
 1. Create 3 notice types - Offer, Request, Announcement
