@@ -66,10 +66,8 @@
     <Content Include="Content\images\tumblr.png" />
     <Content Include="Content\images\twitter.png" />
     <Content Include="Content\images\website.png" />
+    <Content Include="Data\categories.txt" />
     <Content Include="Images\bullets.png" />
-    <Content Include="Data\testRecipe.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Recipes\LETSSetup.recipe.xml">
       <SubType>Designer</SubType>
     </Content>

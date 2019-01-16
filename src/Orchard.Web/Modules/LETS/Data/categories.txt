@@ -1,0 +1,55 @@
+Buy & Sell;buy-sell
+	Art & craft supplies;buy-sell/art-craft-supplies
+	Automotive & Transport;buy-sell/automotive-transport
+	Books;buy-sell/books
+	Clothing & footwear;buy-sell/clothing-footwear
+	Electrical;buy-sell/electrical
+	Games & toys;buy-sell/games-toys
+	Garden & exterior supplies;buy-sell/garden-exterior-supplies
+	Hand made & giftware;buy-sell/hand-made-giftware
+	Home grown produce;buy-sell/home-grown-produce
+	Home made food;buy-sell/home-made-food
+	Homewares;buy-sell/homewares
+	Miscellaneous;buy-sell/miscellaneous
+	Musical;buy-sell/musical
+	Personal care products;buy-sell/personal-care-products
+	Plants, seeds & cuttings;buy-sell/plants-seeds-cuttings
+	Sporting;buy-sell/sporting
+Services & skills;services-skills
+	Animals;services-skills/animals
+	Arts, Crafts & Handiwork;services-skills/arts-crafts-handiwork
+	Business services;services-skills/business-services
+	Childcare & Babysitting;services-skills/childcare-babysitting
+	Cleaning;services-skills/cleaning
+	Computing & Internet;services-skills/computing-internet
+	Cooking & Catering;services-skills/cooking-catering
+	Counselling & Spirituality;services-skills/counselling-spirituality
+	Education & Training;services-skills/education-training
+	Financial services;services-skills/financial-services
+	Garden & exterior design;services-skills/garden-exterior-design
+	Gardening Services;services-skills/gardening-services
+	Help out;services-skills/help-out
+	Ironing;services-skills/ironing
+	Mechanics;services-skills/mechanics
+	Natural Therapies & Healing;services-skills/natural-therapies-healing
+	Personal Care & Beauty;services-skills/personal-care-beauty
+	Photography, Video & Audio;services-skills/photography-video-audio
+	Professional Services;services-skills/professional-services
+	Shopping;services-skills/shopping
+	Trades;services-skills/trades
+	Transport;services-skills/transport
+	Travel advice;services-skills/travel-advice
+	While You're Away;services-skills/while-youre-away
+For Hire;for-hire
+	Accomodation;for-hire/accomodation
+	Art & Craft;for-hire/art-craft
+	Indoor;for-hire/indoor
+	Musical;for-hire/musical
+	Office;for-hire/office
+	Outdoor;for-hire/outdoor
+	Sporting;for-hire/sporting
+Events & Announcements;events-announcements
+	Busy bees;events-announcements/busy-bees
+	General Announcements;events-announcements/general-announcements
+	Meetings;events-announcements/meetings
+	Social & Trading Days;events-announcements/social-trading-days
