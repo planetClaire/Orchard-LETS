@@ -15,4 +15,5 @@ A LETS accounting system based on Orchard https://github.com/OrchardCMS/Orchard
 10. Go to Navigation & add links to Offers, Requests & Announcements (if you wish) as follows: Open /Admin/Contents/List/NoticeType in a new tab and hover over the items for Offer, Request, Announcement to discover their ids. Now supposing the Offer notice type has and id of 13, add a Custom Link to the navigation with the Menu text of 'Offers' and a Url /lets/noticetype/list/13.  Do the same for the other 2 notice types.
 11. Add a custom link to the main menu for "Become a member" at the url /users/account/registermember
 12. Add more links to the main menu as required for your blog, about, contact pages etc.
+13. Add a second navigation section for authenticated users as follows:  Go to Widgets & add an Auth Navigation widget to the AuthNavigation zone. Select the authenticated layer, give it a title but uncheck "render the title". Save.  You should now see some extra navigation on the home page.
 
