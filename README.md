@@ -47,3 +47,4 @@ In Settings, Users, set the following:
 When new members complete the "Become a member" form, they'll be sent a verification email & directed to a page headed "Next steps". The content of this page needs to be expanded.  
 1. Add a new widget layer called "challenge email sent" with a layer rule of url("~/lets/account/challengeemailsent") 
 2. Then add a HTML widget to the Content zone of the widget layer you just created, and populate it. Some example HTML is in src\Orchard.Web\Modules\LETS\Data\next-steps.html
+3. You can also add some content to the page that users land on when they click their verification links.  To do this, add a widget layer called "challenge email success" with a rule of url("~/lets/account/challengeemailsuccess"), and populate it with a HTML widget - the example content is in challenge-email-success.html
