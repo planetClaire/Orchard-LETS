@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Orchard.Taxonomies.Helpers;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.ViewModels;
 using Orchard;
@@ -21,7 +20,6 @@ using Orchard.UI.Notify;
 
 namespace LETS.Services
 {
-    [UsedImplicitly]
     public class NoticeService : INoticeService
     {
         private readonly IRepository<NoticeTypePartRecord> _noticeTypeRepository;

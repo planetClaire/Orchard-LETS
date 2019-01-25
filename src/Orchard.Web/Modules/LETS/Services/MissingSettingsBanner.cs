@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Orchard.Taxonomies.Services;
-using JetBrains.Annotations;
 using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement;
@@ -12,7 +11,6 @@ using Orchard.UI.Notify;
 
 namespace LETS.Services
 {
-    [UsedImplicitly]
     public class MissingSettingsBanner : INotificationProvider
     {
         private readonly IOrchardServices _orchardServices;

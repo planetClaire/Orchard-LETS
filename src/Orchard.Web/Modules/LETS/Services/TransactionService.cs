@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.ViewModels;
 using NHibernate;
@@ -20,7 +19,6 @@ using Orchard.UI.Notify;
 
 namespace LETS.Services
 {
-    [UsedImplicitly]
     public class TransactionService : ITransactionService
     {
         private readonly IRepository<MemberPartRecord> _memberRepository;

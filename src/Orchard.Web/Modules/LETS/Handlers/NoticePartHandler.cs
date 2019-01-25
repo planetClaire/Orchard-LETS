@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Core.Common.Models;
@@ -10,7 +9,6 @@ using Orchard.Security;
 
 namespace LETS.Handlers
 {
-    [UsedImplicitly]
     public class NoticePartHandler : ContentHandler
     {
         private readonly IOrchardServices _orchardServices;

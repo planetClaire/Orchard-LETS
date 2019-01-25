@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
@@ -7,7 +6,6 @@ using Orchard.Localization;
 
 namespace LETS.Handlers
 {
-    [UsedImplicitly]
     public class LETSSettingsPartHandler: ContentHandler {
         public Localizer T { get; set; }
 

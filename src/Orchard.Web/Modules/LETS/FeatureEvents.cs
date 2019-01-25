@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment;
@@ -8,7 +7,6 @@ using Orchard.Roles.Services;
 
 namespace LETS
 {
-    [UsedImplicitly]
     public class FeatureEvents : IFeatureEventHandler
     {
         private readonly IOrchardServices _orchardServices;

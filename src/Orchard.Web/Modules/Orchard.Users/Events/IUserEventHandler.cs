@@ -57,6 +57,18 @@ namespace Orchard.Users.Events {
         /// Called after a user has been approved
         /// </summary>
         void Approved(IUser user);
+
+        /// <summary>
+        /// Called before a user is deleted
+        /// </summary>
+        /// <param name="user"></param>
+        void Deleting(IUser user);
+
+        /// <summary>
+        /// Called after a user has been moderated
+        /// </summary>
+        /// <param name="user"></param>
+        void Moderated(IUser user);
     }
 }
 

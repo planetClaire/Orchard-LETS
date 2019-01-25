@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using JetBrains.Annotations;
 using LETS.Models;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
@@ -15,7 +14,6 @@ using Orchard.Utility.Extensions;
 
 namespace LETS.Feeds
 {
-    [UsedImplicitly]
     public class MemberFeedItemBuilder: IFeedItemBuilder
     {
         private readonly IContentManager _contentManager;

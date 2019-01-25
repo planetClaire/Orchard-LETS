@@ -1,11 +1,9 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class NoticeTypePartDriver : ContentPartDriver<NoticeTypePart>
     {
         protected override DriverResult Display(NoticeTypePart part, string displayType, dynamic shapeHelper)

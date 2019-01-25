@@ -1,7 +1,6 @@
 using System;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
-using JetBrains.Annotations;
 using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement;
@@ -16,7 +15,6 @@ using Orchard.Settings;
 
 
 namespace LETS {
-    [UsedImplicitly]
     public class Migrations : DataMigrationImpl
     {
         private readonly ITaxonomyService _taxonomyService;
@@ -32,7 +30,6 @@ namespace LETS {
             _membershipService = membershipService;
         }
 
-        [UsedImplicitly]
         public int Create()
         {
             // LETS settings

@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
-using JetBrains.Annotations;
 using Orchard.Mvc.Routes;
 
 namespace LETS
 {
-    [UsedImplicitly]
     public class Routes : IRouteProvider
     {
         public IEnumerable<RouteDescriptor> GetRoutes()

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using JetBrains.Annotations;
 using Orchard;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
@@ -8,7 +7,6 @@ using Orchard.Mvc.Filters;
 
 namespace LETS.Notifications
 {
-    [UsedImplicitly]
     public class MemberNotificationFilter : FilterProvider, IResultFilter
     {
         private readonly INotificationManager _memberNotificationManager;

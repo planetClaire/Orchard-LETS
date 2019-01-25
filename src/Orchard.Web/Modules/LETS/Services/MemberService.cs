@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.ViewModels;
 using NogginBox.MailChimp.Models;
@@ -22,7 +21,6 @@ using Orchard.Users.Models;
 
 namespace LETS.Services
 {
-    [UsedImplicitly]
     public class MemberService : IMemberService
     {
         private readonly IRoleService _roleService;

@@ -1,11 +1,9 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class LocalityPartDriver : ContentPartDriver<LocalityPart>
     {
         protected override DriverResult Display(LocalityPart part, string displayType, dynamic shapeHelper)

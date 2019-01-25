@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Orchard.Taxonomies.Services;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.Services;
 using LETS.ViewModels;
@@ -13,7 +12,6 @@ using Orchard.Roles.Services;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class LETSSettingsPartDriver: ContentPartDriver<LETSSettingsPart> {
 
         private const string TemplateName = "Parts/LETSSettings";

@@ -297,6 +297,7 @@ namespace Orchard.Users.Controllers {
                 Services.Notifier.Error(T("You can't remove your own account. Please log in with another account."));
             }
             else {
+                _userEventHandlers.Deleting(user);
                 Services.ContentManager.Remove(user.ContentItem);
                 Services.Notifier.Information(T("User {0} deleted", user.UserName));
             }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.ViewModels;
 using Orchard.Caching;
@@ -11,7 +10,6 @@ using Orchard.Data;
 
 namespace LETS.Services
 {
-    [UsedImplicitly]
     public class AddressService : IAddressService
     {
         private readonly IContentManager _contentManager;

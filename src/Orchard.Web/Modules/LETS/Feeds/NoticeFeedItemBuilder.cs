@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.Services;
 using Orchard;
@@ -21,7 +20,6 @@ using Orchard.Utility.Extensions;
 
 namespace LETS.Feeds
 {
-    [UsedImplicitly]
     public class NoticeFeedItemBuilder : IFeedItemBuilder
     {
         private readonly INoticeService _noticeService;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using JetBrains.Annotations;
 using LETS.Models;
 using Orchard.Caching;
 using Orchard.ContentManagement;
@@ -9,7 +8,6 @@ using Orchard.Security;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class MemberAdminPartDriver : ContentPartDriver<MemberAdminPart>
     {
         private readonly IAuthorizationService _authorizationService;

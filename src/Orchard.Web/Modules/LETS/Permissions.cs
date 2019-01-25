@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Security.Permissions;
 
 namespace LETS
 {
-    [UsedImplicitly]
     public class Permissions : IPermissionProvider
     {
         public static readonly Permission AdminMemberContent = new Permission { Description = "Administer member content like member lists, notices etc", Name = "AdminMemberContent" };

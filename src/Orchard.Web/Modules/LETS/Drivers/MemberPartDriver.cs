@@ -1,5 +1,4 @@
 ﻿using System.Web.Routing;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.Services;
 using Orchard;
@@ -12,7 +11,6 @@ using Orchard.Settings;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class MemberPartDriver : ContentPartDriver<MemberPart>
     {
         private readonly IMemberService _memberService;

@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -7,7 +6,6 @@ using Orchard.Settings;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class MemberLinksPartDriver : ContentPartDriver<MemberLinksPart>
     {
         private readonly ISiteService _siteService;

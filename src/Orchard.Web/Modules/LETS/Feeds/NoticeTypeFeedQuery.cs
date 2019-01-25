@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using JetBrains.Annotations;
 using LETS.Services;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Feeds;
@@ -11,7 +10,6 @@ using Orchard.Utility.Extensions;
 
 namespace LETS.Feeds
 {
-    [UsedImplicitly]
     public class NoticeTypeFeedQuery : IFeedQueryProvider, IFeedQuery
     {
         private readonly INoticeService _noticeService;

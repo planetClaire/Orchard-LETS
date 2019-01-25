@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using LETS.Models;
 using LETS.Services;
 using LETS.ViewModels;
@@ -13,7 +12,6 @@ using Orchard.Security;
 
 namespace LETS.Drivers
 {
-    [UsedImplicitly]
     public class TransactionPartDriver : ContentPartDriver<TransactionPart>
     {
         private readonly ITransactionService _transactionService;

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using JetBrains.Annotations;
 using LETS.Models;
 using Orchard;
 using Orchard.ContentManagement;
@@ -13,7 +12,6 @@ using Orchard.UI.Notify;
 
 namespace LETS.Notifications
 {
-    [UsedImplicitly]
     public class IncompleteProfileBanner : INotificationProvider
     {
         private readonly IOrchardServices _orchardServices;

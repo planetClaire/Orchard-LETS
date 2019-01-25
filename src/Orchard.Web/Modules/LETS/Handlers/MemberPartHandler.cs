@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using LETS.Models;
+﻿using LETS.Models;
 using LETS.Services;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
@@ -7,7 +6,6 @@ using Orchard.Roles.Models;
 
 namespace LETS.Handlers
 {
-    [UsedImplicitly]
     public class MemberPartHandler : ContentHandler
     {
         private readonly IRepository<UserRolesPartRecord> _userRolesRespository;

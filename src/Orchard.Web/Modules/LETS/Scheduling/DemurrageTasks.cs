@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Linq;
-using JetBrains.Annotations;
 using LETS.Services;
 using Orchard.Logging;
 using Orchard.Tasks.Scheduling;
 
 namespace LETS.Scheduling
 {
-    [UsedImplicitly]
     public class DemurrageTasks : IScheduledTaskHandler
 
     {

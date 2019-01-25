@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 using NogginBox.MailChimp.Models;
 using NogginBox.MailChimp.Services;
 using Orchard;
@@ -16,7 +15,6 @@ using System.Text.RegularExpressions;
 
 namespace NogginBox.MailChimp.Drivers
 {
-	[UsedImplicitly]
 	public class MailChimpFormDriver : ContentPartDriver<MailChimpFormPart>
 	{
 		private readonly IMailChimpService _mailChimpService;
