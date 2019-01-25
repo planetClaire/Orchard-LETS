@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using JetBrains.Annotations;
 using Orchard.Comments.Models;
 using Orchard.Comments.Settings;
 using Orchard.ContentManagement;
@@ -21,7 +20,6 @@ using Orchard.Security;
 using Orchard.Services;
 
 namespace Orchard.Comments.Services {
-    [UsedImplicitly]
     public class CommentService : ICommentService {
         private readonly IOrchardServices _orchardServices;
         private readonly IClock _clock;
@@ -243,7 +241,7 @@ namespace Orchard.Comments.Services {
                 _messageService.Send("Email", parameters);
             }
             catch(Exception e) {
-                Logger.Error(e, "An unexpected error occured while sending a notification email");
+                Logger.Error(e, "An unexpected error occurred while sending a notification email");
             }
         }
 

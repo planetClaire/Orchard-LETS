@@ -69,11 +69,5 @@ namespace Orchard.AuditTrail.Providers.Users {
 
         public void Approved(IUser user) {
         }
-
-        public void Deleting(IUser user) {
-        }
-
-        public void Moderated(IUser user) {
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Orchard.Environment.Extensions;
-using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Workflows.Services;
 
@@ -16,13 +15,19 @@ namespace Orchard.Users.Handlers {
         public void Creating(UserContext context) {
             _workflowManager.TriggerEvent("UserCreating",
                                          context.User,
-                                         () => new Dictionary<string, object> {{"User", context}});
+                                         () => new Dictionary<string, object> {
+                                             {"User", context.User},
+                                             {"UserParameters", context.UserParameters}
+                                         });
         }
 
         public void Created(UserContext context) {
             _workflowManager.TriggerEvent("UserCreated",
                                          context.User,
-                                         () => new Dictionary<string, object> {{"User", context}});
+                                         () => new Dictionary<string, object> {
+                                             {"User", context.User},
+                                             {"UserParameters", context.UserParameters}
+                                         });
         }
 
         public void LoggingIn(string userNameOrEmail, string password) {
@@ -77,18 +82,6 @@ namespace Orchard.Users.Handlers {
             _workflowManager.TriggerEvent("UserApproved",
                                          user,
                                          () => new Dictionary<string, object> {{"User", user}});
-        }
-
-        public void Deleting(IUser user) {
-            _workflowManager.TriggerEvent("UserDeleting",
-                                         user,
-                                         () => new Dictionary<string, object> { { "User", user } });
-        }
-
-        public void Moderated(IUser user) {
-            _workflowManager.TriggerEvent("UserModerated",
-                                         user,
-                                         () => new Dictionary<string, object> { { "User", user } });
         }
     }
 }
