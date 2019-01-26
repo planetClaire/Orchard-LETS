@@ -193,3 +193,9 @@ src/Orchard.Azure/Orchard.Azure.CloudService/Staging/
 */.vs/*
 src/Rebracer.xml
 src/Orchard.Web/imagecache/*/*
+src/Orchard.sln.DotSettings
+*/.vs/*
+
+src/Orchard.Web/Config/log4net.Release.config
+src/Orchard.Web/Themes/LETSBootstrap/dist/*
+src/Orchard.Web/Themes/LETSBootstrap/node_modules/*

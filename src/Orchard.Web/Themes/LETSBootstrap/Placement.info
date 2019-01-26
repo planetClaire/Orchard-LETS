@@ -13,4 +13,7 @@
   <Match DisplayType="Summary">
     <Place Fields_Contrib_Image="Content:1"/>
   </Match>
+  <Match ContentType="Page">
+    <Place Parts_Common_Metadata="-"></Place>
+  </Match>
 </Placement>

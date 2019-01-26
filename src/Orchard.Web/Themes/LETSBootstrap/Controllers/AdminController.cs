@@ -36,8 +36,8 @@ namespace LETSBootstrap.Controllers
 
             var viewModel = new SettingsViewModel
             {
-                BackgroundColor = settings.BackgroundColor,
-                Logo = settings.Logo
+                Logo = settings.Logo,
+                Tagline = settings.Tagline
             };
 
             return View(viewModel);
@@ -48,7 +48,7 @@ namespace LETSBootstrap.Controllers
         {
             var settings = _settingsService.GetSettings();
 
-            settings.BackgroundColor= viewModel.BackgroundColor;
+            settings.Tagline= viewModel.Tagline;
 
             if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
             {

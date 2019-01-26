@@ -10,10 +10,10 @@
         logoUrl = WorkContext.Resolve<IMediaService>().GetMediaPublicUrl("Logos", logo);
     }
 }
-<a class="brand" href="@homeUrl">
+<a href="/" class="navbar-brand d-flex align-items-center">
     @if (!string.IsNullOrEmpty(logoUrl))
     {
-        <img src='@logoUrl?height=25' alt="logo" height="25" id="logo"/>
+        <img src='@logoUrl?height=25' alt="logo" height="25" id="logo" />
     }
-    @WorkContext.CurrentSite.SiteName
+        <strong>@WorkContext.CurrentSite.SiteName</strong>
 </a>

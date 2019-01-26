@@ -6,10 +6,8 @@
 		<legend>@T("Theme Options for LETS Bootstrap")</legend>
 
 	    <div>
-	        <label for="@Html.FieldIdFor( m => m.BackgroundColor)">@T("Background color")</label>
-	        @Html.TextBoxFor(m => m.BackgroundColor, new { type="color"})
-	        <span class="hint">@T("Hex format, eg: #a6ad3c. Find nice colors at <a href='http://www.colourlovers.com' target='_blank'>http://www.colourlovers.com</a> or use Opera or Chrome for a built in colour picker.  Clear the box (in a non-Opera/Chrome browser) to revert to the default color.</span>")
-
+	        <label for="@Html.FieldIdFor( m => m.Tagline)">@T("Tagline")</label>
+	        @Html.TextBoxFor(m => m.Tagline)
 	    </div>
         
 	    <div>
