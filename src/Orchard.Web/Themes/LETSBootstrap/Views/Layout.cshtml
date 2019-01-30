@@ -1,234 +1,96 @@
-@functions {
-    // To support the layout classifaction below. Implementing as a razor function because we can, could otherwise be a Func<string[], string, string> in the code block following.
-    string CalcuClassify(string[] zoneNames, string classNamePrefix)
-    {
-        var zoneCounter = 0;
-        var zoneNumsFilled = string.Join("", zoneNames.Select(zoneName => { ++zoneCounter; return Model[zoneName] != null ? zoneCounter.ToString() : ""; }).ToArray());
-        return HasText(zoneNumsFilled) ? classNamePrefix + zoneNumsFilled : "";
-    }
-}
 @{
-    /* Global includes for the theme
-    ***************************************************************/
-
-    SetMeta("viewport", "width=device-width, initial-scale=1.0");
-
-    Script.Require("jQuery").AtHead();
-    Script.Include("modernizr.custom.79104.js").AtHead();
-    Script.Include("oldBrowsers.js").AtFoot();
-    Script.Include("clientValidation.js").AtFoot();
-    Script.Include("random.js").AtFoot();
-    Style.Include("bootstrap.min.css");
-    Style.Include("site.css");
-    Style.Include("bootstrap-responsive.min.css");
-    
-    Script.Include("bootstrap.min.js");
-
-    /* Some useful shortcuts or settings
-    ***************************************************************/
-
-    Func<dynamic, dynamic> Zone = x => Display(x); // Zone as an alias for Display to help make it obvious when we're displaying zones
-
-    /* Layout classification based on filled zones
-    ***************************************************************/
-
-    //Add classes to the wrapper div to toggle aside widget zones on and off
-    var asideClass = CalcuClassify(new[] { "AsideFirst", "AsideSecond" }, "aside-"); // for aside-1, aside-2 or aside-12 if any of the aside zones are filled
-    if (HasText(asideClass))
-    {
-        Model.Classes.Add(asideClass);
-    }
-
-    //Add classes to the wrapper div to toggle tripel widget zones on and off
-    var tripelClass = CalcuClassify(new[] { "TripelFirst", "TripelSecond", "TripelThird" }, "tripel-"); // for tripel-1, triple-2, etc. if any of the tripel zones are filled
-    if (HasText(tripelClass))
-    {
-        Model.Classes.Add(tripelClass);
-    }
-
-    //Add classes to the wrapper div to toggle quad widget zones on and off
-    var footerQuadClass = CalcuClassify(new[] { "FooterQuadFirst", "FooterQuadSecond", "FooterQuadThird", "FooterQuadFourth" }, "split-"); // for quad-1, quad-2, etc. if any of the quad zones are filled
-    if (HasText(footerQuadClass))
-    {
-        Model.Classes.Add(footerQuadClass);
-    }
-
-    /* Inserting some ad hoc shapes
-    ***************************************************************/
-
-    WorkContext.Layout.Header.Add(New.Branding(), "1"); // Site name and link to the home page
-    WorkContext.Layout.Footer.Add(New.Copyright(), "5"); // Copyright message
-
-    /* Last bit of code to prep the layout wrapper
-    ***************************************************************/
+    Style.Include("../dist/main.css");
+    Script.Include("../dist/index.bundle.js").AtFoot();
 
     Model.Id = "layout-wrapper";
-    var tag = Tag(Model, "div"); // using Tag so the layout div gets the classes, id and other attributes added to the Model
-    var mainDivClass = string.Empty; // creating a string variable to hold the class name to add if AsideFirst is not null
+    var tag = Tag(Model, "div");
+
 }
 @tag.StartElement
-<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
-@if (Model.Header != null)
-{
-    if (Model.AuthNavigation != null)
-    {
-        <div id="authPad" class="container"></div>
-        <!-- accounts for appearance of subnav in authenticated layer, prevents it hiding the content -->
-    }
-    <div id="layout-header" class="navbar navbar-fixed-top">
-        <div id="header" class="navbar-inner">
+
+<div class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+            <a class="navbar-brand" href="/">
+                <img src='~/themes/LETSBootstrap/Content/logo.png' height="30" id="logo" class="d-inline-block align-top" alt="@WorkContext.CurrentSite.SiteName logo" /> @WorkContext.CurrentSite.SiteName
             </a>
-            @Zone(Model.Header)
-            <div class="nav-collapse">
-                @Display(New.User())
-                @Display(New.NavBarSearch())
-                @if (Model.Navigation != null)
-                {
-                    @Zone(Model.Navigation)
-                }
-                @if (Model.AuthNavigation != null)
-                {
-                    @Zone(Model.AuthNavigation)
-                }
-            </div><!--/.nav-collapse -->
-        </div>
-    </div>
-</div>
-}
-<div id="layout-main" class="container">
-    <!-- Main hero unit for a primary marketing message or call to action -->
-    @if (Model.Featured != null)
-    {
-        <div id="layout-featured" class="hero-unit">
-            @Zone(Model.Featured)
-        </div><!--/.hero-unit -->
-    }
-
-    @if (Model.BeforeMain != null)
-    {
-        <div id="layout-before-main">
-            @Zone(Model.BeforeMain)
-        </div><!--/div -->
-    }
-    
-    <div class="row">
-        <!-- Create a span of 3 and 9 if there is content in the AsideFirst zone or AsideSecond zone, or 3-6-3 if both, otherwise create a span of 12 -->
-        @if (Model.AsideFirst != null && Model.AsideSecond != null)
-        {
-            mainDivClass = "span6";
-        }
-        else if (Model.AsideFirst != null || Model.AsideSecond != null)
-        {
-            mainDivClass = "span9";
-        }
-        else
-        {
-            mainDivClass = "span12";
-        }
-
-        @if (Model.AsideFirst != null)
-        {
-            <div class="span3">
-                <div id="aside-first" class="well sidebar-nav">
-                    @Zone(Model.AsideFirst)
-                </div><!--/.well -->
-            </div><!--/.span -->
-        }
-        <!-- Place messages above Content -->
-        @if (Model.Messages != null)
-        {
-            <div id="messages" class="span12">
-            <!--[if IE 7]>
-            <div class="alert alert-danger">
-                <p>Hello Internet Explorer 7 or Internet Explorer 6 user.</p>
-                <p>Your browser is more than 6 years old.  That is very old for a web browser.</p>
-                <p>This website is best viewed in any modern browser. You may find that some functions don't behave as expected. Please upgrade your version of Internet Explorer, or use a different browser, such as <a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a> or <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Chrome</a>. </p>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarNav" aria-controls="navigation authNavigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navigation" class="collapse navbar-collapse navbarNav">
+                @Display(Model.Navigation)
             </div>
-            <![endif]-->
-                @Zone(Model.Messages)
-            </div><!--/.span -->
-        }
-        @if (Model.BeforeContent != null)
-        {
-            <div id="before-content" class="@mainDivClass">
-                @Zone(Model.BeforeContent)
-            </div><!--/.span -->
-        }
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+        <div class="container">
+            <div id="authNavigation" class="collapse navbar-collapse navbarNav">
+                @Display(Model.AuthNavigation)
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+@Display(Model.Banner)
+<main role="main" class="mt-4 container">
+    @if (Model.Messages != null)
+    {
+        <div id="messages">
+            @Display(Model.Messages)
+        </div>
+    }
+    @if (Model.BeforeContent != null)
+    {
+        <div id="before-content" class="mb-4 border-bottom">
+            @Display(Model.BeforeContent)
+        </div>
+    }
+    <div class="row mb-4">
         @if (Model.Content != null)
         {
-            <div id="content" class="@mainDivClass">
-                @Zone(Model.Content)
-            </div><!--/.span -->
-        }
-        @if (Model.AfterContent != null)
-        {
-            <div id="after-content" class="@mainDivClass">
-                @Zone(Model.AfterContent)
-            </div><!--/.span -->
-        }
-        @if (Model.AsideSecond != null)
-        {
-            <div class="span3">
-                <div id="aside-second" class="well sidebar-nav">
-                    @Zone(Model.AsideSecond)
-                </div><!--/.well -->
-            </div><!--/.span -->
-        }
-    </div><!--/.row -->
-
-    @if (Model.AfterMain != null)
-    {
-        <div id="layout-after-main">
-            @Zone(Model.AfterMain)
-        </div>
-    }
-    @if (Model.TripelFirst != null || Model.TripelSecond != null || Model.TripelThird != null)
-    {
-        @*<div id="layout-tripel" class="row-fluid">*@
-        <div id="layout-tripel" class="row">
-            @if (Model.TripelFirst != null)
+            var contentClass = "col-md-12";
+            if (Model.Aside != null)
             {
-                <div id="tripel-first" class="span4">
-                    @Zone(Model.TripelFirst)
-                </div><!--/.span -->
+                contentClass = "col-md-8";
             }
-            @if (Model.TripelSecond != null)
-            {
-                <div id="tripel-second" class="span4">
-                    @Zone(Model.TripelSecond)
-                </div><!--/.span -->
-            }
-            @if (Model.TripelThird != null)
-            {
-                <div id="tripel-third" class="span4">
-                    @Zone(Model.TripelThird)
-                </div><!--/.span -->
-            }
-        </div><!--/.row -->
-    }
-
-    <hr />
-
-    <footer id="footer">
-        @if (Model.Footer != null)
-        {
-            <div id="footer-sig">
-                @Zone(Model.Footer)
+            <div id="content" class="@contentClass">
+                @Display(Model.Content)
             </div>
         }
-    </footer>
-</div><!--/.container -->
+        @if (Model.Aside != null)
+        {
+            <aside class="col-md-4">
+                @Display(Model.Aside)
+            </aside>
+        }
 
+    </div>
+
+    @if (Model.AfterContent != null)
+    {
+        <div id="after-content" class="py-5 border-top">
+            @Display(Model.AfterContent)
+        </div>
+    }
+
+</main>
+
+@if (Model.PreFooter != null)
+{
+    <div id="pre-footer" class="bg-white py-5 border-top">
+        <div class="container">
+            @Display(Model.PreFooter)
+        </div>
+    </div>
+}
+<footer class="text-muted bg-light py-5 border-top">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        @Display(Model.Footer)
+    </div>
+</footer>
 @tag.EndElement
-<script>
-    var config = {
-        appRoot: '@Url.Content("~")'
-    };
-    var confirmRemoveMessage = '@T("Are you sure you want to delete this?")';
-</script>
 

@@ -107,6 +107,7 @@
     <Compile Include="Drivers\AddressPartDriver.cs" />
     <Compile Include="Drivers\AuthNavigationWidgetPartDriver.cs" />
     <Compile Include="Drivers\CommentsWidgetPartDriver.cs" />
+    <Compile Include="Drivers\BannerWidgetPartDriver.cs" />
     <Compile Include="Drivers\MemberAccessOnlyPartDriver.cs" />
     <Compile Include="Drivers\MemberAdminPartDriver.cs" />
     <Compile Include="Drivers\MemberLinksPartDriver.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Models\CreditUsageRecord.cs" />
     <Compile Include="Models\CreditUsageRecordSimulation.cs" />
     <Compile Include="Models\DailyStatsRecord.cs" />
+    <Compile Include="Models\BannerWidgetPart.cs" />
     <Compile Include="Models\MemberAccessOnlyPart.cs" />
     <Compile Include="Models\MemberAccessOnlyPartRecord.cs" />
     <Compile Include="Models\MemberAdminPart.cs" />
@@ -539,6 +541,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\NoticeMetadata.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\BannerWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\BannerWidget.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

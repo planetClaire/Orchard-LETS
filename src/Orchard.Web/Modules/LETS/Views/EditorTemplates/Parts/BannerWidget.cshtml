@@ -1,0 +1,21 @@
+﻿@model LETS.Models.BannerWidgetPart
+<div>
+    <label for="@Html.FieldIdFor( m => m.PrimaryButtonText)">@T("Primary Button Text")</label>
+    @Html.TextBoxFor(m => m.PrimaryButtonText)
+</div>
+
+<div>
+    <label for="@Html.FieldIdFor( m => m.PrimaryButtonUrl)">@T("Primary Button Url")</label>
+    @Html.TextBoxFor(m => m.PrimaryButtonUrl)
+</div>
+
+<div>
+    <label for="@Html.FieldIdFor( m => m.SecondaryButtonText)">@T("Secondary Button Text")</label>
+    @Html.TextBoxFor(m => m.SecondaryButtonText)
+</div>
+
+<div>
+    <label for="@Html.FieldIdFor( m => m.SecondaryButtonUrl)">@T("Secondary Button Url")</label>
+    @Html.TextBoxFor(m => m.SecondaryButtonUrl)
+</div>
+

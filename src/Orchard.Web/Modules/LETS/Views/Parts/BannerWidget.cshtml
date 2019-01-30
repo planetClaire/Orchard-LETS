@@ -1,0 +1,9 @@
+﻿@using LETS.Models
+
+@{
+    BannerWidgetPart bannerWidgetPart = Model.Part;
+}
+
+<a class="button primary" href="@bannerWidgetPart.PrimaryButtonUrl">@bannerWidgetPart.PrimaryButtonText</a>
+<a class="button secondary" href="@bannerWidgetPart.SecondaryButtonUrl">@bannerWidgetPart.SecondaryButtonText</a>
+

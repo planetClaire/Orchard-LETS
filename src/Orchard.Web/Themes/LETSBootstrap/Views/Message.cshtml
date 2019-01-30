@@ -1,12 +1,22 @@
-﻿@using (Script.Foot())
-{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.alert-message').alert();
-        });
-    </script>
+﻿@using Orchard.UI.Notify;
+@{
+    var cssClass = "alert alert-";
+    switch ((NotifyType)Model.Type)
+    {
+        case NotifyType.Warning:
+            cssClass += "warning";
+            break;
+        case NotifyType.Error:
+            cssClass += "danger";
+            break;
+        default:
+            cssClass += "primary";
+            break;
+    }
 }
-<div class="alert @((Model.Type).ToString() == "Error" ? "alert-error" : (Model.Type).ToString() == "Information" ? "alert-success" : "") fade in">
-    <a class="close" data-dismiss="alert" href="#">&times;</a>
-    <strong>@Model.Message</strong>
-</div>
+@*
+    Model.Message can either be:
+    - an IHtmlString and won't be re-encoded
+    - a string and will be encoded
+*@
+<div class="@cssClass message message-@Model.Type">@Html.Raw(Html.Encode(Model.Message).Replace("\n", "<br />"))</div>

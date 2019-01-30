@@ -6,26 +6,11 @@
 #logo {
     margin-right: 5px;
 }
-.banner-image {
-    //background: url(../Content/banner-image.jpg) no-repeat;
-    background-position: center;
-
+.jumbotron-wrapper {
+    background-position: center bottom;
+    background-repeat: no-repeat;
     .jumbotron {
-        background: rgba(0,0,0,.4);
-        margin-bottom: 0;
-        padding-top: 5rem;
-    }
-
-    .jumbotron-heading {
-        color: white;
-        padding-left: 1em;
-        padding-right: 1em;
-    }
-
-    .lead {
-        color: white;
-        padding-left: 1em;
-        padding-right: 1em;
-        font-weight:normal;
+        background: rgba(0,0,0,0.3);
+        color: #FFFFFF;
     }
 }

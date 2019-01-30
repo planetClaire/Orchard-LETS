@@ -16,4 +16,8 @@
   <Match ContentType="Page">
     <Place Parts_Common_Metadata="-"></Place>
   </Match>
+  <Match ContentType="BannerWidget">
+    <Place Fields_MediaLibraryPicker="-"></Place>
+  </Match>
+
 </Placement>

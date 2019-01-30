@@ -400,5 +400,22 @@ namespace LETS {
             return 33;
         }
 
+        public int UpdateFrom33()
+        {
+            ContentDefinitionManager.AlterPartDefinition("BannerWidgetPart", part => part
+                .WithField("BackgroundImage", field => field
+                    .OfType("MediaLibraryPickerField")
+                    .WithSetting("MediaLibraryPickerFieldSettings.Required", "true"))
+                .Attachable());
+
+            ContentDefinitionManager.AlterTypeDefinition("BannerWidget", type => type
+               .WithPart("BannerWidgetPart")
+               .WithPart("WidgetPart")
+               .WithPart("CommonPart")
+               .WithPart("BodyPart")
+               .WithSetting("Stereotype", "Widget"));
+
+            return 36;
+        }
     }
 }
