@@ -59,7 +59,6 @@
       <Place Parts_Title_Edit="Content:0"/>
       <Place Fields_Enumeration_Edit-Per="Content:1.7"/>
       <Place Fields_Enumeration_Edit-PaymentTerms="Content:1.8"/>
-      <Place Fields_AgileUploader_Edit="Content:4"/>
       <Place Parts_Comments_Enable="Content:5"/>
     </Match>
   </Match>
@@ -69,7 +68,6 @@
     <Match ContentType="Notice">
       <Place Parts_Title_DetailedSummary_Notice="Header:1"></Place>
     </Match>
-    <Place Fields_AgileUploader="Header:after" />
     <Place Parts_Common_Metadata="Content:before"/>
     <Place Fields_Common_Text-Description="Content:0"/>
     <Place Parts_Notice_DetailedSummary="Content:1"></Place>
@@ -82,7 +80,6 @@
     <Match ContentType="Notice">
       <Place Parts_Title_DetailedSummaryArchived_Notice="Header:1"></Place>
     </Match>
-    <Place Fields_AgileUploader="Header:after" />
     <Place Parts_Common_Metadata="Content:before"/>
     <Place Fields_Common_Text-Description="Content:0"/>
     <Place Parts_Notice_DetailedSummaryArchived="Content:1"></Place>
@@ -128,4 +125,7 @@
 
   <Place Parts_MembersMap="Content:0"/>
   <Place Parts_MembersMap_Edit="Content:0"></Place>
+
+  <Place Parts_BannerWidget="Content:after"></Place>
+  <Place Parts_BannerWidget_Edit="Content:0"></Place>
 </Placement>

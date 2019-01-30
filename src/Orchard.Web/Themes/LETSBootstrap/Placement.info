@@ -5,7 +5,6 @@
     <Place Fields_Common_Text_Edit-About="-"/>
     <Place Fields_Link_Edit="-"/>
     <Place Parts_MemberLinks_Edit="-" />
-    <Place Fields_AgileUploader_Edit="-"/>
   </Match>
   <Match ContentType="CarouselImage">
     <Place Fields_Numeric-Priority="-"/>

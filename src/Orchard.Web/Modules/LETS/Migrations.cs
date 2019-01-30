@@ -14,7 +14,8 @@ using Orchard.Security;
 using Orchard.Settings;
 
 
-namespace LETS {
+namespace LETS
+{
     public class Migrations : DataMigrationImpl
     {
         private readonly ITaxonomyService _taxonomyService;
@@ -161,17 +162,17 @@ namespace LETS {
                         "TextFieldSettings.Flavor", "Textarea")
                     .WithSetting("TextFieldSettings.Hint", "Don't add your contact details here.  They will be added automatically.")
                 )
-                .WithField("Photos", field => field
-                    .OfType("AgileUploaderField")
-                    .WithSetting(
-                        "AgileUploaderFieldSettings.MaxWidth", "870")
-                    .WithSetting(
-                        "AgileUploaderFieldSettings.MaxHeight", "600")
-                    .WithSetting(
-                        "AgileUploaderFieldSettings.Hint", "Upload your photos here, they will be resized automatically before upload")
-                    .WithSetting(
-                        "AgileUploaderFieldSettings.MediaFolder", "{user-id}/{content-type}")
-                )
+                //.WithField("Photos", field => field
+                //    .OfType("AgileUploaderField")
+                //    .WithSetting(
+                //        "AgileUploaderFieldSettings.MaxWidth", "870")
+                //    .WithSetting(
+                //        "AgileUploaderFieldSettings.MaxHeight", "600")
+                //    .WithSetting(
+                //        "AgileUploaderFieldSettings.Hint", "Upload your photos here, they will be resized automatically before upload")
+                //    .WithSetting(
+                //        "AgileUploaderFieldSettings.MediaFolder", "{user-id}/{content-type}")
+                //)
                 .WithField("Category", field => field
                     .OfType("TaxonomyField")
                     .WithSetting("TaxonomyFieldSettings.Taxonomy", "Category")
@@ -379,11 +380,13 @@ namespace LETS {
             return 1;
         }
 
-        public int UpdateFrom1() {
+        public int UpdateFrom1()
+        {
             return 32;
         }
 
-        public int UpdateFrom32() {
+        public int UpdateFrom32()
+        {
             SchemaBuilder.CreateTable("DailyStatsRecord", table => table
                     .Column<int>("Id", c => c.PrimaryKey().Identity())
                     .Column<DateTime>("DateCollected")
