@@ -41,7 +41,7 @@ namespace LETS.Helpers
                 foreach (var item in listOfValues)
                 {
                     var id = string.Format("{0}_{1}", metaData.PropertyName, item.Value);
-                    var radio = htmlHelper.RadioButtonFor(expression, item.Value, new {id}).ToHtmlString();
+                    var radio = htmlHelper.RadioButtonFor(expression, item.Value, new { id }).ToHtmlString();
                     sb.AppendFormat("<label class=\"radioButton\">{0}{1}</label>", radio,
                                     HttpUtility.HtmlEncode(item.Text));
                 }
@@ -86,6 +86,12 @@ namespace LETS.Helpers
 
             return
                 MvcHtmlString.Create(helper.DropDownListFor(expression, items, blankOption, mergedAttributes).ToString());
+        }
+
+        public static string IfSelected(this HtmlHelper html, string action, string controller)
+        {
+            var routeData = html.ViewContext.RouteData.Values;
+            return routeData["action"].ToString().ToLower() == action.ToLower() && routeData["controller"].ToString().ToLower() == controller.ToLower() ? " active" : "";
         }
 
         internal static object GetModelStateValue(this HtmlHelper helper, string key, Type destinationType)
