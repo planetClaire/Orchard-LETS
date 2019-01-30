@@ -9,7 +9,7 @@
     "jquery-validation": "^1.19.0",
     "jquery-validation-unobtrusive": "^3.2.11",
     "popper.js": "^1.14.6",
-    "postcss-loader": "^3.0.0",
+    "css-loader": "^3.0.0",
     "precss": "^4.0.0",
     "uglifyjs-webpack-plugin": "^2.1.1"
   },
