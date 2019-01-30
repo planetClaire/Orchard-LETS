@@ -280,10 +280,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LETS", "Orchard.Web\Modules
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LETS", "LETS", "{EF5553D2-80D1-4DC2-B907-62067331A174}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileUploaderField", "Orchard.Web\Modules\AgileUploaderField\AgileUploaderField.csproj", "{BCEA07F6-CEFE-4B07-AC95-FD1B7ED7EF74}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contrib.ImageField", "Orchard.Web\Modules\Contrib.ImageField\Contrib.ImageField.csproj", "{079DEEDE-EDA1-4810-9304-A71642FADF01}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contrib.Profile", "Orchard.Web\Modules\Contrib.Profile\Contrib.Profile.csproj", "{BB5C57F4-D9CB-4440-89A6-D9FF9F41E4E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NogginBox.MailChimp", "Orchard.Web\Modules\NogginBox.MailChimp\NogginBox.MailChimp.csproj", "{1024F5BA-7E04-4E70-8D94-30584F09918E}"

@@ -410,10 +410,6 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AgileUploaderField\AgileUploaderField.csproj">
-      <Project>{BCEA07F6-CEFE-4B07-AC95-FD1B7ED7EF74}</Project>
-      <Name>AgileUploaderField</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
       <Project>{BB5C57F4-D9CB-4440-89A6-D9FF9F41E4E3}</Project>
       <Name>Contrib.Profile</Name>

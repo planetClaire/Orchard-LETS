@@ -8,4 +8,4 @@ Description: Accounting for a LETS system
 FeatureName: LETS
 Category: LETS
 FeatureDescription: Accounting for a LETS system
-Dependencies: Orchard.Widgets, Common, Contrib.Profile, UrlAlternates, Orchard.Taxonomies, Orchard.Email, Orchard.Projections, Orchard.Indexing, Orchard.ArchiveLater, Orchard.Fields, AgileUploaderField, Lucene, Orchard.Search, Orchard.Comments, Orchard.Roles, NogginBox.MailChimp
+Dependencies: Orchard.Widgets, Common, Contrib.Profile, UrlAlternates, Orchard.Taxonomies, Orchard.Email, Orchard.Projections, Orchard.Indexing, Orchard.ArchiveLater, Orchard.Fields, Lucene, Orchard.Search, Orchard.Comments, Orchard.Roles, NogginBox.MailChimp
