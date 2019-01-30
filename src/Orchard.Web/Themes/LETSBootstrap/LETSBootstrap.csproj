@@ -179,6 +179,11 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\MenuItem.cshtml" />
+    <Content Include="Views\MenuItemLink.cshtml" />
+    <Content Include="Views\RegisterMemberLink.cshtml" />
+    <Content Include="Views\Parts.BannerWidget.cshtml" />
+    <Content Include="Views\Message.cshtml" />
     <None Include="Views\Content.cshtml" />
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
@@ -209,9 +214,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Menu.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Pager.cshtml" />

@@ -6,13 +6,21 @@
     string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
     bool isRtl = WorkContext.CurrentCultureInfo().TextInfo.IsRightToLeft;
     Html.AddPageClassNames("dir-" + (isRtl ? "rtl" : "ltr"));
+    var pageTitle = Html.Title(title, siteName);
 }
 <!DOCTYPE html>
 <html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()" dir="@(isRtl?"rtl":"ltr")">
 <head>
     <meta charset="utf-8" />
-    <title>@Html.Title(title, siteName)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta property="og:url" content='@Request.Url.AbsoluteUri.Replace("http://", "https://")' />
+    <meta property="og:title" content="@pageTitle" />
+
+    <title>@pageTitle</title>
+
     @Display(Model.Head)
+
     <script>(function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script>
     <script>window.isRTL = @(isRtl.ToString().ToLowerInvariant());</script>
 </head>
