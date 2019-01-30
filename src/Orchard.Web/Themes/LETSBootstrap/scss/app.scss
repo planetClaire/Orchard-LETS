@@ -1,10 +1,12 @@
 ﻿@charset 'utf-8';
-@import "unsupportedBrowser";
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
 
 #logo {
     margin-right: 5px;
+}
+.zone-navigation, .zone-auth-navigation{
+    width: 100%;
 }
 .jumbotron-wrapper {
     background-position: center bottom;

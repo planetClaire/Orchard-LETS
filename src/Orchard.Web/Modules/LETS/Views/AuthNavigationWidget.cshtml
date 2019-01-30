@@ -1,20 +1,30 @@
-﻿@if (WorkContext.CurrentUser != null) {
+﻿@using LETS.Helpers
+
+@if (WorkContext.CurrentUser != null)
+{
     dynamic user = WorkContext.CurrentUser.ContentItem;
     List<string> roles = user.UserRolesPart.Roles;
 
-    <ul id="authNav" class="nav nav-pills">
-        <li>@Html.ActionLink(T("Add a notice").ToString(), "Create", new {area = "LETS", controller = "Notice"})</li>
-        <li>@Html.ActionLink(T("My Notices").ToString(), "Member", new {id = WorkContext.CurrentUser.Id, area = "LETS", Controller = "Notice"})</li>
-        <li>@Html.ActionLink(T("Categories").ToString(), "Browse", new {area = "LETS", controller = "Notice"})</li>
-        <li>@Html.ActionLink(T("Members").ToString(), "Index", new {area = "LETS", controller = "Member"})</li>
-        <li>@Html.ActionLink(T("Transactions").ToString(), "Index", new {area = "LETS", controller = "Transactions"})</li>
-        <li>@Html.ActionLink(T("Profile").ToString(), "Edit", new {Controller = "Home", Area = "Contrib.Profile"})</li>
-        <li>@Html.ActionLink(T("Change Password").ToString(), "ChangePassword", new {Controller = "Account", Area = "Orchard.Users"})</li>
-        @if (roles.Contains("Trustee") || roles.Contains("Administrator") || WorkContext.CurrentSite.SuperUser.Equals(WorkContext.CurrentUser.UserName)) {
-            <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new {Area = "Dashboard", Controller = "Admin"})</li>
-        }
-        <li class="pull-right">
-            @Html.ActionLink(WorkContext.CurrentUser.UserName, "Index", new {username = WorkContext.CurrentUser.UserName, area = "Contrib.Profile", Controller = "Home"})
+    <ul id="authNav" class="navbar-nav justify-content-end">
+        <li class='nav-item @Html.IfSelected("Create", "Notice")'>@Html.ActionLink(T("Add a notice").ToString(), "Create", new { area = "LETS", controller = "Notice" }, new { @class = "nav-link" })</li>
+        <li class='nav-item @Html.IfSelected("Member", "Notice")'>@Html.ActionLink(T("My Notices").ToString(), "Member", new { id = WorkContext.CurrentUser.Id, area = "LETS", Controller = "Notice" }, new { @class = "nav-link" })</li>
+        <li class='nav-item @Html.IfSelected("Browse", "Notice")'>@Html.ActionLink(T("Categories").ToString(), "Browse", new { area = "LETS", controller = "Notice" }, new { @class = "nav-link" })</li>
+        <li class='nav-item @Html.IfSelected("Index", "Member")'>@Html.ActionLink(T("Members").ToString(), "Index", new { area = "LETS", controller = "Member" }, new { @class = "nav-link" })</li>
+        <li class='nav-item @Html.IfSelected("Index", "Transactions")'>@Html.ActionLink(T("Transactions").ToString(), "Index", new { area = "LETS", controller = "Transactions" }, new { @class = "nav-link" })</li>
+
+        <li class="nav-item ml-lg-auto dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @WorkContext.CurrentUser.UserName
+            </a>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                @Html.ActionLink("View profile", "Index", new { username = WorkContext.CurrentUser.UserName, area = "Contrib.Profile", Controller = "Home" }, new { @class = "dropdown-item" })
+                @Html.ActionLink(T("Edit profile").ToString(), "Edit", new { Controller = "Home", Area = "Contrib.Profile" }, new { @class = "dropdown-item" })
+                @Html.ActionLink(T("Change password").ToString(), "ChangePassword", new { Controller = "Account", Area = "Orchard.Users" }, new { @class = "dropdown-item" })
+                <div class="dropdown-divider"></div>
+                @Html.ActionLink(T("Logout").ToString(), "LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl }, new { @class = "dropdown-item" })
+            </div>
         </li>
     </ul>
+
 }
+
