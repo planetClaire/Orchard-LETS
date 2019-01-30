@@ -181,9 +181,9 @@
     </None>
     <Content Include="Views\MenuItem.cshtml" />
     <Content Include="Views\MenuItemLink.cshtml" />
-    <Content Include="Views\RegisterMemberLink.cshtml" />
     <Content Include="Views\Parts.BannerWidget.cshtml" />
     <Content Include="Views\Message.cshtml" />
+    <Content Include="Views\RegisterMemberLink.cshtml" />
     <None Include="Views\Content.cshtml" />
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
