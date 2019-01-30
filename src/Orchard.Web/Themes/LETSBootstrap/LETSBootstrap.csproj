@@ -135,13 +135,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminMenu.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Handlers\LETSBootstrapSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\SettingsRecord.cs" />
+    <Compile Include="Models\LETSBootstrapSettingsPart.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Fields\Boolean.Edit.cshtml" />
@@ -256,7 +254,7 @@
     <Content Include="Views\Parts.TermPart-Category.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\Index.cshtml" />
+    <None Include="Views\EditorTemplates\Parts\LETSBootstrapSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Modes.ShareBar.TweetLikeShare.cshtml" />

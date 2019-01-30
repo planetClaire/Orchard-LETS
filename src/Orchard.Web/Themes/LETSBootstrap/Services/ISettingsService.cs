@@ -5,6 +5,6 @@ namespace LETSBootstrap.Services
 {
     public interface ISettingsService : IDependency
     {
-        SettingsRecord GetSettings();
+        LETSBootstrapSettingsPart GetSettings();
     }
 }

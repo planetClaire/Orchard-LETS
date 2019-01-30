@@ -1,0 +1,11 @@
+﻿@model LETSBootstrap.Models.LETSBootstrapSettingsPart
+
+<fieldset>
+    <legend>@T("Theme Options for LETS Bootstrap")</legend>
+
+    <div>
+        <label for="@Html.FieldIdFor( m => m.Tagline)">@T("Tagline")</label>
+        @Html.TextBoxFor(m => m.Tagline)
+    </div>
+
+</fieldset>
