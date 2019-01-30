@@ -1,14 +1,8 @@
 ﻿@using LETS.Helpers
 @model LETS.ViewModels.EditNoticeViewModel
-@{
     HtmlHelper.ClientValidationEnabled = true;
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
-    
-    Script.Require("jQuery");
-    Script.Include("jQuery.validate.min.js").AtFoot();
-    Script.Include("jQuery.validate.unobtrusive.min.js").AtFoot();
 
-}
 <div class="control-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.IdNoticeType)">@T("Notice type")</label>
     <div class="controls noticeTypesRadioList">

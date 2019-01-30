@@ -87,8 +87,6 @@
     <Content Include="postcss.config.js" />
     <Content Include="Scripts\clientValidation.js" />
     <Content Include="Scripts\index.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr.custom.79104.js" />
     <Content Include="Scripts\oldBrowsers.js" />
     <Content Include="Scripts\placeholder.js" />

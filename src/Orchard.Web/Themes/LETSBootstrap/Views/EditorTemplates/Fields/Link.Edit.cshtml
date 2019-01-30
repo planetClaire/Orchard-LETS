@@ -3,8 +3,6 @@
 @{
     HtmlHelper.ClientValidationEnabled = true;
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
-    
-    Script.Require("jQuery");
 }
 @{
     var settings = Model.PartFieldDefinition.Settings.GetModel<LinkFieldSettings>();
