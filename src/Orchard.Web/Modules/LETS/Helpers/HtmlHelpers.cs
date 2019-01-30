@@ -30,7 +30,7 @@ namespace LETS.Helpers
         public static MvcHtmlString RadioButtonForSelectList<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper,
                                                                                 Expression<Func<TModel, TProperty>>
                                                                                     expression,
-                                                                                IEnumerable<SelectListItem> listOfValues)
+                                                                                IEnumerable<SelectListItem> listOfValues, bool required = false)
         {
             var metaData = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
             var sb = new StringBuilder();
@@ -41,9 +41,9 @@ namespace LETS.Helpers
                 foreach (var item in listOfValues)
                 {
                     var id = string.Format("{0}_{1}", metaData.PropertyName, item.Value);
-                    var radio = htmlHelper.RadioButtonFor(expression, item.Value, new { id }).ToHtmlString();
-                    sb.AppendFormat("<label class=\"radioButton\">{0}{1}</label>", radio,
-                                    HttpUtility.HtmlEncode(item.Text));
+                    var radio = required ? htmlHelper.RadioButtonFor(expression, item.Value, new { id, @class = "form-check-input", required = "required" }) : htmlHelper.RadioButtonFor(expression, item.Value, new { id, @class = "form-check-input" });
+                    sb.AppendFormat("<div class=\"form-check form-check-inline\">{0}<label class=\"radioButton form-check-label \" for=\"{2}\" >{1}</label></div>", radio.ToHtmlString(),
+                                    HttpUtility.HtmlEncode(item.Text), id);
                 }
                 sb.Append(htmlHelper.HiddenFor(expression).ToHtmlString());
                 sb.Append("</div>");
