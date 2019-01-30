@@ -1,6 +1,8 @@
 ﻿@model LETS.ViewModels.EditAddressViewModel
+@{
     HtmlHelper.ClientValidationEnabled = true;
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+}
 <div class="control-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.StreetAddress)">@T("Street address")</label>
     <div class="controls">

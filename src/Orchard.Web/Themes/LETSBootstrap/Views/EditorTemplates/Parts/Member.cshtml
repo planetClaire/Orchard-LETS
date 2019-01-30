@@ -1,7 +1,9 @@
 ﻿@model LETS.Models.MemberPart
+@{
     HtmlHelper.ClientValidationEnabled = true;
-    HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
-    
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+}
+
 <div class="control-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.FirstName)">@T("First name")</label>
     <div class="controls">
