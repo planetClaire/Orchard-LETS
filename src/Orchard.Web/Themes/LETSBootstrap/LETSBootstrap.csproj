@@ -82,8 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\oops-baby.jpg" />
-    <Content Include="Img\glyphicons-halflings-white.png" />
-    <Content Include="Img\glyphicons-halflings.png" />
     <Content Include="postcss.config.js" />
     <Content Include="Scripts\clientValidation.js" />
     <Content Include="Scripts\index.js" />
@@ -91,15 +89,10 @@
     <Content Include="Scripts\oldBrowsers.js" />
     <Content Include="Scripts\placeholder.js" />
     <Content Include="Scripts\random.js" />
-    <Content Include="Styles\bootstrap-responsive.css" />
-    <Content Include="Styles\bootstrap-responsive.min.css" />
-    <Content Include="Styles\bootstrap.css" />
-    <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\site.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
-    <Content Include="Img\Web.config" />
     <Content Include="Theme.txt" />
     <Content Include="Theme.png" />
     <Content Include="Placement.info" />
@@ -178,17 +171,13 @@
     <Content Include="Views\Body-Textarea.Editor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Branding.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
     <Content Include="scss\app.scss" />
-    <Content Include="dist\Web.config" />
     <Content Include="scss\_custom.scss" />
-    <Content Include="scss\_unsupportedBrowser.scss" />
+    <Content Include="dist\Web.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -196,8 +185,8 @@
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
     <Content Include="Views\Parts.MailChimpForm.cshtml" />
-    <Content Include="Views\TestView.cshtml" />
     <Content Include="Views\Template.User.LostPassword.cshtml" />
+    <Content Include="Views\Widget-BannerWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Content.DetailedSummary.cshtml" />
@@ -232,9 +221,7 @@
   <ItemGroup>
     <None Include="Views\NavBarSearch.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Zones\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Fields.Contrib.Image.cshtml" />
   </ItemGroup>

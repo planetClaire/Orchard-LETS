@@ -1,5 +1,0 @@
-syntax: glob
-bin/
-WS_FTP.LOG
-obj/
-*.user
