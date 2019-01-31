@@ -71,3 +71,26 @@ p.noticeType span.name {
 .more-notices{
     margin-bottom: 2rem;
 }
+span.price {
+    font-weight: 500;
+}
+
+span.per {
+    font-weight: 500;
+}
+
+span.paymentTerms {
+    font-weight: 500;
+}
+
+span.paymentTermsLabel {
+    text-transform: uppercase;
+    font-size: .75rem;
+    font-weight: 500;
+    color: $gray-800;
+}
+.published, .archived{
+    p{
+        margin-bottom: 0;
+    }
+}
