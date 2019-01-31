@@ -5,7 +5,7 @@
 @{
     var createdUtc = Model.ContentPart.CreatedUtc != null ? TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.CreatedUtc, WorkContext.CurrentTimeZone) : null;
     var publishedUtc = Model.ContentPart.PublishedUtc != null ? TimeZoneInfo.ConvertTimeFromUtc(Model.ContentPart.PublishedUtc, WorkContext.CurrentTimeZone) : null;
-    var republished = publishedUtc != null && createdUtc != null ?? (publishedUtc - createdUtc).Days > 1;
+    var republished = publishedUtc != null && createdUtc != null && (publishedUtc - createdUtc).Days > 1;
 }
 @if (republished)
 {
