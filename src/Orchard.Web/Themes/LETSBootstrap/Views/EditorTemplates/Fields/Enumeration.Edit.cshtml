@@ -4,45 +4,65 @@
     var settings = Model.PartFieldDefinition.Settings.GetModel<EnumerationFieldSettings>();
     string[] options = (!String.IsNullOrWhiteSpace(settings.Options)) ? settings.Options.Split(new string[] { System.Environment.NewLine }, StringSplitOptions.None) : new string[] { T("Select an option").ToString() };
 }
-<div class="control-group">
-    <label for="@Html.FieldIdFor(m => m.Value)" class="control-label">@Model.DisplayName</label>
-    <div class="controls">
-        @switch (settings.ListMode) {
-            case ListMode.Dropdown:
-                @Html.DropDownListFor(m => m.Value, new SelectList(options, Model.Value))
-                break;
-        
-            case ListMode.Radiobutton:
-                foreach (var option in options) {
-                    if (string.IsNullOrWhiteSpace(option)) {
-                        <label class="radio inline">@Html.RadioButton("Value", "", string.IsNullOrWhiteSpace(Model.Value))<i>@T("unset")</i></label>			
+<div class="wrap-row col-lg border p-3 border-left-0">
+    <div class="form-group">
+        <label for="@Html.FieldIdFor(m => m.Value)" class="control-label">@Model.DisplayName</label>
+        <div class="form-group">
+            @switch (settings.ListMode)
+            {
+                case ListMode.Dropdown:
+                    @Html.DropDownListFor(m => m.Value, new SelectList(options, Model.Value))
+                    break;
+
+                case ListMode.Radiobutton:
+                    int i = 0;
+                    foreach (var option in options)
+                    {
+                        i++;
+                        <div class="form-check form-check-inline">
+                            @if (string.IsNullOrWhiteSpace(option))
+                            {
+                                @Html.RadioButton("Value", "", string.IsNullOrWhiteSpace(Model.Value), new { @class = "form-check-input" })
+                                <label class="form-check-label "><i>@T("unset")</i></label>
+                            }
+                            else
+                            {
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="@Html.FieldNameFor(m => m.SelectedValues)" value="@option" @((Model.SelectedValues != null && Model.SelectedValues.Contains(option)) ? "checked=\"checked\"" : "") class="form-check-input" id="@Html.FieldIdFor(m => m.SelectedValues)-@i" />
+                                    <label class="form-check-label " for="@Html.FieldIdFor(m => m.SelectedValues)-@i">@T(option)</label>
+                                </div>
+                                @*@Html.RadioButton("Value", option, (option == Model.Value), new { @class = "form-check-input" })
+                                    <label class="form-check-label" >@option</label>*@
+                            }
+                        </div>
                     }
-                    else {
-                        <label class="radio inline">@Html.RadioButton("Value", option, (option == Model.Value))@option</label>
+                    break;
+
+                case ListMode.Listbox:
+                    @Html.ListBoxFor(m => m.SelectedValues, new MultiSelectList(options, Model.SelectedValues))
+                    break;
+
+                case ListMode.Checkbox:
+                    int index = 0;
+                    foreach (var option in options)
+                    {
+                        index++;
+                        if (!string.IsNullOrWhiteSpace(option))
+                        {
+                            <div class="form-check form-check-inline">
+                                <input type="checkbox" name="@Html.FieldNameFor(m => m.SelectedValues)" value="@option" @((Model.SelectedValues != null && Model.SelectedValues.Contains(option)) ? "checked=\"checked\"" : "") class="form-check-input" id="@Html.FieldIdFor(m => m.SelectedValues)-@index" />
+                                <label class="form-check-label " for="@Html.FieldIdFor(m => m.SelectedValues)-@index">
+                                    @T(option)
+                                </label>
+                            </div>
+                        }
                     }
-                }
-                break;
-        
-            case ListMode.Listbox:
-                @Html.ListBoxFor(m => m.SelectedValues, new MultiSelectList(options, Model.SelectedValues))
-                break;
-        
-            case ListMode.Checkbox:
-                int index = 0;
-                foreach (var option in options) {
-                    index++;
-                    if (!string.IsNullOrWhiteSpace(option)) {
-                        <label class="checkbox inline" for="@Html.FieldIdFor(m => m.SelectedValues)-@index">
-                            <input type="checkbox" name="@Html.FieldNameFor(m => m.SelectedValues)" value="@option" @((Model.SelectedValues != null && Model.SelectedValues.Contains(option)) ? "checked=\"checked\"" : "") class="check-box" id="@Html.FieldIdFor(m => m.SelectedValues)-@index" />
-                            @T(option)
-                        </label>
-                    }
-                }
-                <input name="@Html.FieldNameFor(m => m.SelectedValues)" type="hidden" />
-                break;
-        }
-    
-        @Html.ValidationMessageFor(m => m.SelectedValues)
-        <span class="hint help-block">@settings.Hint</span>
+                    <input name="@Html.FieldNameFor(m => m.SelectedValues)" type="hidden" />
+                    break;
+            }
+
+            @Html.ValidationMessageFor(m => m.SelectedValues)
+            <span class="hint help-block">@settings.Hint</span>
+        </div>
     </div>
 </div>

@@ -2,4 +2,4 @@
 @{
     string editorFlavor = Model.EditorFlavor;
 }
-@Html.TextArea("Text", (string)Model.Text, 8, 270, new { @class = editorFlavor.HtmlClassify() + " input-xlarge"})
+@Html.TextArea("Text", (string)Model.Text, new { @class = editorFlavor.HtmlClassify() + " form-control", rows = 3})

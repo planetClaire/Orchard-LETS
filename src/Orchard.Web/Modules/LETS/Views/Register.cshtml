@@ -3,66 +3,80 @@
 @{
     var memberVM = (RegisterMemberViewModel)Model.Register;
     var noticeTypesVM = (RegisterNoticeTypesViewModel)Model.RequiredNoticeTypes;
-
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 }
 <header class="page-header">
     <h1>@Html.TitleForPage(T("Become a Member").ToString())</h1>
 </header>
 <p>@T("Passwords are required to be a minimum of {0} characters in length.", ViewData["PasswordLength"])</p>
 @* markup optimised for twitter bootstrap form-horizontal *@
-@using (Html.BeginFormAntiForgeryPost(new { @class = "form-horizontal" }))
-{ 
+@using (Html.BeginFormAntiForgeryPost(new { @class = "form-horizontal needs-validation", novalidate = "novalidate" }))
+{
     @Html.ValidationSummary()
-    <fieldset>
-        <legend>@T("Login Details")</legend>
-    
-        <div class="control-group">
-            <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Email)">@T("Email")</label>
-            <div class="controls">
-                @Html.TextBoxFor(m => memberVM.Email, new{ autofocus = "autofocus", type = "email", @class = "required input-xlarge" })
-                @Html.ValidationMessageFor(m => memberVM.Email)
-            </div>
-        </div>
-    
-        <div class="control-group">
-            <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Password)">@T("Password")</label>
-            <div class="controls">
-                @Html.PasswordFor(m => memberVM.Password, new { @class = "required input-xlarge" })
-                @Html.ValidationMessageFor(m => memberVM.Password)
-            </div>
-        </div>
-    
-        <div class="control-group">
-            <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.ConfirmPassword)">@T("Confirm Password")</label>
-            <div class="controls">
-                @Html.PasswordFor(m => memberVM.ConfirmPassword, new { @class = "required input-xlarge" })
-                @Html.ValidationMessageFor(m => memberVM.ConfirmPassword)
-            </div>
-        </div>
+    <div class="border p-3 mb-3">
+        <fieldset>
+            <legend>@T("Login Details")</legend>
 
-        @if (Model.UserProfile != null)
-        {
+            <div class="form-group">
+                <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Email)">@T("Email")</label>
+                @Html.TextBoxFor(m => memberVM.Email, new { autofocus = "autofocus", type = "email", @class = "form-control required input-xlarge", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(m => memberVM.Email)</div>
+            </div>
+
+            <div class="form-group">
+                <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Password)">@T("Password")</label>
+                @Html.PasswordFor(m => memberVM.Password, new { @class = "form-control required input-xlarge", @type = "password", required = "required" })
+                <div class="invalid-feedback">
+                    @Html.ValidationMessageFor(m => memberVM.Password)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.ConfirmPassword)">@T("Confirm Password")</label>
+                <div class="controls">
+                    @Html.PasswordFor(m => memberVM.ConfirmPassword, new { @class = "form-control required input-xlarge", @type = "password", required = "required" })
+                    <div class="invalid-feedback">
+                        @Html.ValidationMessageFor(m => memberVM.ConfirmPassword)
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+
+    if (Model.UserProfile != null)
+    {
+        <div class="border p-3 mb-3">
             <fieldset>
-                <legend>@T("Member Details")</legend>
+                <legend>@T("Member Details")<small> (available to other members but not shown to the public)</small></legend>
+
                 @Display(Model.UserProfile)
             </fieldset>
-        }
+        </div>
+    }
+    <div class="border p-3 mb-3">
 
-        @* there's a better way to do this 2D nested list but I don't know what it is yet... *@
         @if (noticeTypesVM != null)
         {
             for (int i = 0; i < noticeTypesVM.NoticeTypes.Count; i++)
             {
+                var noticeTypeName = @noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower();
                 <fieldset>
                     <legend><span>Your </span>@noticeTypesVM.NoticeTypes[i].NoticeTypeName<span>s</span></legend>
-                    <p><strong>Your membership requires you to have atleast @noticeTypesVM.NoticeTypes[i].RequiredCount @noticeTypesVM.NoticeTypes[i].NoticeTypeName<span>/s</span>.</strong> Please add them here (you'll be able to add fuller descriptions & photos after your membership has been approved.</p>
+                    <p><strong>Your membership requires you to start with @noticeTypesVM.NoticeTypes[i].RequiredCount @noticeTypeName.</strong> You'll be able to add more @string.Format("{0}s", noticeTypeName), fuller descriptions & photos after your membership has been approved.</p>
                     @Html.HiddenFor(m => noticeTypesVM.NoticeTypes[i].IdNoticeType)
                     @for (var j = 0; j < noticeTypesVM.NoticeTypes[i].RequiredCount; j++)
                     {
-                        <div class="control-group">
-                            @Html.DropDownListFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm, noticeTypesVM.CategoryTerms, "Choose a category...")
-                            @Html.TextBoxFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title, new { placeholder = string.Format("Type your {0} here...", noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower()), @class = "wide input-xlarge" })
-                            <div class="registerNoticeError">
+                        <div class="form-group">
+                            <div class="row no-gutters">
+                                <div class="col-4">
+                                    @Html.DropDownListFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm, noticeTypesVM.CategoryTerms, "Choose a category...", new { required = "required", @class = "form-control custom-select" })
+                                </div>
+                                <div class="col-8">
+                                    @Html.TextBoxFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title, new { placeholder = string.Format("Type your {0} here...", noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower()), @class = "form-control wide input-xlarge", required = "required" })
+                                </div>
+                            </div>
+                            <div class="registerNoticeError invalid-feedback">
                                 @Html.ValidationMessageFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm)
                                 @Html.ValidationMessageFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title)
                             </div>
@@ -71,9 +85,8 @@
                 </fieldset>
             }
         }
-
-    <div class="form-actions">
+    </div>
+    <div class="form-actions text-center">
         <button class="btn btn-primary btn-large" type="submit">@T("Register")</button>
-    </div>    
-    </fieldset>
-} 
+    </div>
+}

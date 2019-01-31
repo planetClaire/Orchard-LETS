@@ -3,7 +3,7 @@
 @{
     var settings = Model.PartFieldDefinition.Settings.GetModel<BooleanFieldSettings>();
 }
-<div class="control-group">
+<div class="form-group">
     <label for="@Html.FieldIdFor(m => m.Value)" class="control-label">@Model.DisplayName</label>
     <div class="controls">
         @switch (settings.SelectionMode) {

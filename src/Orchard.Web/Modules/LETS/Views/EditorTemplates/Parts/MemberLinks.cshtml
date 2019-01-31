@@ -1,61 +1,37 @@
 ﻿@model LETS.Models.MemberLinksPart
-<div class="control-group">
+<h2>Social media links <small>optional</small></h2>
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.Website)">@T("Website")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Website, new { @class = "input-xlarge" })
-    </div>
+    @Html.TextBoxFor(model => model.Website, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.Facebook)">@T("Facebook")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Facebook, new { @class = "input-xlarge" })
-    </div>
+    @Html.TextBoxFor(model => model.Facebook, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
 </div>
-<div class="control-group">
+<div class="form-group">
+    <label class="control-label" for="@Html.FieldIdFor(m => m.Instagram)">@T("Instagram")</label>
+    @Html.TextBoxFor(model => model.Instagram, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
+</div>
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.Twitter)">@T("Twitter")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Twitter, new { @class = "input-xlarge" })
-    </div>
+    @Html.TextBoxFor(model => model.Twitter, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.LinkedIn)">@T("LinkedIn")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.LinkedIn, new { @class = "input-xlarge" })
-    </div>
+    @Html.TextBoxFor(model => model.LinkedIn, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
 </div>
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.Tumblr)">@T("Tumblr")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Tumblr, new { @class = "input-xlarge" })
-    </div>
-</div>
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.Flickr)">@T("Flickr")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Flickr, new { @class = "input-xlarge" })
-    </div>
-</div>
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.Pinterest)">@T("Pinterest")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Pinterest, new { @class = "input-xlarge" })
-    </div>
+    @Html.TextBoxFor(model => model.Pinterest, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
 </div>
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.GooglePlus)">@T("GooglePlus")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.GooglePlus, new { @class = "input-xlarge" })
-    </div>
-</div>
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.Goodreads)">@T("Goodreads")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Goodreads, new { @class = "input-xlarge" })
-    </div>
-</div>
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.Skype)">@T("Skype")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Skype, new { @class = "input-xlarge" })
-    </div>
+    @Html.TextBoxFor(model => model.Goodreads, new { @class = "form-control input-xlarge", @type = "url" })
+    <div class="invalid-feedback">Please type a valid url (starting with http:// or https://)</div>
 </div>

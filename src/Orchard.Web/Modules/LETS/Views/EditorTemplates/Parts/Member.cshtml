@@ -1,22 +1,26 @@
 ﻿@model LETS.Models.MemberPart
-<div class="control-group">
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+}
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.FirstName)">@T("First name")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.FirstName, new { @class = "required input-xlarge" })
+    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control required input-xlarge", required = "required" })
+    <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.FirstName)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.LastName)">@T("Last name")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.LastName, new { @class = "required input-xlarge" })
+    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control required input-xlarge", required = "required" })
+    <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.LastName)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.Telephone)">@T("Telephone")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Telephone, new { @class = "required input-xlarge" })
+    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control required input-xlarge", required = "required" })
+    <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.Telephone)
     </div>
 </div>

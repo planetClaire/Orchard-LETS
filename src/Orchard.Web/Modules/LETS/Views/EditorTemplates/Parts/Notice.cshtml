@@ -1,25 +1,32 @@
 ﻿@using LETS.Helpers
 @model LETS.ViewModels.EditNoticeViewModel
-<div class="control-group">
-    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdNoticeType)">@T("Notice type")</label>
-    <div class="controls noticeTypesRadioList">
-        @Html.RadioButtonForSelectList(model => model.IdNoticeType,
-                                     Model.NoticeTypes.Select(noticeType => new SelectListItem
-                                                                                {
-                                                                                    Selected = noticeType.Id == Model.IdNoticeType,
-                                                                                    Text = @Html.ItemDisplayText(noticeType).ToString(),
-                                                                                    Value = noticeType.Id.ToString()
-                                                                                }))
-        @Html.ValidationMessageFor(model => model.IdNoticeType)
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+}
+<div class="border p-3 border-bottom-0">
+    <div class="form-group">
+        <label class="required control-label" for="@Html.FieldIdFor(m => m.IdNoticeType)">@T("Notice type")</label>
+        <div class="form-group noticeTypesRadioList ">
+            @Html.RadioButtonForSelectList(model => model.IdNoticeType,
+                                         Model.NoticeTypes.Select(noticeType => new SelectListItem
+                                         {
+                                             Selected = noticeType.Id == Model.IdNoticeType,
+                                             Text = @Html.ItemDisplayText(noticeType).ToString(),
+                                             Value = noticeType.Id.ToString()
+                                         }), true)
+            <div class="invalid-feedback">@Html.ValidationMessageFor(m => Model.IdNoticeType)</div>
+        </div>
     </div>
 </div>
-
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.Price)">@T("Price")</label>
-    <div class="controls">
-        <div class="input-prepend">
-            <span class="add-on">@Model.CurrencyUnit</span>@Html.TextBoxFor(model => model.Price, new { @class = "input-mini" })
+<div class="wrap-row col-lg border p-3">
+    <div class="form-group">
+        <label class="control-label" for="@Html.FieldIdFor(m => m.Price)">@T("Price")</label>
+        <div class="input-group mb-2">
+            <div class="input-group-prepend">
+                <div class="input-group-text">@Model.CurrencyUnit</div>
+            </div>
+            @Html.TextBoxFor(model => model.Price, new { @class = "input-mini form-control", @type = "text" })
         </div>
-        @Html.ValidationMessageFor(model => model.Price)
-    </div>    
+    </div>
 </div>

@@ -19,7 +19,7 @@
             break;
 	}
 }
-<div class="control-group">
+<div class="form-group">
     <label for="@Html.FieldIdFor(m => m.Value)" class="control-label">@string.Format("{0} {1}", Model.DisplayName, @T("url"))</label>
     <div class="controls">
         @Html.TextBoxFor(m =>   m.Value, new { @class = "input-xlarge" })
@@ -28,7 +28,7 @@
 </div>
 
 @if (settings.LinkTextMode == LinkTextMode.Optional || settings.LinkTextMode == LinkTextMode.Required) {
-    <div class="control-group">
+    <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.Text)" class="control-label">@string.Format("{0} {1}", Model.DisplayName, @T("link text"))</label>
         <div class="controls">
             @Html.TextBoxFor(m => m.Text, new {@class = "input-xlarge"})

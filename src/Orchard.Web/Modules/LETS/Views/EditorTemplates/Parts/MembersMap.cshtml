@@ -1,40 +1,40 @@
 ﻿@model LETS.Models.MembersMapPart
-<div class="control-group">
+<div class="form-group">
     <label class="required" for="@Html.FieldIdFor(m => m.ApiKey)">@T("Google maps Api Key")</label>
     <div class="controls">
         @Html.EditorFor(model => model.ApiKey)
         @Html.ValidationMessageFor(model => model.ApiKey)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required" for="@Html.FieldIdFor(m => m.Latitude)">@T("Latitude of center of map")</label>
     <div class="controls">
         @Html.EditorFor(model => model.Latitude)
         @Html.ValidationMessageFor(model => model.Latitude)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.Longitude)">@T("Longitude of center of map")</label>
     <div class="controls">
         @Html.EditorFor(model => model.Longitude)
         @Html.ValidationMessageFor(model => model.Longitude)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.MapWidth)">@T("Width of map")</label>
     <div class="controls">
         @Html.EditorFor(model => model.MapWidth)
         @Html.ValidationMessageFor(model => model.MapWidth)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.MapHeight)">@T("Height of map")</label>
     <div class="controls">
         @Html.EditorFor(model => model.MapHeight)
         @Html.ValidationMessageFor(model => model.MapHeight)
     </div>
 </div>
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.ZoomLevel)">@T("Initial zoom level of map")</label>
     <div class="controls">
         @Html.EditorFor(model => model.ZoomLevel)

@@ -3,6 +3,9 @@
 @using Orchard.Security
 @model LETS.ViewModels.EditTransactionViewModel
 @{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
     Style.Require("jQueryCalendars_Picker");
     Style.Require("jQueryUI_Calendars_Picker");
     Style.Require("jQueryDateTimeEditor");
@@ -13,75 +16,79 @@
     var minTransactionDay = WorkContext.CurrentSite.As<LETSSettingsPart>().OldestRecordableTransactionDays * -1;
     var isAdmin = WorkContext.Resolve<IAuthorizationService>().TryCheckAccess(LETS.Permissions.AdminMemberContent, WorkContext.CurrentUser, WorkContext.Resolve<IContentManager>().New<TransactionPart>("Transaction"));
 }
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.TransactionDate)">@T("Transaction date")</label>
-    <div class="controls">
-        @Html.TextBoxFor(m => m.TransactionDate, new { @class = "required input-small date" })
-        @Html.ValidationMessageFor(m => m.TransactionDate)
-        @Html.HiddenFor(m => m.TransactionTime)
-    </div>
-</div>
-
-@if (isAdmin) {
-    <div class="control-group">
-        <label class="control-label" for="@Html.FieldIdFor(m => m.TransactionType)">@T("Type")</label>
-        <div class="controls">
-            @Html.DropDownListFor(model => model.TransactionType, new SelectList(Enum.GetValues(typeof (TransactionType))))
-        </div>
-    </div>
-
-    <div class="control-group">
-        <label class="required control-label" for="@Html.FieldIdFor(m => m.IdSeller)">@T("Seller")</label>
-        <div class="controls noticeTypesRadioList">
-            @Html.DropDownListFor(model => model.IdSeller, Model.Members, @T("Choose a seller").ToString())
-            @Html.ValidationMessageFor(model => model.IdSeller)
-        </div>
-    </div>
-}
-else {
-    @Html.HiddenFor(m => m.TransactionType)
-    @Html.HiddenFor(m => m.IdSeller)
-}
-
-<div class="control-group">
-    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdBuyer)">@T("Buyer")</label>
-    <div class="controls noticeTypesRadioList">
-        @Html.DropDownListFor(model => model.IdBuyer, Model.Members, @T("Choose a buyer").ToString())
-        @Html.ValidationMessageFor(model => model.IdBuyer)
-    </div>
-</div>
-
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.Description)">@T("Description")</label>
-    <div class="controls">
-        @Html.TextBoxFor(model => model.Description, new { @class = "required input-xlarge" })
-        @Html.ValidationMessageFor(model => model.Description)
-    </div>    
-</div>
-
-<div class="control-group">
-    <label class="control-label" for="@Html.FieldIdFor(m => m.Value)">@T("Value")</label>
-    <div class="controls">
-        <div class="input-prepend">
-            <span class="add-on">@Model.CurrencyUnit</span>@Html.TextBoxFor(model => model.Value, new { @class = "input-mini" })
-        </div>
-        @Html.ValidationMessageFor(model => model.Value)
-    </div>    
-</div>
+<table class="table table-striped table-bordered ">
+    <thead>
+        <tr>
+            <th scope="col">@T("Trade date")</th>
+            @if (isAdmin)
+            {
+                <th scope="col">@T("Type")</th>
+                <th scope="col">@T("Seller")</th>
+            }
+            <th scope="col">@T("Member")</th>
+            <th scope="col">@T("Description")</th>
+            <th scope="col">@T("Value")</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td width="18%">
+                @Html.TextBoxFor(m => m.TransactionDate, new { @class = "form-control required input-small date", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(m => m.TransactionDate)</div>
+                @Html.HiddenFor(m => m.TransactionTime)
+            </td>
+            @if (isAdmin)
+            {
+                <td>
+                    @Html.DropDownListFor(model => model.TransactionType, new SelectList(Enum.GetValues(typeof(TransactionType))))
+                </td>
+                <td>
+                    <div class="controls noticeTypesRadioList">
+                        @Html.DropDownListFor(model => model.IdSeller, Model.Members, @T("Choose a seller").ToString())
+                        @Html.ValidationMessageFor(model => model.IdSeller)
+                    </div>
+                </td>
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.TransactionType)
+                @Html.HiddenFor(m => m.IdSeller)
+            }
+            <td width="25%">
+                @Html.DropDownListFor(model => model.IdBuyer, Model.Members, @T("Choose a buyer").ToString(), new { @class = "form-control custom-select", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.IdBuyer)</div>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Description, new { @class = "form-control required input-xlarge", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Description)</div>
+            </td>
+            <td width="18%">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@Model.CurrencyUnit</div>
+                    </div>
+                    @Html.TextBoxFor(model => model.Value, new { @class = "input-mini form-control", @type = "number", min = "1", required = "required" })
+                    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Value, @T("The value is required").ToString())</div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 @Display.CalendarsPickerLocalization()
 
 @using (Script.Foot())
 {
-    <script type="text/javascript">    
+    <script type="text/javascript">
+
     //<![CDATA[
         $(function () {
             var txtTransactionDate = $('#@Html.FieldIdFor(m => m.TransactionDate)');
             txtTransactionDate.calendarsPicker({
-                showAnim: "", 
-                minDate: @minTransactionDay, 
-                maxDate: 0, 
-                showOn: "both", 
+                showAnim: "",
+                minDate: @minTransactionDay,
+                maxDate: 0,
+                showOn: "both",
                 buttonImageOnly: false,
                 renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
                     picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
@@ -90,5 +97,5 @@ else {
             });
         })
     //]]>
-</script>
+    </script>
 }

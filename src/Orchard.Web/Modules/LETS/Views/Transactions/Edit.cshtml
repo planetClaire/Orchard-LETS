@@ -1,16 +1,17 @@
-﻿@{
+﻿@using LETS.Helpers
+@{
     Layout.Title = T("Edit Transaction").ToString();
     HtmlHelper.ClientValidationEnabled = true;
-    HtmlHelper.UnobtrusiveJavaScriptEnabled = true; 
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 }
 
-@using (Html.BeginFormAntiForgeryPost())
+@using (Html.BeginFormAntiForgeryPost(new { @class = "needs-validation", novalidate = "novalidate" }))
 {
     Html.ValidationSummary();
 
     <div id="editTransaction">
         <header class="page-header">
-            <h1>@T("You are editing your trade")</h1>    
+            <h1>@T("You are editing your trade")</h1>
         </header>
         @Display(Model)
 

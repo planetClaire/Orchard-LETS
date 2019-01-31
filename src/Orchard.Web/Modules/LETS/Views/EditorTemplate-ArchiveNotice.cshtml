@@ -24,34 +24,35 @@
         archiveLater.Editor.Date = maxDate;
     }
 }
-<div class="control-group">
-    <input type="hidden" value="true" name="ArchiveLater.ArchiveLater">
-    <label class="required control-label" for="@Html.FieldIdFor(m => archiveLater.Editor.Date)">@T("Expires")</label>
-    <div class="controls">
+
+<div class="border p-3 border-top-0">
+    <div class="form-group">
+        <input type="hidden" value="true" name="ArchiveLater.ArchiveLater">
+        <label class="required control-label" for="@Html.FieldIdFor(m => archiveLater.Editor.Date)">@T("Expires")</label>
+        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
             <div class="input-append">
-                @Html.TextBoxFor(m => archiveLater.Editor.Date, new { @class = "input-small appendedPrependedInput date" })
+                @Html.TextBoxFor(m => archiveLater.Editor.Date, new { @class = "form-control" })
             </div>
-            <div id="archiveQuickPick" class="help-inline btn-group" data-toggle="buttons-radio">
-                <a class="btn" href="#" id="aTwoDays">
+            <div id="archiveQuickPick" class="btn-group mr-2 input-group-append" role="group">
+                <a class="btn btn-outline-primary" href="#" id="aTwoDays">
                     <input type="hidden" value="2" />
                     <i class="icon-time"></i>
                     2 @T("days")
                 </a>
-                <a class="btn" href="#" id="aSevenDays">
+                <a class="btn btn-outline-primary" href="#" id="aSevenDays">
                     <input type="hidden" value="7" />
                     <i class="icon-time"></i>
                     1 @T("week")
                 </a>
-                <a class="btn" href="#" id="aMaxDays">
+                <a class="btn btn-outline-primary" href="#" id="aMaxDays">
                     <input type="hidden" value="@maxDays" />
                     <i class="icon-time"></i>
                     @maxDays @T(" days")
                 </a>
             </div>
-        <input type="hidden" name="ArchiveLater.ScheduledArchiveTime" value="12:00 AM" />
-    </div>  
+        </div>
+    </div>
 </div>
-
 @Display.CalendarsPickerLocalization()
 
 @using (Script.Foot())
@@ -62,15 +63,15 @@
         $(function () {
 
             // need this for unobtrusive date validation to work in chrome http://stackoverflow.com/questions/6906725/unobtrusive-validation-in-chrome-wont-validate-with-dd-mm-yyyy
-            jQuery.validator.methods["date"] = function (value, element) { return true; }
+            //jQuery.validator.methods["date"] = function (value, element) { return true; }
 
             // activate the datepicker
             var txtArchiveDate = $('#@Html.FieldIdFor(m => archiveLater.Editor.Date)');
-            txtArchiveDate.calendarsPicker({ 
-                showAnim: "", 
-                minDate: 0, 
-                maxDate: @maxDays, 
-                showOn: "both", 
+            txtArchiveDate.calendarsPicker({
+                showAnim: "",
+                minDate: 0,
+                maxDate: @maxDays,
+                showOn: "both",
                 buttonImageOnly: false,
                 renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
                     picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
@@ -102,5 +103,5 @@
             });
         })
         //]]>
-</script>
+    </script>
 }

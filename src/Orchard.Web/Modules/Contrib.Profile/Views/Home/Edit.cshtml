@@ -1,5 +1,6 @@
 <h1>@Html.TitleForPage(T("Edit Profile").Text)</h1>
-@using (Html.BeginFormAntiForgeryPost()) {
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Edit"), FormMethod.Post, new { enctype = "multipart/form-data", @class = "no-multisubmit needs-validation", novalidate = "novalidate" }))
+{
     @Html.ValidationSummary()
     @Display(Model)
 }

@@ -1,5 +1,9 @@
 ﻿@using Orchard.ContentManagement
+@using LETS.Helpers
 @{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
     var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
     var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
 }
@@ -7,39 +11,37 @@
     <h1 class="page-title">@T("Login")</h1>
 </header>
 <p>
-    @T("Please enter your email and password.") 
-    @if(userCanRegister) { @Html.ActionLink(T("Register").Text, "RegisterMember", "Account") @T(" if you aren't a member yet. ") }
-    @if(enableLostPassword) { @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPasswordMember", "Account") }
+    @T("Please enter your email and password.")
+    @if (userCanRegister)
+    {@Html.ActionLink(T("Register").Text, "RegisterMember", "Account") @T(" if you aren't a member yet. ")}
+    @if (enableLostPassword)
+    {@Html.ActionLink(T("Lost your Password?").Text, "RequestLostPasswordMember", "Account")}
 </p>
 @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
 
-@using (Html.BeginFormAntiForgeryPost(Url.Action("LogOnMember", "Account", new { ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { @class = "form-horizontal" })) {
-<fieldset >
-    <legend>@T("Login Details")</legend>
-    <div class="control-group">
-        <label for="username-email" class="control-label">@T("Email")</label>
-        <div class="controls">
-            @Html.TextBox("userNameOrEmail", "", new { id = "username-email", autofocus = "autofocus", @class = "required input-xlarge" })
-            @Html.ValidationMessage("userNameOrEmail")
-        </div>
+@using (Html.BeginFormAntiForgeryPost(Url.Action("LogOnMember", "Account", new { ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { @class = "form-horizontal needs-validation", novalidate = "novalidate" }))
+{
+    <div class="row ">
+        <fieldset class="col-4 m-auto text-center">
+            <legend>@T("Login Details")</legend>
+            <div class="form-group">
+                @Html.TextBox("userNameOrEmail", "", new { id = "username-email", autofocus = "autofocus", @class = "form-control required input-xlarge", required = "required", @type = "email", placeholder = "Email" })
+                @Html.ValidationMessage("userNameOrEmail")
+            </div>
+            <div class="form-group">
+                @Html.Password("password", "", new { @class = "form-control required input-xlarge", required = "required", @type = "password", placeholder ="Password" })
+                @Html.ValidationMessage("password")
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    @Html.CheckBox("createPersistentCookie", new { @class = "form-check-input" })
+                    <label for="createPersistentCookie" class="form-check-label control-label forcheckbox">@T("Remember me for 2 weeks")</label>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary btn-large" type="submit">@T("Login")</button>
+            </div>
+        </fieldset>
     </div>
-    <div class="control-group">
-        <label for="password" class="control-label">@T("Password")</label>
-        <div class="controls">
-            @Html.Password("password", "", new { @class = "required input-xlarge" })
-            @Html.ValidationMessage("password")
-        </div>
-    </div>
-    <div class="control-group">
-        <label for="createPersistentCookie" class="control-label forcheckbox">@T("Remember me")</label>
-        <div class="controls">
-            @Html.CheckBox("createPersistentCookie")
-            <span class="help-inline">Checking this will keep you logged in for 2 weeks, unless you logout <strong>(don't use this on public computers)</strong></span>
-        </div>
-    </div>
-    <div class="form-actions">
-        <button class="btn btn-primary btn-large" type="submit">@T("Login")</button>
-    </div>
-</fieldset>
 }
 

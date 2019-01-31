@@ -83,7 +83,6 @@
   <ItemGroup>
     <Content Include="Content\oops-baby.jpg" />
     <Content Include="postcss.config.js" />
-    <Content Include="Scripts\clientValidation.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\modernizr.custom.79104.js" />
     <Content Include="Scripts\oldBrowsers.js" />
@@ -152,15 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Fields.Common.Text.Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\Address.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\Member.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\Notice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts.Title.TitlePart.cshtml" />

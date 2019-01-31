@@ -1,7 +1,7 @@
 ﻿@using LETS.Models
 @model LETS.Models.MemberAdminPart
 
-<div class="control-group">
+<div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.JoinDate)">@T("Joined")</label>
     <div class="controls">
         @Html.TextBoxFor(m => m.JoinDate, new { @class = "required input-small date" })
@@ -9,14 +9,14 @@
     </div>
 </div>
 
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.MemberType)">@T("Type")</label>
     <div class="controls">
         @Html.DropDownListFor(model => model.MemberType, new SelectList(Enum.GetValues(typeof(MemberType))))
     </div>
 </div>
 
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="@Html.FieldIdFor(m => m.OpeningBalance)">@T("Opening balance")</label>
     <div class="controls">
         @Html.TextBoxFor(m => m.OpeningBalance)

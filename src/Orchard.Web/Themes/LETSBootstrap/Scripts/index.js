@@ -13,6 +13,8 @@ window.addEventListener('load', function () {
     var validation = Array.prototype.filter.call(forms, function (form) {
         form.addEventListener('submit', function (event) {
             if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
                 // show validation error for radiobuttonlist
                 $(".form-check-input.input-validation-error").closest(".form-group").find(".invalid-feedback").css("display", "block");
             }
@@ -20,3 +22,5 @@ window.addEventListener('load', function () {
         }, false);
     });
 }, false);
+
+$(".wrap-row").wrapAll("<div class='no-gutters row'/>");

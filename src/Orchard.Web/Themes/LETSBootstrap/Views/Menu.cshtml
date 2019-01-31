@@ -1,4 +1,7 @@
 ﻿@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
     // Model is Model.Menu from the layout (Layout.Menu)
     Model.Classes.Add("navbar-nav justify-content-end");
     var tag = Tag(Model, "ul");
@@ -15,7 +18,7 @@
         Login
     </a>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
-        @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOnMember", "Account", new { area = "LETS", ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { @class = "px-4 py-3" }))
+        @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOnMember", "Account", new { area = "LETS", ReturnUrl = Request.QueryString["ReturnUrl"] }), FormMethod.Post, new { @class = "px-4 py-3 needs-validation", novalidate = "novalidate" }))
         {
             <div class="form-group">
                 @Html.TextBox("userNameOrEmail", "", new { id = "username-email", @class = "form-control", placeholder = "Your email", @type = "email", required = "required" })

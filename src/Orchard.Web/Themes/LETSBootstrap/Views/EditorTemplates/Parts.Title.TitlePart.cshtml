@@ -4,9 +4,9 @@
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 }
 
-<div class="control-group">
-    <label class="required control-label" for="@Html.FieldIdFor(m => m.Title)">@T("Title")</label>
-    <div class="controls">
+<div class="border p-3 border-bottom-0">
+    <div class="form-group">
+        <label class="required" for="@Html.FieldIdFor(m => m.Title)">@T("Title")</label>
         @Html.TextBoxFor(m => m.Title, new { @class = "required input-xlarge form-control", autofocus = "autofocus", required = "required" })
         <div class="invalid-feedback">@Html.ValidationMessageFor(m => m.Title)</div>
     </div>
