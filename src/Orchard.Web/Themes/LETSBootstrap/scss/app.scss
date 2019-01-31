@@ -5,31 +5,69 @@
 #logo {
     margin-right: 5px;
 }
-.zone-navigation, .zone-auth-navigation{
+
+.zone-navigation, .zone-auth-navigation {
     width: 100%;
 }
+
 .jumbotron-wrapper {
     background-position: center bottom;
     background-repeat: no-repeat;
+
     .jumbotron {
         background: rgba(0,0,0,0.3);
         color: #FFFFFF;
     }
 }
-label{
-    &.required{
+
+label {
+    &.required {
         font-weight: 600;
     }
 }
-.help-inline{
+
+.help-inline {
     display: inline-block;
 }
+
 .validation-summary-valid {
     display: none;
 }
+
 div.validation-summary-errors {
     color: $form-feedback-invalid-color;
     position: relative;
     padding: .75rem 1.25rem;
     margin-bottom: 1rem;
+}
+
+.zone-aside {
+    h1 {
+        font-size: 2rem;
+        border-bottom: solid 2px $hr-border-color;
+        padding-bottom:.2rem;
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 2rem;
+    }
+
+    .latest-notices {
+        .noticeTypeLabel, .archived, .noticeType {
+            display: none;
+        }
+    }
+}
+p.taxonomy-field span.name,
+p.taxonomy-field span.name a,
+p.noticeType span.name {
+    font-size: .75rem;
+    color: $green;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.more-notices{
+    margin-bottom: 2rem;
 }

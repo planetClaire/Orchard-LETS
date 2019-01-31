@@ -1,9 +1,6 @@
 ﻿@using LETS.Helpers
 @using Orchard.Security
-@using Orchard.Utility.Extensions
 @{
-    Script.Require("jQuery");
-    //Script.Include("base.js").AtFoot();
     Script.Require("ShapesBase").AtFoot();
 }
 @Html.AntiForgeryTokenOrchard()
@@ -15,8 +12,6 @@
     var published = Helpers.IsPublished(Model.ContentItem);
     if (published)
     {
-        @*@Html.ActionLink(T("Archive").ToString(), "Archive", "Notice", new { area = "LETS", id = Model.ContentItem.Id }, new { @class = "edit", itemprop = "UnsafeUrl" })*@
-        @*@Html.ActionLink(T("Archive").ToString(), "Archive", "Notice", new { area = "LETS", id = Model.ContentItem.Id }, new { @class = "edit", itemprop = "UnsafeUrl" })*@
         @Html.Link(T("Archive").Text, Url.Action("Unpublish", "Notice", new { area = "LETS", id = Model.ContentItem.Id }), new { @class = "edit", itemprop = "UnsafeUrl ArchiveUrl" })
     }
     else
