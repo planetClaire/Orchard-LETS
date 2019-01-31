@@ -6,6 +6,7 @@ namespace LETS.Models
     {
         public virtual string Website { get; set; }
         public virtual string Facebook { get; set; }
+        public virtual string Instagram { get; set; }
         public virtual string Twitter { get; set; }
         public virtual string LinkedIn { get; set; }
         public virtual string Tumblr { get; set; }

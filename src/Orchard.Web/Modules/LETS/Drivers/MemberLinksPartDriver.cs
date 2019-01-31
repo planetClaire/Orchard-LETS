@@ -62,6 +62,11 @@ namespace LETS.Drivers
             {
                 part.Facebook = facebook;
             }
+            var instagram = context.Attribute(part.PartDefinition.Name, "Instagram");
+            if (instagram != null)
+            {
+                part.Instagram = instagram;
+            }
             var twitter = context.Attribute(part.PartDefinition.Name, "Twitter");
             if (twitter != null)
             {
@@ -108,6 +113,7 @@ namespace LETS.Drivers
         {
             context.Element(part.PartDefinition.Name).SetAttributeValue("Website", part.Website);
             context.Element(part.PartDefinition.Name).SetAttributeValue("Facebook", part.Facebook);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Instagram", part.Instagram);
             context.Element(part.PartDefinition.Name).SetAttributeValue("Twitter", part.Twitter);
             context.Element(part.PartDefinition.Name).SetAttributeValue("LinkedIn", part.LinkedIn);
             context.Element(part.PartDefinition.Name).SetAttributeValue("Tumblr", part.Tumblr);

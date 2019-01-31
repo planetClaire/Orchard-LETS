@@ -16,6 +16,12 @@ namespace LETS.Models
             set { Record.Facebook = value; }
         }
 
+        public string Instagram
+        {
+            get { return Record.Instagram; }
+            set { Record.Instagram = value; }
+        }
+
         public string Twitter
         {
             get { return Record.Twitter; }
@@ -77,7 +83,8 @@ namespace LETS.Models
                        && string.IsNullOrEmpty(LinkedIn)
                        && string.IsNullOrEmpty(Twitter)
                        && string.IsNullOrEmpty(Skype)
-                       && string.IsNullOrEmpty(Facebook);
+                       && string.IsNullOrEmpty(Facebook)
+                       && string.IsNullOrEmpty(Instagram);
             }
         }
     }

@@ -420,5 +420,12 @@ namespace LETS
 
             return 36;
         }
+
+        public int UpdateFrom36()
+        {
+            SchemaBuilder.AlterTable("MemberLinksPartRecord", t => t.AddColumn<string>("Instagram"));
+
+            return 37;
+        }
     }
 }
