@@ -425,7 +425,25 @@ namespace LETS
         {
             SchemaBuilder.AlterTable("MemberLinksPartRecord", t => t.AddColumn<string>("Instagram"));
 
-            return 37;
+            return 38;
+        }
+
+        public int UpdateFrom38()
+        {
+            ContentDefinitionManager.AlterPartDefinition("NoticePart", part => part
+                .WithField("Photos", field => field
+                    .OfType("DropzoneField")
+                    .WithSetting(
+                        "DropzoneFieldSettings.MaxWidth", "870")
+                    .WithSetting(
+                        "DropzoneFieldSettings.MaxHeight", "600")
+                    .WithSetting(
+                        "DropzoneFieldSettings.Hint", "Upload your photos here, they will be resized automatically before upload")
+                    .WithSetting(
+                        "DropzoneFieldSettings.MediaFolder", "{user-id}/{content-type}")
+                ));
+
+            return 39;
         }
     }
 }

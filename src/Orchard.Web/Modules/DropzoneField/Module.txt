@@ -1,0 +1,10 @@
+﻿Name: DropzoneField
+AntiForgery: enabled
+Author: Claire Botman, DropzoneJS
+Website: http://zeta.com.au https://www.dropzonejs.com/
+Version: 1.0
+OrchardVersion: 1.0
+Description: A field based on DropzoneJS
+Features:
+    DropzoneField:
+        Description: A field based on DropzoneJS

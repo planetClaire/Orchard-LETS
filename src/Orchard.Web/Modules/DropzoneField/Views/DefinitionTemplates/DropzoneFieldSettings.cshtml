@@ -1,0 +1,24 @@
+﻿@model DropzoneField.Settings.DropzoneFieldSettings
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.MaxWidth)">@T("Limit size")</label>
+    @T("Width") @Html.EditorFor(m => m.MaxWidth, new { @class = "text" })
+
+    @Html.ValidationMessageFor(m => m.MaxWidth)
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.FileLimit)">@T("Limit number of files")</label>
+    @Html.EditorFor(m => m.FileLimit, new { @class = "text"})
+    <span class="hint">@T("The maximum number of files allowed to be uploaded")</span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.Hint)">@T("Help text")</label>
+    @Html.TextAreaFor(m => m.Hint, new { @class = "textMedium", rows = "5" } )
+    <span class="hint">@T("The help text is written under the field when authors are editing the content item.")</span>
+    @Html.ValidationMessageFor(m => m.Hint)
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.MediaFolder)">@T("Media folder")</label>
+    @Html.TextBoxFor(m => m.MediaFolder, new { @class = "textMedium" })
+	<span class="hint">@T("The name of the media folder where the files will be saved. You can also use these tokens: {content-type}, {field-name}, {content-item-id}, {user-id}.")</span>
+</fieldset>

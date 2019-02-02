@@ -18,5 +18,13 @@
   <Match ContentType="BannerWidget">
     <Place Fields_MediaLibraryPicker="-"></Place>
   </Match>
-
+  <Match ContentType="Notice">
+    <Place Fields_Dropzone_Edit="Content:4"></Place>
+    <Match DisplayType="Detail">
+      <Place Fields_Dropzone="/Aside:1"></Place>
+    </Match>
+    <Match DisplayType="Summary">
+      <Place Fields_Dropzone="Content:after"></Place>
+    </Match>
+  </Match>
 </Placement>

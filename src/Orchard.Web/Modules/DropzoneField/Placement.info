@@ -1,0 +1,13 @@
+﻿<Placement>
+  <Place Fields_Dropzone_Edit="Content:2.5"/>
+
+  <Match DisplayType="SummaryAdmin">
+    <Place Fields_Dropzone="-"/>
+  </Match>
+
+  <Match DisplayType="Summary">
+    <Place Fields_Dropzone="-"/>
+  </Match>
+
+  <Place Fields_Dropzone="Content:before"/>
+</Placement>

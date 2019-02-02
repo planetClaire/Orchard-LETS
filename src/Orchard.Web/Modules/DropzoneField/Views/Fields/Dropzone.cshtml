@@ -1,0 +1,13 @@
+﻿
+@if (!string.IsNullOrEmpty(Model.ContentField.FileNames))
+{
+    <ul class="dropzoneImages">
+        @foreach (var fileName in Model.ContentField.FileNames.Split(';'))
+        {
+            <li class="dropzoneImage">
+                <img src="@fileName" alt="" />
+            </li>
+        }
+    </ul>
+}
+

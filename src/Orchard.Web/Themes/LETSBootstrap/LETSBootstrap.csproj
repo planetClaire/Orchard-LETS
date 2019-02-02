@@ -176,6 +176,7 @@
     <Content Include="Views\RegisterMemberLink.cshtml" />
     <None Include="Views\Content.cshtml" />
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
+    <Content Include="Views\Fields.Dropzone-NoticePart-Photos.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
     <Content Include="Views\Parts.MailChimpForm.cshtml" />
     <Content Include="Views\Template.User.LostPassword.cshtml" />
