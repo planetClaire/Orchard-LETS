@@ -1,0 +1,48 @@
+﻿@*overriding in order to move out ShapesBase script to themes's build*@
+@model LETS.ViewModels.MemberTransactionsViewModel
+@{
+    Style.Require("LETS.Common");
+}
+
+@Html.AntiForgeryTokenOrchard()
+
+<table class="items table table-striped table-bordered" >
+    <thead>
+        <tr>
+            <th scope="col">@T("Date")</th>
+            <th scope="col">@T("Trading partner")</th>
+            <th scope="col">@T("Description")</th>
+            <th scope="col">@T("Value")</th>
+            <th scope="col">@T("Balance")</th>
+            <th></th>
+        </tr>
+    </thead>    
+    @foreach (var memberTransactionViewModel in Model.Transactions) {
+        <tr id="@memberTransactionViewModel.Id" class="@memberTransactionViewModel.TransactionType">
+            <td class="colorCode">@memberTransactionViewModel.TransactionDate.ToLongDateString()</td>
+            <td>@Html.ActionLink(memberTransactionViewModel.TradingPartner, "Index", new { username = memberTransactionViewModel.UserName, area = "Contrib.Profile", Controller = "Home" }) </td>
+            <td class="colorCode">
+                @memberTransactionViewModel.Description
+            </td>
+            <td class="colorCode currency">
+                @if (memberTransactionViewModel.Value > 0 && memberTransactionViewModel.CreditValue > 0)
+                {
+                    <a rel="tooltip" title="@T("Credit value") @memberTransactionViewModel.CreditValue">@memberTransactionViewModel.Value</a>
+                }
+                else
+                {
+                    @memberTransactionViewModel.Value
+                }
+            </td>
+            <td class="currency">@memberTransactionViewModel.RunningTotal</td>
+            <td>
+                @if (Model.AdminIsViewing || memberTransactionViewModel.Value > 0) {
+                    @Html.ActionLink("Edit", "Edit", new { area = "LETS", Controller = "Transactions", id = memberTransactionViewModel.Id })
+                    @: 
+                    @Html.ActionLink("Delete", "Delete", new { area = "LETS", Controller = "Transactions", id = memberTransactionViewModel.Id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl" })
+                }
+            </td>
+        </tr>
+    } 
+</table>
+@Display(Model.Pager)

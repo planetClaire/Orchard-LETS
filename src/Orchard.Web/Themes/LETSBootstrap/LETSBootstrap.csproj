@@ -185,8 +185,10 @@
     <Content Include="Views\Fields.Dropzone-NoticePart-Photos.cshtml" />
     <Content Include="Views\EditorTemplate-ArchiveNotice.cshtml" />
     <Content Include="Views\EditorTemplates\Fields\Dropzone.cshtml" />
+    <Content Include="Views\Transactions.cshtml" />
     <None Include="Views\LETS\Transactions\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
+    <Content Include="Views\NoticeOwnerLinks.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
     <Content Include="Views\Parts.MailChimpForm.cshtml" />
     <Content Include="Views\Template.User.LostPassword.cshtml" />
@@ -258,9 +260,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\EditorTemplates\Parts\LETSBootstrapSettings.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Modes.ShareBar.TweetLikeShare.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Widget-Name-latestOffers.cshtml" />

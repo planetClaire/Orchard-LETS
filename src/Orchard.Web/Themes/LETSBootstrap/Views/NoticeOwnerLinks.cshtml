@@ -1,0 +1,20 @@
+﻿@*overriding in order to move out ShapesBase script to themes's build*@
+
+@using LETS.Helpers
+@using Orchard.Security
+@Html.AntiForgeryTokenOrchard()
+
+@if (WorkContext.Resolve<IAuthorizationService>().TryCheckAccess(Orchard.Core.Contents.Permissions.EditContent, WorkContext.CurrentUser, Model.ContentItem))
+{
+    @Html.ActionLink(T("Edit").ToString(), "Edit", "Notice", new { area = "LETS", id = Model.ContentItem.Id }, new { @class = "edit" }) @:|
+    @Html.ActionLink(T("Delete").ToString(), "Delete", "Notice", new { area = "LETS", id = Model.ContentItem.Id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl" }) @:|
+    var published = Helpers.IsPublished(Model.ContentItem);
+    if (published)
+    {
+        @Html.Link(T("Archive").Text, Url.Action("Unpublish", "Notice", new { area = "LETS", id = Model.ContentItem.Id }), new { @class = "edit", itemprop = "UnsafeUrl ArchiveUrl" })
+    }
+    else
+    {
+        @Html.ActionLink(T("Publish").ToString(), "Publish", "Notice", new { area = "LETS", id = Model.ContentItem.Id }, new { @class = "edit", itemprop = "UnsafeUrl" })
+    }
+}
