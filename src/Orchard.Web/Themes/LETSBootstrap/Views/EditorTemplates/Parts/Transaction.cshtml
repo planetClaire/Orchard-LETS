@@ -1,0 +1,74 @@
+﻿@*overriding this template to use a lighter date picker*@
+@using LETS.Models
+@using Orchard.ContentManagement
+@using Orchard.Security
+@model LETS.ViewModels.EditTransactionViewModel
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
+    var minTransactionDay = WorkContext.CurrentSite.As<LETSSettingsPart>().OldestRecordableTransactionDays * -1;
+    var isAdmin = WorkContext.Resolve<IAuthorizationService>().TryCheckAccess(LETS.Permissions.AdminMemberContent, WorkContext.CurrentUser, WorkContext.Resolve<IContentManager>().New<TransactionPart>("Transaction"));
+    var today = DateTime.Now.ToString("dd-MM-yyyy");
+    var minDate = DateTime.Parse(Model.TransactionDate).AddDays(minTransactionDay).ToString("dd-MM-yyyy");
+}
+<table class="table table-striped table-bordered ">
+    <thead>
+        <tr>
+            <th scope="col">@T("Trade date")</th>
+            @if (isAdmin)
+            {
+                <th scope="col">@T("Type")</th>
+                <th scope="col">@T("Seller")</th>
+            }
+            <th scope="col">@T("Member")</th>
+            <th scope="col">@T("Description")</th>
+            <th scope="col">@T("Value")</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td width="18%">
+                @Html.TextBoxFor(m => m.TransactionDate, new { @class = "transaction-datepicker form-control required input-small", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(m => m.TransactionDate)</div>
+                @Html.HiddenFor(m => m.TransactionTime)
+            </td>
+            @if (isAdmin)
+            {
+                <td>
+                    @Html.DropDownListFor(model => model.TransactionType, new SelectList(Enum.GetValues(typeof(TransactionType))))
+                </td>
+                <td>
+                    <div class="controls noticeTypesRadioList">
+                        @Html.DropDownListFor(model => model.IdSeller, Model.Members, @T("Choose a seller").ToString())
+                        @Html.ValidationMessageFor(model => model.IdSeller)
+                    </div>
+                </td>
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.TransactionType)
+                @Html.HiddenFor(m => m.IdSeller)
+            }
+            <td width="25%">
+                @Html.DropDownListFor(model => model.IdBuyer, Model.Members, @T("Choose a buyer").ToString(), new { @class = "form-control custom-select", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.IdBuyer)</div>
+            </td>
+            <td>
+                @Html.TextBoxFor(model => model.Description, new { @class = "form-control required input-xlarge", required = "required" })
+                <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Description)</div>
+            </td>
+            <td width="18%">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@Model.CurrencyUnit</div>
+                    </div>
+                    @Html.TextBoxFor(model => model.Value, new { @class = "input-mini form-control", @type = "number", min = "1", required = "required" })
+                    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Value, @T("The value is required").ToString())</div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<input type="hidden" id="today" value="@today" />
+<input type="hidden" id="minDate" value="@minDate" />

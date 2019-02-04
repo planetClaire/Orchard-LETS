@@ -1,0 +1,97 @@
+﻿@*overriding this template to use a lighter date picker*@
+@using System.Globalization
+@using LETS.Models
+@using Orchard.ContentManagement
+@using LETS.Helpers
+@model LETS.ViewModels.MemberTransactionsViewModel
+
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
+    var letsSettings = WorkContext.CurrentSite.As<LETSSettingsPart>();
+    var minTransactionDay = letsSettings.OldestRecordableTransactionDays * -1;
+    var cultureInfo = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+    var longDateFormat = cultureInfo.DateTimeFormat.LongDatePattern;
+    var oldestCreditValueTransactionDate = string.Empty;
+    var creditValuesInSync = true;
+    if (Model.Balance > 0)
+    {
+        if (Model.OldestCreditValueTransaction != null)
+        {
+            oldestCreditValueTransactionDate = ((DateTime)Model.OldestCreditValueTransaction.TransactionDate).ToString(longDateFormat);
+        }
+        else
+        {
+            creditValuesInSync = false;
+        }
+    }
+    var today = DateTime.Now.ToString("dd-MM-yyyy");
+    var minDate = DateTime.Now.AddDays(minTransactionDay).ToString("dd-MM-yyyy");
+}
+<header class="page-header">
+    <h1>@T("Record a trade")</h1>
+</header>
+@using (Html.BeginFormAntiForgeryPost(new { @class = "needs-validation", novalidate = "novalidate" }))
+{
+    <table class="table table-striped table-bordered ">
+        <thead>
+            <tr>
+                <th scope="col">@T("Trade date")</th>
+                <th scope="col">@T("Member")</th>
+                <th scope="col">@T("Description")</th>
+                <th scope="col">@T("Value")</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="18%">
+                    @Html.TextBoxFor(m => m.NewTransaction.TransactionDate, new { @class = "transaction-datepicker form-control required input-small", required = "required" })
+                    <div class="invalid-feedback">@Html.ValidationMessageFor(m => m.NewTransaction.TransactionDate, @T("The trade date is required").ToString())</div>
+                </td>
+                <td width="25%">
+                    @Html.DropDownListFor(model => model.NewTransaction.IdBuyer, Model.NewTransaction.Members, @T("Choose a buyer").ToString(), new { @class = "form-control custom-select", required = "required" })
+                    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.IdBuyer, @T("The buyer is required").ToString())</div>
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.NewTransaction.Description, new { @class = "form-control required input-xlarge", required = "required" })
+                    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.Description, @T("A description is required").ToString())</div>
+                </td>
+                <td width="18%">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@Model.NewTransaction.CurrencyUnit</div>
+                        </div>
+                        @Html.TextBoxFor(model => model.NewTransaction.Value, new { @class = "input-mini form-control", @type = "number", min = "1", required = "required" })
+                        <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.Value, @T("The value is required").ToString())</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @Html.HiddenFor(model => model.NewTransaction.IdSeller)
+    <input type="hidden" id="today" value="@today" />
+    <input type="hidden" id="minDate" value="@minDate" />
+    <div class="form-actions text-center">
+        <button class="btn btn-primary btn-large" type="submit">@T("Record Trade")</button>
+    </div>
+}
+
+<header class="page-header">
+    <h1>@T("Your trading account")</h1>
+</header>
+@if (Model.Balance > 0 && letsSettings.UseDemurrage)
+{
+    if (creditValuesInSync)
+    {
+        <p>
+            <strong>@T("Remember, you should spend your credits within {0} days of earning them", letsSettings.DemurrageTimeIntervalDays)</strong><br />
+            @Html.ActionLink(T("Here is your demurrage forecast (how much you need to spend & how much time you have)").ToString(), "Demurrage", new { area = "LETS", controller = "Transactions" }) <br />
+        </p>
+    }
+    else
+    {
+        <p>@T("The credit values on your account are out of sync.  Please contact admin so that it can be corrected.")</p>
+    }
+}
+@Html.Partial("Transactions")

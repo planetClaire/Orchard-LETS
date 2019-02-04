@@ -1,0 +1,49 @@
+﻿@*overriding this template to use a lighter date picker*@
+@using LETS.Models
+@using Orchard.ContentManagement;
+@using System.Web.Mvc.Html;
+@using Orchard.ArchiveLater.ViewModels
+@{
+    HtmlHelper.ClientValidationEnabled = true;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+
+    var archiveLater = (ArchiveLaterViewModel)Model.Model;
+    var maxDays = WorkContext.CurrentSite.As<LETSSettingsPart>().MaximumNoticeAgeDays;
+    var twoDays = DateTime.Now.AddDays(2).ToString("dd-MM-yyyy");
+    var sevenDays = DateTime.Now.AddDays(7).ToString("dd-MM-yyyy");
+    var maxDate = DateTime.Now.AddDays(maxDays).ToString("dd-MM-yyyy");
+    var today = DateTime.Now.ToString("dd-MM-yyyy");
+}
+<div class="border p-3 border-top-0">
+    <div class="form-group">
+        <input type="hidden" value="true" name="ArchiveLater.ArchiveLater">
+        <label class="required control-label" for="@Html.FieldIdFor(m => archiveLater.Editor.Date)">@T("Expires")</label>
+        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="input-append">
+                @Html.TextBoxFor(m => archiveLater.Editor.Date, new { @class = "archive-datepicker form-control" })
+            </div>
+            <div id="archiveQuickPick" class="btn-group mr-2 input-group-append" role="group">
+                <a class="btn btn-outline-primary" href="#" id="aTwoDays">
+                    <input type="hidden" value="2" />
+                    <i class="icon-time"></i>
+                    2 @T("days")
+                </a>
+                <a class="btn btn-outline-primary" href="#" id="aSevenDays">
+                    <input type="hidden" value="7" />
+                    <i class="icon-time"></i>
+                    1 @T("week")
+                </a>
+                <a class="btn btn-outline-primary" href="#" id="aMaxDays">
+                    <input type="hidden" value="@maxDays" />
+                    <i class="icon-time"></i>
+                    @maxDays @T(" days")
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="today" value="@today" />
+<input type="hidden" id="maxDate" value="@maxDate" />
+<input type="hidden" id="twoDays" value="@twoDays" />
+<input type="hidden" id="sevenDays" value="@sevenDays" />
+

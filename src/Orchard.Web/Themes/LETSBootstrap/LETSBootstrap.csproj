@@ -94,7 +94,9 @@
     <Content Include="Styles\Web.config" />
     <Content Include="Theme.txt" />
     <Content Include="Theme.png" />
-    <Content Include="Placement.info" />
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="webpack.common.js" />
     <Content Include="webpack.dev.js" />
     <Content Include="webpack.prod.js" />
@@ -177,6 +179,9 @@
     <None Include="Views\Content.cshtml" />
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <Content Include="Views\Fields.Dropzone-NoticePart-Photos.cshtml" />
+    <Content Include="Views\EditorTemplate-ArchiveNotice.cshtml" />
+    <None Include="Views\LETS\Transactions\Index.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
     <Content Include="Views\Parts.MailChimpForm.cshtml" />
     <Content Include="Views\Template.User.LostPassword.cshtml" />

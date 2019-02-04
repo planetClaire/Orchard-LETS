@@ -3,6 +3,7 @@
 @{
     Layout.Title = T("Edit Notice").ToString();
     var noticeCategoryVM = (NoticeCategoryViewModel)Model.NoticeCategoryViewModel;
+    var isPublished = (bool)Model.IsPublished;
     HtmlHelper.ClientValidationEnabled = true;
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 }
@@ -11,7 +12,7 @@
 {
     Html.ValidationSummary();
 
-    <div id="editNotice">
+    <div id="editNotice" class="edit-create-notice">
         <header class="page-header">
             <h1>You are editing your notice</h1>
         </header>
@@ -27,7 +28,7 @@
         @Display(Model)
 
         <div class="form-actions mt-3">
-            @if (!Model.IsPublished)
+            @if (!isPublished)
             {
                 <button class="btn btn-primary btn-large" type="submit" value="submit.Save" name="submit.Save">@T("Save &amp; Publish")</button>
             }
@@ -36,7 +37,7 @@
                 <button class="btn btn-primary btn-large" type="submit" value="submit.Save" name="submit.Save">@T("Save")</button>
             }
             <p class="float-right">
-                @if (Model.IsPublished)
+                @if (isPublished)
                 {
                     <button class="btn btn-warning cancel" type="submit" value="submit.Unpublish" name="submit.Unpublish">@T("Archive")</button>
                 }

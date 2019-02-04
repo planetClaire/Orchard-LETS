@@ -1,6 +1,7 @@
 ﻿@charset 'utf-8';
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
+@import '../node_modules/flatpickr/dist/themes/airbnb.css';
 
 #logo {
     margin-right: 5px;
@@ -111,4 +112,7 @@ span.paymentTermsLabel {
         width: 170px;
         height: 170px;
     }
+}
+.transaction-datepicker, .archive-datepicker{
+    background-color: #FFFFFF !important;
 }
