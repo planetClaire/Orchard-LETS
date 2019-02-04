@@ -11,6 +11,8 @@ if (process.env.NODE_ENV !== 'production') {
     console.log('Looks like we are in development mode!');
 }
 
+(function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);
+
 // UnsafeUrl links -> form POST
 $(function () {
     var magicToken = $("input[name=__RequestVerificationToken]").first();
