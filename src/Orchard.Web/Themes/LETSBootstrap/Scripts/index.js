@@ -3,6 +3,7 @@ import 'jquery-validation';
 import 'jquery-validation-unobtrusive';
 import flatpickr from "flatpickr";
 import * as $ from "jquery";
+import Dropzone from 'dropzone';
 
 require("../scss/app.scss");
 
@@ -75,3 +76,64 @@ $(function () {
         }
     })
 });
+
+// notice images
+Dropzone.autoDiscover = false;
+
+$(function () {
+
+    $(".dropzone-container").each(function () {
+
+        var $filenamesInput = $("#filenames");
+        var images = $filenamesInput.val().split(";");
+
+        var dz = new Dropzone("#dropzoneContainer", {
+            url: $("#upload-url").val(),
+            thumbnailWidth: 170,
+            thumbnailHeight: 170,
+            resizeWidth: $("#resize-width").val(),
+            maxFiles: $("#file-limit").val(),
+            acceptedFiles: 'image/gif,image/jpeg,image/png,image/svg+xml',
+            addRemoveLinks: true,
+            dictDefaultMessage: "Click or drop image files here (limit " + $("#file-limit").val() + ")",
+            init: function () {
+                var self = this;
+                this.on("sending", function (file, xhr, formData) {
+                    formData.append("__RequestVerificationToken", $("#anti-forgery-token").val());
+                    formData.append("dropzoneMediaFolder", $("#dropzone-folder").val());
+                });
+                this.on("success", function (file) {
+                    var newVal = file.xhr.responseText;
+                    var val = $filenamesInput.val();
+                    if (val !== "")
+                        val += ";";
+                    val += newVal;
+                    $filenamesInput.val(val);
+                    file.uploadedName = newVal;
+                });
+                this.on("removedfile", function (file) {
+                    $filenamesInput.val($.grep($filenamesInput.val().split(';'), function (fileName) { return fileName !== file.dataURL; }).join(';'));
+                });
+                this.on("maxfilesexceeded", function (file) {
+                    this.removeFile(file);
+                });
+                for (var i = 0; i < images.length; i++) {
+                    let image = images[i];
+                    if (image === "")
+                        continue;
+
+                    let imagePathComps = image.split("/");
+                    let filename = imagePathComps[imagePathComps.length - 1];
+                    let mockFile = { name: filename, size: 1, dataURL: image };
+                    this.emit("addedfile", mockFile);
+                    this.createThumbnailFromUrl(mockFile,
+                        this.options.thumbnailWidth, this.options.thumbnailHeight,
+                        this.options.thumbnailMethod, true, function (thumbnail) {
+                            self.emit('thumbnail', mockFile, thumbnail);
+                        });
+                    this.emit("complete", mockFile);
+                }
+            }
+        })
+    })
+})

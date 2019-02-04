@@ -110,6 +110,10 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\DropzoneField\DropzoneField.csproj">
+      <Project>{74f46177-161d-4d40-9e37-a5a754c3de21}</Project>
+      <Name>DropzoneField</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\LETS\LETS.csproj">
       <Project>{66D55827-018F-41E0-BDD9-E3EBA69C57E4}</Project>
       <Name>LETS</Name>
@@ -180,6 +184,7 @@
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <Content Include="Views\Fields.Dropzone-NoticePart-Photos.cshtml" />
     <Content Include="Views\EditorTemplate-ArchiveNotice.cshtml" />
+    <Content Include="Views\EditorTemplates\Fields\Dropzone.cshtml" />
     <None Include="Views\LETS\Transactions\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
     <None Include="Views\Orchard.Blogs\BlogPost\ListByArchive.cshtml" />
