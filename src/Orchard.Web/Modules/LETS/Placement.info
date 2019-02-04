@@ -59,7 +59,6 @@
       <Place Parts_Title_Edit="Content:0"/>
       <Place Fields_Enumeration_Edit-Per="Content:1.7"/>
       <Place Fields_Enumeration_Edit-PaymentTerms="Content:1.8"/>
-      <Place Parts_Comments_Enable="Content:5"/>
     </Match>
   </Match>
 
@@ -71,7 +70,6 @@
     <Place Parts_Common_Metadata="Content:before"/>
     <Place Fields_Common_Text-Description="Content:0"/>
     <Place Parts_Notice_DetailedSummary="Content:1"></Place>
-    <Place Parts_Comments_Count="Content:after:1" />
     <Place Fields_TaxonomyField="Content:after:1"/>
   </Match>
 
@@ -83,7 +81,6 @@
     <Place Parts_Common_Metadata="Content:before"/>
     <Place Fields_Common_Text-Description="Content:0"/>
     <Place Parts_Notice_DetailedSummaryArchived="Content:1"></Place>
-    <Place Parts_Comments_Count="-" />
     <Place Fields_TaxonomyField="Content:after:1"/>
   </Match>
 
@@ -92,7 +89,6 @@
     <Place Fields_Common_Text-Description="-"/>
     <Place Parts_Notice_Summary="Content:0"></Place>
     <Place Parts_Member_Summary="Content:0"></Place>
-    <Place Parts_Comments_Count="Content:3" />
     <Place Fields_TaxonomyField="Content:after"/>
   </Match>
   
@@ -119,7 +115,6 @@
     <Place Parts_Common_Metadata="-"/>
   </Match>
 
-  <Place CommentsWidget="Content:0" />
   <Place StatsWidget="Content:0" />
   <Place AuthNavigationWidget="Content:0" />
 

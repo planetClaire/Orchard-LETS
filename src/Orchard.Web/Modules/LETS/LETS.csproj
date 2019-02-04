@@ -106,7 +106,6 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Drivers\AddressPartDriver.cs" />
     <Compile Include="Drivers\AuthNavigationWidgetPartDriver.cs" />
-    <Compile Include="Drivers\CommentsWidgetPartDriver.cs" />
     <Compile Include="Drivers\BannerWidgetPartDriver.cs" />
     <Compile Include="Drivers\MemberAccessOnlyPartDriver.cs" />
     <Compile Include="Drivers\MemberAdminPartDriver.cs" />
@@ -115,8 +114,6 @@
     <Compile Include="Drivers\MembersMapPartDriver.cs" />
     <Compile Include="Drivers\StatsWidgetPartDriver.cs" />
     <Compile Include="Feeds\BlogPostFeedItemBuilder.cs" />
-    <Compile Include="Feeds\CommentFeedItemBuilder.cs" />
-    <Compile Include="Feeds\CommentsFeedQuery.cs" />
     <Compile Include="Feeds\LETSFeedQuery.cs" />
     <Compile Include="Feeds\MemberFeedItemBuilder.cs" />
     <Compile Include="Feeds\MemberFeedQuery.cs" />
@@ -133,7 +130,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\AuthNavigationWidgetPart.cs" />
-    <Compile Include="Models\CommentsWidgetPart.cs" />
     <Compile Include="Models\CreditUsageRecord.cs" />
     <Compile Include="Models\CreditUsageRecordSimulation.cs" />
     <Compile Include="Models\DailyStatsRecord.cs" />
@@ -161,7 +157,6 @@
     </Compile>
     <Compile Include="Scheduling\DemurrageTasks.cs" />
     <Compile Include="Scheduling\StatsTasks.cs" />
-    <Compile Include="Services\ILETSService.cs" />
     <Compile Include="Services\IStatsService.cs" />
     <Compile Include="Services\ITransactionService.cs" />
     <Compile Include="Drivers\LocalityPartDriver.cs" />
@@ -219,7 +214,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\IMembersMapService.cs" />
-    <Compile Include="Services\LETSService.cs" />
     <Compile Include="Services\MemberService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -310,8 +304,6 @@
     <Content Include="Views\EditorTemplate-ArchiveNotice.cshtml" />
     <Content Include="Views\Notice\Edit.cshtml" />
     <Content Include="Views\User.cshtml" />
-    <Content Include="Views\EditorTemplate-Comments.cshtml" />
-    <Content Include="Views\EditorTemplates\Parts.Comments.Comments.cshtml" />
     <Content Include="Views\Notice\Browse.cshtml" />
     <Content Include="Views\MetadataSummary_DraftWrapper.cshtml" />
     <Content Include="Views\Fields\Common.Text-Description.cshtml" />
@@ -326,13 +318,10 @@
     <Content Include="Views\EditorTemplates\Parts\MemberLinks.cshtml" />
     <Content Include="Views\Fields\Common.Text.cshtml" />
     <Content Include="Views\NoticeOwnerLinks.cshtml" />
-    <Content Include="Views\Parts\Comments.Count-Notice.cshtml" />
     <Content Include="Views\Parts\Notice.Summary.cshtml" />
     <Content Include="Views\Parts\Notice.DetailedSummary.cshtml" />
     <Content Include="Views\LogOn.cshtml" />
     <Content Include="Views\Account\RequestLostPasswordMember.cshtml" />
-    <Content Include="Views\Parts\Comments.cshtml" />
-    <Content Include="Views\CommentAuthor.cshtml" />
     <Content Include="Views\Parts\Transaction.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\MemberAdmin\Index.cshtml" />
@@ -477,9 +466,6 @@
     <Content Include="Views\Parts\Title.DetailedSummaryArchived.Notice.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\CommentsWidget.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\AuthNavigationWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -526,9 +512,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\Locality.SummaryAdmin.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ListOfComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Rules\" />

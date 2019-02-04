@@ -184,7 +184,6 @@ namespace LETS
                 .WithPart("NoticePart")
                 .WithPart("TitlePart")
                 .WithPart("CommonPart")
-                .WithPart("CommentsPart")
                 .WithPart("ArchiveLaterPart")
                 .WithPart("AutoroutePart", builder => builder
                     .WithSetting("AutorouteSettings.PatternDefinitions", "[{Name:'Category then Slug', Pattern: '{Content.NoticeCategory}/{Content.Slug}', Description: 'Category slug then notice slug'}]")
@@ -252,12 +251,6 @@ namespace LETS
             ContentDefinitionManager.AlterTypeDefinition("User", type => type
                 .WithPart("MemberLinksPart")
                 .Indexed());
-
-            ContentDefinitionManager.AlterTypeDefinition("CommentsWidget", cfg => cfg
-                .WithPart("CommentsWidgetPart")
-                .WithPart("WidgetPart")
-                .WithPart("CommonPart")
-                .WithSetting("Stereotype", "Widget"));
 
             ContentDefinitionManager.AlterTypeDefinition("AuthNavigationWidget", type => type
                 .WithPart("AuthNavigationWidgetPart")
