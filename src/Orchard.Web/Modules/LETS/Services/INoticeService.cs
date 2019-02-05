@@ -14,6 +14,7 @@ namespace LETS.Services
         IEnumerable<NoticeTypePart> GetNoticeTypes();
         IEnumerable<NoticeTypePart> GetRequiredNoticeTypes();
         IEnumerable<NoticePart> GetMemberNotices(int idUser, int idNoticeType);
+        IEnumerable<NoticePart> GetMemberNotices(int idUser, VersionOptions versionOptions);
         IContentQuery<NoticePart, NoticePartRecord> GetNotices();
         IContentQuery<NoticePart> GetNotices(int idNoticeType);
         IEnumerable<dynamic> GetNoticesByLocality(int idLocality);

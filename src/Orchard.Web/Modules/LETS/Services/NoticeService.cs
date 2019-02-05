@@ -226,7 +226,7 @@ namespace LETS.Services
             return id != null ? _noticeTypeRepository.Get((int) id) : null;
         }
 
-        private IEnumerable<NoticePart> GetMemberNotices(int idUser, VersionOptions versionOptions)
+        public IEnumerable<NoticePart> GetMemberNotices(int idUser, VersionOptions versionOptions)
         {
             return
                _contentManager.Query<NoticePart>(versionOptions).Where<CommonPartRecord>(c => c.OwnerId.Equals(idUser)).List();
