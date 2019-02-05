@@ -27,12 +27,8 @@ namespace LETS.Drivers
         {
             var settings = field.PartFieldDefinition.Settings.GetModel<TextFieldSettings>();
             object fieldValue = new HtmlString(_htmlFilters.Aggregate(field.Value, (text, filter) => filter.ProcessContent(text, settings.Flavor)));
-            return Combined(
-                ContentShape("Fields_Common_Text", GetDifferentiator(field, part),
-                    () => shapeHelper.Fields_Common_Text(Name: field.Name, Value: fieldValue)),
-                ContentShape("Fields_Common_Text_Summary", GetDifferentiator(field, part),
-                    () => shapeHelper.Fields_Common_Text_Summary(Name: field.Name, Value: fieldValue))
-            );
+            return ContentShape("Fields_Common_Text_Summary", GetDifferentiator(field, part),
+                () => shapeHelper.Fields_Common_Text_Summary(Name: field.Name, Value: fieldValue));
         }
     }
 }

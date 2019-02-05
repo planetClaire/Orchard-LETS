@@ -1,0 +1,6 @@
+﻿@using LETS.Helpers;
+@using Orchard.Utility.Extensions;
+@{
+    var text = Helpers.Linkify(Html.Encode((HtmlString)Model.Value).ReplaceNewLinesWith("<br />"));
+}
+<p class="text mt-4">@(new MvcHtmlString(text))</p>

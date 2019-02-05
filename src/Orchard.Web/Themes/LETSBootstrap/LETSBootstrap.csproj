@@ -196,6 +196,7 @@
     <Content Include="Views\Transactions.cshtml" />
     <Content Include="Views\Fields.Dropzone.Summary-NoticePart-Photos.cshtml" />
     <Content Include="Views\Fields.TaxonomyField-Category.cshtml" />
+    <Content Include="Views\Fields.Common.Text-Description.cshtml" />
     <None Include="Views\LETS\Transactions\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
     <Content Include="Views\NoticeOwnerLinks.cshtml" />

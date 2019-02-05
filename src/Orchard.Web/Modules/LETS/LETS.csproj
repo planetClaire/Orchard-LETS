@@ -306,7 +306,6 @@
     <Content Include="Views\User.cshtml" />
     <Content Include="Views\Notice\Browse.cshtml" />
     <Content Include="Views\MetadataSummary_DraftWrapper.cshtml" />
-    <Content Include="Views\Fields\Common.Text-Description.cshtml" />
     <Content Include="Views\Parts\Common.Metadata.Summary-Notice.cshtml" />
     <Content Include="Views\Parts\Common.Metadata-Notice.cshtml" />
     <Content Include="Views\Account\ChallengeEmailSuccess.cshtml" />
@@ -315,7 +314,6 @@
     <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\MemberAdmin.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\MemberLinks.cshtml" />
-    <Content Include="Views\Fields\Common.Text.cshtml" />
     <Content Include="Views\NoticeOwnerLinks.cshtml" />
     <Content Include="Views\Parts\Notice.Summary.cshtml" />
     <Content Include="Views\LogOn.cshtml" />
