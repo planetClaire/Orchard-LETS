@@ -84,7 +84,7 @@ flatpickr(".transaction-datepicker", {
     minDate: $("#minDate").val()
 });
 
-let archiveDatePicker = flatpickr(".archive-datepicker", {
+var archiveDatePicker = flatpickr(".archive-datepicker", {
     dateFormat: 'd/m/Y',
     minDate: $("#today").val(),
     maxDate: $("#maxDate").val()
@@ -166,14 +166,15 @@ $(function () {
                 this.on("maxfilesexceeded", function (file) {
                     this.removeFile(file);
                 });
+                var image, imagePathComps, filename, mockFile;
                 for (var i = 0; i < images.length; i++) {
-                    let image = images[i];
+                    image = images[i];
                     if (image === "")
                         continue;
 
-                    let imagePathComps = image.split("/");
-                    let filename = imagePathComps[imagePathComps.length - 1];
-                    let mockFile = { name: filename, size: 1, dataURL: image };
+                    imagePathComps = image.split("/");
+                    filename = imagePathComps[imagePathComps.length - 1];
+                    mockFile = { name: filename, size: 1, dataURL: image };
                     this.emit("addedfile", mockFile);
                     this.createThumbnailFromUrl(mockFile,
                         this.options.thumbnailWidth, this.options.thumbnailHeight,
