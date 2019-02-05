@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\oops-baby.jpg" />
+    <Content Include="fonts\lets.svg" />
     <Content Include="postcss.config.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\modernizr.custom.79104.js" />
@@ -172,6 +173,10 @@
     <Content Include="scss\app.scss" />
     <Content Include="scss\_custom.scss" />
     <Content Include="dist\Web.config" />
+    <Content Include="fonts\lets.eot" />
+    <Content Include="fonts\lets.ttf" />
+    <Content Include="fonts\lets.woff" />
+    <Content Include="fonts\Web.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -182,6 +187,7 @@
     <Content Include="Views\RegisterMemberLink.cshtml" />
     <Content Include="Views\Content-Notice.Summary.cshtml" />
     <Content Include="Views\Content-Notice.Detail.cshtml" />
+    <Content Include="scss\_fonts.scss" />
     <None Include="Views\Content.cshtml" />
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <Content Include="Views\Fields.Dropzone-NoticePart-Photos.cshtml" />
