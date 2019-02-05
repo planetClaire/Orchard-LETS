@@ -28,8 +28,8 @@ namespace LETS.Services
 
         void DeleteMemberNotices(int idUser);
 
-        IEnumerable<dynamic> GetMemberNoticeShapes(int idUser, string displayType = "DetailedSummary");
-        IEnumerable<dynamic> GetMemberArchivedNoticeShapes(int id, string displayType = "DetailedSummaryArchived");
+        IEnumerable<dynamic> GetMemberNoticeShapes(int idUser, string displayType = "Summary");
+        IEnumerable<dynamic> GetMemberArchivedNoticeShapes(int id, string displayType = "Summary");
         IEnumerable<dynamic> GetNoticeShapesByType(int id, int page, int pageSize);
         int GetNoticeCountByType(int idNoticeType);
 

@@ -116,7 +116,7 @@ namespace LETS.Services
                 ", idLocality));
                 return query.List<int>();
             });
-            return _contentManager.GetMany<NoticePart>(list, VersionOptions.Published, QueryHints.Empty).Select(contentItem => _contentManager.BuildDisplay(contentItem, "DetailedSummary")); 
+            return _contentManager.GetMany<NoticePart>(list, VersionOptions.Published, QueryHints.Empty).Select(contentItem => _contentManager.BuildDisplay(contentItem, "Summary")); 
         }
 
         public IEnumerable<SelectListItem> GetCategoryTerms()
@@ -166,12 +166,12 @@ namespace LETS.Services
             });
         }
 
-        public IEnumerable<dynamic> GetMemberNoticeShapes(int idUser, string displayType = "DetailedSummary")
+        public IEnumerable<dynamic> GetMemberNoticeShapes(int idUser, string displayType = "Summary")
         {
             return GetMemberNotices(idUser).Select(contentItem => _contentManager.BuildDisplay(contentItem, displayType));
         }
 
-        public IEnumerable<dynamic> GetMemberArchivedNoticeShapes(int idUser, string displayType = "DetailedSummaryArchived")
+        public IEnumerable<dynamic> GetMemberArchivedNoticeShapes(int idUser, string displayType = "Summary")
         {
             return GetMemberArchivedNotices(idUser).Select(contentItem => _contentManager.BuildDisplay(contentItem, displayType));
         }
