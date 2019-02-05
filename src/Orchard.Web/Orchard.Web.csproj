@@ -179,6 +179,22 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="Modules\Contrib.Profile\Contrib.Profile.csproj">
+      <Project>{bb5c57f4-d9cb-4440-89a6-d9ff9f41e4e3}</Project>
+      <Name>Contrib.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="Modules\DropzoneField\DropzoneField.csproj">
+      <Project>{74f46177-161d-4d40-9e37-a5a754c3de21}</Project>
+      <Name>DropzoneField</Name>
+    </ProjectReference>
+    <ProjectReference Include="Modules\LETS\LETS.csproj">
+      <Project>{66d55827-018f-41e0-bdd9-e3eba69c57e4}</Project>
+      <Name>LETS</Name>
+    </ProjectReference>
+    <ProjectReference Include="Themes\LETSBootstrap\LETSBootstrap.csproj">
+      <Project>{eb6645d2-699a-489b-8288-073d27412044}</Project>
+      <Name>LETSBootstrap</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\Host.config" />
@@ -186,6 +202,7 @@
   <ItemGroup>
     <Content Include="Config\Sites.config" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
