@@ -1,15 +1,17 @@
 ﻿@using LETS.Models
 @using LETS.ViewModels
 @using Orchard.ContentManagement
+@using LETS.Services
 @{
     var runningBalance = 0;
     var turnoverTotal = 0;
     var memberCount = ((IEnumerable<object>)Model.Members).Count();
+    var noticeService = WorkContext.Resolve<INoticeService>();
 }
 @if (memberCount > 0)
 {
 <header class="page-header">
-    <h1>@Model.MemberType - @memberCount</h1>
+    <h1>@Model.MemberType: @memberCount</h1>
 </header>
     <table class="table table-striped table-bordered ">
         <thead>
@@ -36,10 +38,21 @@
         </thead>
         @foreach (var member in Model.Members)
         {
-            <tr>
+            var noticeCount = ((IEnumerable<NoticePart>)noticeService.GetMemberNotices(member.Id, VersionOptions.Published)).Count();
+            var cssClass = "";
+            var noticesLabel = "Notices";
+            if (noticeCount == 0)
+            {
+                cssClass = "inactive-member";
+            }
+            else
+            {
+                noticesLabel += string.Format(" ({0})", noticeCount);
+            }
+            <tr class="@cssClass">
                 <td>@Html.ActionLink(((MemberViewModel)member).LastFirstName, "Index", new { username = member.UserName, area = "Contrib.Profile", Controller = "Home" })</td>
                 <td>
-                    @Html.ActionLink(T("Notices").ToString(), "Member", new { id = member.Id, area = "LETS", Controller = "Notice" })
+                    @Html.ActionLink(noticesLabel, "Member", new { id = member.Id, area = "LETS", Controller = "Notice" })
                 </td>
                 <td class="currency">@member.Balance.ToString("n0")</td>
                 <td class="currency">@member.Turnover.ToString("n0")</td>
