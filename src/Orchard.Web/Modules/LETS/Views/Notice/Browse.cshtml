@@ -7,15 +7,20 @@
 <div class="row">
     @foreach (var browseNoticeCategoryViewModel in Model.Categories)
     {
-        <div class="span3">
+        <div class="col-md-3">
             <h3>@browseNoticeCategoryViewModel.Term.Name</h3>
             <ul class="subCategories browseCategories">
                 @foreach(var subCategory in browseNoticeCategoryViewModel.SubCategories)
                 {
                     var className = "empty";
-                    if (subCategory.NoticeCount > 0) { className = ""; }
+                    var noticeCountLabel = "";
+                    var noticeCount = subCategory.NoticeCount;
+                    if (noticeCount > 0) {
+                        className = "";
+                        noticeCountLabel = string.Format(" ({0})", noticeCount);
+                    }
                     <li class="@className">
-                        @Html.ItemDisplayLink(subCategory.Term.Name, subCategory.Term.ContentItem)
+                        @Html.ItemDisplayLink(string.Format("{0}{1}", subCategory.Term.Name, noticeCountLabel), subCategory.Term.ContentItem)
                     </li>
                 }
             </ul>

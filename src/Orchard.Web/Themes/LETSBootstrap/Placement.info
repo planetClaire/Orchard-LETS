@@ -9,9 +9,6 @@
   <Match ContentType="CarouselImage">
     <Place Fields_Numeric-Priority="-"/>
   </Match>
-  <Match DisplayType="Summary">
-    <Place Fields_Contrib_Image="Content:1"/>
-  </Match>
   <Match ContentType="Page">
     <Place Parts_Common_Metadata="-"></Place>
   </Match>
@@ -19,12 +16,21 @@
     <Place Fields_MediaLibraryPicker="-"></Place>
   </Match>
   <Match ContentType="Notice">
-    <Place Fields_Dropzone_Edit="Content:4"></Place>
-    <Match DisplayType="Detail">
-      <Place Fields_Dropzone="/Aside:1"></Place>
-    </Match>
     <Match DisplayType="Summary">
-      <Place Fields_Dropzone="Content:after"></Place>
+      <Place Fields_Dropzone_Summary="Header:0"></Place>
+      <Place Parts_Title_Summary="Content:0"></Place>
+      <Place Fields_TaxonomyField="-"></Place>
+      <Place Fields_Common_Text_Summary-Description="Content:1"/>
+      <Place Parts_Common_Metadata_Summary="Footer:1"></Place>
     </Match>
+    <Match DisplayType="Detail">
+      <Place Fields_Dropzone="/Aside:0"></Place>
+      <Place Parts_Common_Metadata="/Aside:1"></Place>
+      <Place Parts_Notice="/Aside:2"></Place>
+      <Place Fields_TaxonomyField="/AfterContent:0"></Place>
+    </Match>
+  </Match>
+  <Match ContentType="CategoryTerm">
+    <Place Parts_Common_Metadata="-"></Place>
   </Match>
 </Placement>

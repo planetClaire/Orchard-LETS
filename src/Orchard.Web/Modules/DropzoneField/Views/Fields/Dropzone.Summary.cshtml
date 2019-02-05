@@ -1,0 +1,11 @@
+﻿@{ 
+    var firstImage = "";
+    if (!string.IsNullOrEmpty(Model.ContentField.FileNames)){
+        var images = Model.ContentField.FileNames.Split(';');
+        if (images.Length > 0)
+        {
+            firstImage = images[0];
+        }
+    }
+}
+<img src="@firstImage" alt="" />

@@ -1,0 +1,25 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.ContentManagement
+@{
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    var locality = Model.ContentItem.NoticePart.Member.Locality;
+    var link = Url.ItemDisplayUrl((IContent)Model.ContentItem);
+}
+
+<div class="content-item @contentTypeClassName summary my-2 py-2 row">
+    <div class="col-3 px-2">
+        <a class="notice-link" href="@link">
+            @Display(Model.Header)
+        </a>
+    </div>
+    <div class="col-6 px-2">
+        @Display(Model.Content)
+    </div>
+    <div class="col-3 px-2">
+        <a class="notice-link" href="@link">
+            <p class="locality">@locality</p>
+            @Display(Model.Footer)
+        </a>
+    </div>
+</div>
+

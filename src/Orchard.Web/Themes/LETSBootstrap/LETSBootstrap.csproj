@@ -180,12 +180,16 @@
     <Content Include="Views\Parts.BannerWidget.cshtml" />
     <Content Include="Views\Message.cshtml" />
     <Content Include="Views\RegisterMemberLink.cshtml" />
+    <Content Include="Views\Content-Notice.Summary.cshtml" />
+    <Content Include="Views\Content-Notice.Detail.cshtml" />
     <None Include="Views\Content.cshtml" />
     <Content Include="Views\Content.DetailedSummaryArchived.cshtml" />
     <Content Include="Views\Fields.Dropzone-NoticePart-Photos.cshtml" />
     <Content Include="Views\EditorTemplate-ArchiveNotice.cshtml" />
     <Content Include="Views\EditorTemplates\Fields\Dropzone.cshtml" />
     <Content Include="Views\Transactions.cshtml" />
+    <Content Include="Views\Fields.Dropzone.Summary-NoticePart-Photos.cshtml" />
+    <Content Include="Views\Fields.TaxonomyField-Category.cshtml" />
     <None Include="Views\LETS\Transactions\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Transaction.cshtml" />
     <Content Include="Views\NoticeOwnerLinks.cshtml" />
@@ -193,6 +197,8 @@
     <Content Include="Views\Parts.MailChimpForm.cshtml" />
     <Content Include="Views\Template.User.LostPassword.cshtml" />
     <Content Include="Views\Widget-BannerWidget.cshtml" />
+    <Content Include="Views\Parts.Notice.cshtml" />
+    <Content Include="Views\Parts.Title.Summary-Notice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Content.DetailedSummary.cshtml" />

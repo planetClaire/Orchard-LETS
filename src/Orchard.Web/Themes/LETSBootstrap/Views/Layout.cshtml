@@ -40,6 +40,7 @@
             @Display(Model.Messages)
         </div>
     }
+
     @if (Model.BeforeContent != null)
     {
         <div id="before-content" class="mb-4 border-bottom">
@@ -47,6 +48,16 @@
         </div>
     }
     <div class="row mb-4">
+        @if (Model.ContentFirst != null)
+        {
+            <div id="content-first" class="col-md-6 pr-4">
+                @Display(Model.ContentFirst)
+            </div>
+            <div id="content-second" class="col-md-6 pl-4">
+                @Display(Model.ContentSecond)
+            </div>
+        }
+
         @if (Model.Content != null)
         {
             var contentClass = "col-md-12";

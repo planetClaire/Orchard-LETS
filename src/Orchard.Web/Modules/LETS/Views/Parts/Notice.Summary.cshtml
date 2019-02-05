@@ -1,5 +1,9 @@
-﻿@Display.PricingInfo(ContentPart: Model.ContentPart)
-<p class="noticeType">
-    <span class="name">@T("Notice type"):</span> 
-    @Model.NoticeTypeTitle
-</p>
+﻿@using Orchard.ContentManagement;
+@{
+    var category = Model.ContentPart.Category.Terms[0];
+    var link = Url.ItemDisplayUrl((IContent)Model.ContentItem);
+}
+<a class="notice-link" href="@link">
+    @Display.PricingInfo(ContentPart: Model.ContentPart)
+</a>
+<p class="taxonomy-field"><span class="name"><a href="/@category.Slug">@category.Name</a></span></p>

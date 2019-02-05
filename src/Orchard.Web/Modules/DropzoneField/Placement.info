@@ -6,8 +6,10 @@
   </Match>
 
   <Match DisplayType="Summary">
-    <Place Fields_Dropzone="-"/>
+    <Place Fields_Dropzone_Summary="Content:before"/>
   </Match>
 
-  <Place Fields_Dropzone="Content:before"/>
+  <Match DisplayType="Detail">
+    <Place Fields_Dropzone="Content:before"/>
+  </Match>
 </Placement>

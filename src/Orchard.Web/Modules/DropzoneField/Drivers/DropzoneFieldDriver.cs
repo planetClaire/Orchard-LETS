@@ -17,7 +17,7 @@ namespace DropzoneField.Drivers
             _orchardServices = orchardServices;
         }
 
-        private const string TemplateName = "Fields/Dropzone"; 
+        private const string TemplateName = "Fields/Dropzone";
         private const string TokenContentType = "{content-type}";
         private const string TokenFieldName = "{field-name}";
         private const string TokenContentItemId = "{content-item-id}";
@@ -35,13 +35,22 @@ namespace DropzoneField.Drivers
 
         protected override DriverResult Display(ContentPart part, Fields.DropzoneField field, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("Fields_Dropzone", GetDifferentiator(field, part),
+            return Combined(
+                ContentShape("Fields_Dropzone", GetDifferentiator(field, part),
                 () =>
-                    shapeHelper.Fields_Dropzone( // this is the actual Shape which will be resolved (Fields/Dropzone.cshtml)
-                        ContentPart: part, // it will allow to access the content item
+                    shapeHelper.Fields_Dropzone(
+                        ContentPart: part,
                         ContentField: field
                         )
-                    );
+                    ),
+                ContentShape("Fields_Dropzone_Summary", GetDifferentiator(field, part),
+                () =>
+                    shapeHelper.Fields_Dropzone_Summary(
+                        ContentPart: part,
+                        ContentField: field
+                        )
+                    )
+                );
         }
 
         protected override DriverResult Editor(ContentPart part, Fields.DropzoneField field, dynamic shapeHelper)

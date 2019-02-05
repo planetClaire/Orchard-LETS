@@ -1,0 +1,26 @@
+﻿@{
+    var firstImage = "";
+    if (!string.IsNullOrEmpty(Model.ContentField.FileNames))
+    {
+        var images = Model.ContentField.FileNames.Split(';');
+        if (images.Length > 0)
+        {
+            firstImage = images[0];
+        }
+    }
+}
+@if (!string.IsNullOrEmpty(firstImage))
+{
+    <div class="placeholder">
+        <img class="dropzone-first" src="@firstImage?w=120&h=120&mode=crop" alt="" />
+        <span class="dropzone-text">@Model.ContentItem.NoticePart.StrNoticeType</span>
+    </div>
+}
+else
+{
+    <div class="placeholder">
+        <span class="align-middle">@Model.ContentItem.NoticePart.StrNoticeType</span>
+    </div>
+
+}
+

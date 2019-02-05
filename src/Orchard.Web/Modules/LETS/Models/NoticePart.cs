@@ -31,5 +31,13 @@ namespace LETS.Models
             get { return this.As<CommonPart>().Owner.As<MemberPart>(); } 
         }
 
+        public string StrNoticeType
+        {
+            get
+            {
+                return ContentItem.ContentManager.Get(NoticeType.Id).As<TitlePart>().Title;
+            }
+        }
+
     }
 }

@@ -113,6 +113,7 @@
     <Compile Include="Drivers\NoticeTitlePartDriver.cs" />
     <Compile Include="Drivers\MembersMapPartDriver.cs" />
     <Compile Include="Drivers\StatsWidgetPartDriver.cs" />
+    <Compile Include="Drivers\TextFieldDriver.cs" />
     <Compile Include="Feeds\BlogPostFeedItemBuilder.cs" />
     <Compile Include="Feeds\LETSFeedQuery.cs" />
     <Compile Include="Feeds\MemberFeedItemBuilder.cs" />
@@ -490,7 +491,8 @@
     <Content Include="Views\Parts\MembersMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Fields.TaxonomyField.cshtml" />
+    <None Include="Views\Fields.TaxonomyField.cshtml" />
+    <Content Include="Views\Fields\Common.Text.Summary-Description.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts.Title-Category.cshtml" />
@@ -530,6 +532,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\BannerWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\NoticeMetadataSummary.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

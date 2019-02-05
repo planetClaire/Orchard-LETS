@@ -5,4 +5,3 @@
     var noticeTypeTitle = WorkContext.Resolve<INoticeService>().GetNoticeTypeTitle(Model.ContentPart.Id);
 }
 <h2><span class="noticeTypeLabel">@noticeTypeTitle - </span>@Html.ItemDisplayLink(title, contentItem)</h2>
-@Display.NoticeOwnerLinks(Model.ContentPart)

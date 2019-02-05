@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Orchard.ContentManagement;
+using Orchard.Core.Title.Models;
 using Orchard.Users.Models;
 
 namespace LETS.Models
@@ -41,6 +42,14 @@ namespace LETS.Models
         public string LastFirstName
         {
             get { return string.Format("{0}, {1}", LastName, FirstName); }
+        }
+
+        public string Locality
+        {
+            get
+            {
+                return ContentItem.ContentManager.Get(this.As<AddressPart>().Locality.Id).As<TitlePart>().Title;
+            }
         }
     }
 }

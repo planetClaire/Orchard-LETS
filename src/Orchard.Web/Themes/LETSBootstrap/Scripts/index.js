@@ -4,6 +4,7 @@ import 'jquery-validation-unobtrusive';
 import flatpickr from "flatpickr";
 import * as $ from "jquery";
 import Dropzone from 'dropzone';
+import truncate from 'truncate';
 
 require("../scss/app.scss");
 
@@ -184,4 +185,16 @@ $(function () {
             }
         })
     })
+})
+
+// truncate notice descriptions
+$(".notice.summary .text").each(function () {
+    this.innerHTML = truncate(this.innerHTML, 66);
+})
+
+$(".notice-link").on("mouseover", function () {
+    $(this).closest(".notice").find(".notice-link").addClass("hover");
+})
+$(".notice-link").on("mouseout", function () {
+    $(this).closest(".notice").find(".notice-link").removeClass("hover");
 })

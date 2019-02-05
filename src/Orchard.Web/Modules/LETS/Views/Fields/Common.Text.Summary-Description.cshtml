@@ -1,0 +1,20 @@
+﻿@using LETS.Helpers
+@using Orchard.Utility.Extensions;
+@using Orchard.ContentManagement;
+@{
+    string name = Model.ContentField.DisplayName;
+}
+<a class="notice-link" href="@Url.ItemDisplayUrl((IContent)Model.ContentItem)">
+    @if (HasText(name) && HasText(Model.Value))
+    {
+        if (Model.ContentField.PartFieldDefinition.Settings["TextFieldSettings.Flavor"].Equals("Textarea"))
+        {
+            var text = Helpers.Linkify(Html.Encode((HtmlString)Model.Value).ReplaceNewLinesWith("<br />"));
+            <p class="text">@(new MvcHtmlString(text))</p>
+        }
+        else
+        {
+            <p class="text-field"><span class="value">@Model.Value</span></p>
+        }
+    }
+</a>

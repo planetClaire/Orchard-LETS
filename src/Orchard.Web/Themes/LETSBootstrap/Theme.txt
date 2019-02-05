@@ -5,4 +5,4 @@ Description: Specialised for the LETS module & based on the Twitter Bootstrap te
 Version: 1.1
 AntiForgery: enabled
 Tags: Bootstrap, Twitter, LETS
-Zones: Banner, Navigation, AuthNavigation, Aside, Messages, BeforeContent, Content, AfterContent, PreFooter, Footer
+Zones: Banner, Navigation, AuthNavigation, Messages, BeforeContent, ContentFirst, ContentSecond, Content, Aside, AfterContent, PreFooter, Footer
