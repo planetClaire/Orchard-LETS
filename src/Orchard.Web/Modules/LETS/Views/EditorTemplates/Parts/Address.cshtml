@@ -4,14 +4,14 @@
     HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 }
 <div class="form-group">
-    <label class="required control-label" for="@Html.FieldIdFor(m => m.StreetAddress)">@T("Street address (for admin only, not shown to members)")</label>
-    @Html.TextBoxFor(model => model.StreetAddress, new { @class = "form-control required input-xlarge", required = "required" })
-    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.StreetAddress)</div>
-</div>
-<div class="form-group">
-    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdLocality)">@T("Locality")</label>
-    @Html.DropDownListFor(model => model.IdLocality, new SelectList(Model.Localities, "Id", "Name"), "Choose a locality...", new { required = "required", @class = "form-control custom-select" })
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.IdLocality)">@T("Suburb")</label>
+    @Html.DropDownListFor(model => model.IdLocality, new SelectList(Model.Localities, "Id", "Name"), "Select your suburb...", new { required = "required", @class = "form-control custom-select" })
     <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.IdLocality)
     </div>
+</div>
+<div class="form-group">
+    <label class="required control-label" for="@Html.FieldIdFor(m => m.StreetAddress)">@T("Street address (for admin only, not shown to members)")</label>
+    @Html.TextBoxFor(model => model.StreetAddress, new { @class = "form-control required input-xlarge", required = "required" })
+    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.StreetAddress)</div>
 </div>
