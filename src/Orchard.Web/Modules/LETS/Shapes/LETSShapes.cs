@@ -37,9 +37,9 @@ namespace LETS.Shapes
                 });
             builder.Describe("Content").OnDisplaying(displaying =>
                 {
-                    if (displaying.ShapeMetadata.DisplayType.Equals("DetailedSummary") || displaying.ShapeMetadata.DisplayType.Equals("DetailedSummaryArchived"))
+                    if (displaying.ShapeMetadata.DisplayType.Equals("Summary"))
                     {
-                        displaying.ShapeMetadata.Wrappers.Add("Content_DetailedSummaryWrapper");
+                        displaying.ShapeMetadata.Wrappers.Add("Content_SummaryWrapper");
                     }
                 });
         }

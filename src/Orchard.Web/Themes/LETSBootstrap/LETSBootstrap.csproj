@@ -207,9 +207,6 @@
     <Content Include="Views\Parts.Title.Summary-Notice.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Content.DetailedSummary.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Content.SaveButton.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -42,14 +42,6 @@ namespace LETS.Drivers
                 ContentShape("Parts_Notice_Summary",
                              () => shapeHelper.Parts_Notice_Summary(
                                  ContentPart: part,
-                                 NoticeTypeTitle: _noticeService.GetNoticeTypeTitle(part.NoticeType.Id))),
-                ContentShape("Parts_Notice_DetailedSummary",
-                             () => shapeHelper.Parts_Notice_DetailedSummary(
-                                 ContentPart: part,
-                                 NoticeTypeTitle: _noticeService.GetNoticeTypeTitle(part.NoticeType.Id))),
-                ContentShape("Parts_Notice_DetailedSummaryArchived",
-                             () => shapeHelper.Parts_Notice_DetailedSummaryArchived(
-                                 ContentPart: part,
                                  NoticeTypeTitle: _noticeService.GetNoticeTypeTitle(part.NoticeType.Id)))
                  );
 
