@@ -2,6 +2,7 @@
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
+using Orchard.ContentManagement.Utilities;
 
 namespace LETS.Models
 {
@@ -31,13 +32,10 @@ namespace LETS.Models
             get { return this.As<CommonPart>().Owner.As<MemberPart>(); } 
         }
 
-        public string StrNoticeType
-        {
-            get
-            {
-                return ContentItem.ContentManager.Get(NoticeType.Id).As<TitlePart>().Title;
-            }
-        }
+        private readonly LazyField<string> _strNoticeType = new LazyField<string>();
+        internal LazyField<string> StrNoticeTypeField { get { return _strNoticeType; } }
+        public string StrNoticeType { get { return _strNoticeType.Value; } }
+
 
     }
 }

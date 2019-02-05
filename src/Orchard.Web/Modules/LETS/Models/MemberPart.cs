@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Orchard.ContentManagement;
-using Orchard.Core.Title.Models;
 using Orchard.Users.Models;
+using Orchard.ContentManagement.Utilities;
 
 namespace LETS.Models
 {
@@ -44,12 +44,9 @@ namespace LETS.Models
             get { return string.Format("{0}, {1}", LastName, FirstName); }
         }
 
-        public string Locality
-        {
-            get
-            {
-                return ContentItem.ContentManager.Get(this.As<AddressPart>().Locality.Id).As<TitlePart>().Title;
-            }
-        }
+        private readonly LazyField<string> _locality = new LazyField<string>();
+        internal LazyField<string> LocalityField { get { return _locality; } }
+        public string Locality { get { return _locality.Value; } }
+                
     }
 }

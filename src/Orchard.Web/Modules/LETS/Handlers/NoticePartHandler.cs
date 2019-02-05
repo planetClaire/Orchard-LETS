@@ -1,7 +1,7 @@
 ﻿using LETS.Models;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.Localization;
@@ -27,7 +27,15 @@ namespace LETS.Handlers
                     throw new OrchardSecurityException(T("attempt to access member content"));
                 }
             });
+            OnLoaded<NoticePart>(LazyLoadHandlers);
         }
 
+        void LazyLoadHandlers(LoadContentContext context, NoticePart part)
+        {
+            part.StrNoticeTypeField.Loader(() =>
+            {
+                return _orchardServices.ContentManager.Get(part.NoticeType.Id).As<TitlePart>().Title;
+            });
+        }
     }
 }
