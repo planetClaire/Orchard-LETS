@@ -1,21 +1,14 @@
 ﻿@using Orchard.Taxonomies.Services
-
+@using Orchard.ContentManagement
 @{
     var terms = (IEnumerable<Orchard.Taxonomies.Models.TermPart>)Model.Terms;
     var taxonomyService = WorkContext.Resolve<ITaxonomyService>();
-    taxonomyService.GetContentItems
 }
 
 @if (Model.Terms.Count > 0)
 {
-<p class="taxonomy-field">
-    More from
-    <span class="name">
-        @(new HtmlString(string.Join(", ", terms.Select(t =>
-                    {
-                        var firstOrDefault = taxonomyService.GetParents(t).FirstOrDefault();
-                        return firstOrDefault != null ? Html.ItemDisplayLink(firstOrDefault.Name + " - " + t.Name, t.ContentItem).ToString() : null;
-                    }).ToArray())))
-    </span>
-</p>
+    var term = Model.Terms[0];
+    <p class="taxonomy-field">
+        <span class="name">@Html.ItemDisplayLink((string)term.Name, (ContentItem)term.ContentItem)</span>
+    </p>
 }

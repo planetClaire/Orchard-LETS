@@ -24,10 +24,10 @@
       <Place Parts_Common_Metadata_Summary="Footer:1"></Place>
     </Match>
     <Match DisplayType="Detail">
-      <Place Fields_Dropzone="/Aside:0"></Place>
-      <Place Parts_Common_Metadata="/Aside:1"></Place>
-      <Place Parts_Notice="/Aside:2"></Place>
-      <Place Fields_TaxonomyField="/AfterContent:0"></Place>
+      <Place Fields_Dropzone="Meta:0"></Place>
+      <Place Fields_TaxonomyField="Content:after"></Place>
+      <Place Parts_Common_Metadata="Meta:1"></Place>
+      <Place Parts_Notice="Meta:2"></Place>
     </Match>
   </Match>
   <Match ContentType="CategoryTerm">
