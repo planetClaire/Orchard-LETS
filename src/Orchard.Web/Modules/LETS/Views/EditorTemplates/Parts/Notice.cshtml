@@ -26,7 +26,8 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">@Model.CurrencyUnit</div>
             </div>
-            @Html.TextBoxFor(model => model.Price, new { @class = "input-mini form-control", @type = "text" })
+            @Html.TextBoxFor(model => model.Price, new { @class = "input-mini form-control", @type = "number", min = "1", max = "500" })
+            <div class="invalid-feedback">@Html.ValidationMessageFor(m => Model.Price, "Enter a number between 1 and 500")</div>
         </div>
     </div>
 </div>

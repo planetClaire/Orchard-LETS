@@ -200,6 +200,7 @@
     <Content Include="Views\Widget-BannerWidget.cshtml" />
     <Content Include="Views\Parts.Notice.cshtml" />
     <Content Include="Views\Parts.Title.Summary-Notice.cshtml" />
+    <Content Include="Views\Parts.Title-url-homepage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Content.SaveButton.cshtml" />

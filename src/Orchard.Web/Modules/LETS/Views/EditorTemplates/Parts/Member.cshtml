@@ -5,21 +5,21 @@
 }
 <div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.FirstName)">@T("First name")</label>
-    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control required input-xlarge", required = "required" })
+    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control required input-xlarge", required = "required", maxlength = "50" })
     <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.FirstName)
     </div>
 </div>
 <div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.LastName)">@T("Last name")</label>
-    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control required input-xlarge", required = "required" })
+    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control required input-xlarge", required = "required", maxlength = "50" })
     <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.LastName)
     </div>
 </div>
 <div class="form-group">
     <label class="required control-label" for="@Html.FieldIdFor(m => m.Telephone)">@T("Telephone")</label>
-    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control required input-xlarge", required = "required" })
+    @Html.TextBoxFor(model => model.Telephone, new { @class = "form-control required input-xlarge", required = "required", maxlength = "50" })
     <div class="invalid-feedback">
         @Html.ValidationMessageFor(model => model.Telephone)
     </div>

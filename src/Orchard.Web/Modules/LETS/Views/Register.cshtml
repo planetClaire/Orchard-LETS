@@ -20,13 +20,13 @@
 
             <div class="form-group">
                 <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Email)">@T("Email")</label>
-                @Html.TextBoxFor(m => memberVM.Email, new { autofocus = "autofocus", type = "email", @class = "form-control required input-xlarge", required = "required" })
+                @Html.TextBoxFor(m => memberVM.Email, new { autofocus = "autofocus", type = "email", @class = "form-control required input-xlarge", required = "required", maxlength = 50 })
                 <div class="invalid-feedback">@Html.ValidationMessageFor(m => memberVM.Email)</div>
             </div>
 
             <div class="form-group">
                 <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.Password)">@T("Password")</label>
-                @Html.PasswordFor(m => memberVM.Password, new { @class = "form-control required input-xlarge", @type = "password", required = "required" })
+                @Html.PasswordFor(m => memberVM.Password, new { @class = "form-control required input-xlarge", @type = "password", required = "required", maxlength = 50 })
                 <div class="invalid-feedback">
                     @Html.ValidationMessageFor(m => memberVM.Password)
                 </div>
@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label class="required control-label" for="@Html.FieldIdFor(m => memberVM.ConfirmPassword)">@T("Confirm Password")</label>
                 <div class="controls">
-                    @Html.PasswordFor(m => memberVM.ConfirmPassword, new { @class = "form-control required input-xlarge", @type = "password", required = "required" })
+                    @Html.PasswordFor(m => memberVM.ConfirmPassword, new { @class = "form-control required input-xlarge", @type = "password", required = "required", maxlength = 50 })
                     <div class="invalid-feedback">
                         @Html.ValidationMessageFor(m => memberVM.ConfirmPassword)
                     </div>
@@ -73,7 +73,7 @@
                                     @Html.DropDownListFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].IdCategoryTerm, noticeTypesVM.CategoryTerms, "Choose a category...", new { required = "required", @class = "form-control custom-select" })
                                 </div>
                                 <div class="col-8">
-                                    @Html.TextBoxFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title, new { placeholder = string.Format("Type your {0} here...", noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower()), @class = "form-control wide input-xlarge", required = "required" })
+                                    @Html.TextBoxFor(m => noticeTypesVM.NoticeTypes[i].Notices[j].Title, new { placeholder = string.Format("Type your {0} here...", noticeTypesVM.NoticeTypes[i].NoticeTypeName.ToLower()), @class = "form-control wide input-xlarge", required = "required", maxlength = 55 })
                                 </div>
                             </div>
                             <div class="registerNoticeError invalid-feedback">

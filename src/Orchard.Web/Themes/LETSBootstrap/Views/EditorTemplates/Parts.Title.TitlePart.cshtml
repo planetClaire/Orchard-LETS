@@ -7,7 +7,7 @@
 <div class="border p-3 border-bottom-0">
     <div class="form-group">
         <label class="required" for="@Html.FieldIdFor(m => m.Title)">@T("Title")</label>
-        @Html.TextBoxFor(m => m.Title, new { @class = "required input-xlarge form-control", autofocus = "autofocus", required = "required" })
+        @Html.TextBoxFor(m => m.Title, new { @class = "required input-xlarge form-control", autofocus = "autofocus", required = "required", maxlength = 55 })
         <div class="invalid-feedback">@Html.ValidationMessageFor(m => m.Title)</div>
     </div>
 </div>

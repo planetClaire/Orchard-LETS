@@ -55,16 +55,16 @@
                 <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.IdBuyer)</div>
             </td>
             <td>
-                @Html.TextBoxFor(model => model.Description, new { @class = "form-control required input-xlarge", required = "required" })
+                @Html.TextBoxFor(model => model.Description, new { @class = "form-control required input-xlarge", required = "required", maxlength = 150 })
                 <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Description)</div>
             </td>
-            <td width="18%">
+            <td width="20%">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">@Model.CurrencyUnit</div>
                     </div>
-                    @Html.TextBoxFor(model => model.Value, new { @class = "input-mini form-control", @type = "number", min = "1", required = "required" })
-                    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Value, @T("The value is required").ToString())</div>
+                    @Html.TextBoxFor(model => model.Value, new { @class = "input-mini form-control", @type = "number", min = "1", max = "500", required = "required", maxlength = 3 })
+                    <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.Value, @T("Enter a value up to 500").ToString())</div>
                 </div>
             </td>
         </tr>

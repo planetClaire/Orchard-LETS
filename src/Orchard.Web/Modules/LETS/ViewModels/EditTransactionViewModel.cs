@@ -29,7 +29,7 @@ namespace LETS.ViewModels
 
         public string CurrencyUnit { get; set; }
 
-        [Required, Range(1, 999999, ErrorMessage = "Please enter a number between 1 and 999999")]
+        [Required, Range(1, 500, ErrorMessage = "Please enter a number between 1 and 500")]
         public int? Value { get; set; }
 
         public int CreditValue { get; set; }

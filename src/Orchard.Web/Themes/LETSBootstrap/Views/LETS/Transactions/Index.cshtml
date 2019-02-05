@@ -54,16 +54,16 @@
                     <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.IdBuyer, @T("The buyer is required").ToString())</div>
                 </td>
                 <td>
-                    @Html.TextBoxFor(model => model.NewTransaction.Description, new { @class = "form-control required input-xlarge", required = "required" })
+                    @Html.TextBoxFor(model => model.NewTransaction.Description, new { @class = "form-control required input-xlarge", required = "required", maxlength = 150 })
                     <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.Description, @T("A description is required").ToString())</div>
                 </td>
-                <td width="18%">
+                <td width="20%">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">@Model.NewTransaction.CurrencyUnit</div>
                         </div>
-                        @Html.TextBoxFor(model => model.NewTransaction.Value, new { @class = "input-mini form-control", @type = "number", min = "1", required = "required" })
-                        <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.Value, @T("The value is required").ToString())</div>
+                        @Html.TextBoxFor(model => model.NewTransaction.Value, new { @class = "input-mini form-control", @type = "number", min = "1", max = "500", maxlength = "3", required = "required" })
+                        <div class="invalid-feedback">@Html.ValidationMessageFor(model => model.NewTransaction.Value, @T("Enter a value up to 500").ToString())</div>
                     </div>
                 </td>
             </tr>
