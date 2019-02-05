@@ -85,14 +85,8 @@
     <Content Include="fonts\lets.svg" />
     <Content Include="postcss.config.js" />
     <Content Include="Scripts\index.js" />
-    <Content Include="Scripts\modernizr.custom.79104.js" />
-    <Content Include="Scripts\oldBrowsers.js" />
-    <Content Include="Scripts\placeholder.js" />
-    <Content Include="Scripts\random.js" />
-    <Content Include="Styles\site.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
-    <Content Include="Styles\Web.config" />
     <Content Include="Theme.txt" />
     <Content Include="Theme.png" />
     <Content Include="Placement.info">
