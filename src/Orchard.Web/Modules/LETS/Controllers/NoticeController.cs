@@ -103,7 +103,7 @@ namespace LETS.Controllers
                 _contentManager.Publish(notice);
             }
             _orchardServices.Notifier.Information(T("Your Notice has been created."));
-            return Redirect(string.Format("~/{0}", term.Slug));
+            return RedirectToAction("Own");
         }
 
         public ActionResult Edit(int id)
@@ -149,7 +149,7 @@ namespace LETS.Controllers
             _signals.Trigger(string.Format("letsMemberNoticesChanged{0}", idOwner));
             _signals.Trigger(string.Format("letsMemberArchivedNoticesChanged{0}", idOwner));
             _signals.Trigger(string.Format("letsNoticesByLocalityChanged{0}", _memberService.GetMember(idOwner).As<AddressPart>().Locality.Id));
-            return Redirect(string.Format("~/{0}", term.Slug));
+            return RedirectToAction("Own");
         }
 
         private NoticeCategoryViewModel GetNoticeCategoryViewModel(int idContentItem)
@@ -188,7 +188,7 @@ namespace LETS.Controllers
             _signals.Trigger(string.Format("letsMemberArchivedNoticesChanged{0}", idUser));
             _signals.Trigger(string.Format("letsNoticesByLocalityChanged{0}", _memberService.GetMember(idUser).As<AddressPart>().Locality.Id));
             _orchardServices.Notifier.Information(T("Your Notice has been archived."));
-            return RedirectToAction("Member", new { id = idUser });
+            return RedirectToAction("Own");
         }
 
         [HttpPost, ActionName("Edit")]
@@ -212,7 +212,7 @@ namespace LETS.Controllers
             _signals.Trigger(string.Format("letsMemberArchivedNoticesChanged{0}", idUser));
             _signals.Trigger(string.Format("letsNoticesByLocalityChanged{0}", _memberService.GetMember(idUser).As<AddressPart>().Locality.Id));
             _orchardServices.Notifier.Information(T("Your Notice has been deleted."));
-            return RedirectToAction("Member", new { id = idUser });
+            return RedirectToAction("Own");
         }
 
         [HttpPost]
@@ -257,6 +257,19 @@ namespace LETS.Controllers
             var memberNoticesViewModel = new MemberNoticesViewModel {Notices = _noticeService.GetMemberNoticeShapes(id), ArchivedNotices = _noticeService.GetMemberArchivedNoticeShapes(id), Member = _memberService.GetMember(id), AdminIsViewing = _orchardServices.Authorizer.Authorize(Permissions.AdminMemberContent)};
 
             return View(memberNoticesViewModel);
+        }
+
+        public ActionResult Own()
+        {
+            if (!_orchardServices.Authorizer.Authorize(Permissions.AccessMemberContent))
+                return new HttpUnauthorizedResult();
+            var user = _orchardServices.WorkContext.CurrentUser;
+            return View(new MemberNoticesViewModel {
+                Notices = _noticeService.GetMemberNoticeShapes(user.Id, "Detail"),
+                ArchivedNotices = _noticeService.GetMemberArchivedNoticeShapes(user.Id, "Detail"),
+                Member = _memberService.GetMember(user.Id),
+                AdminIsViewing = false
+            });
         }
 
     }

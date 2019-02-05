@@ -7,7 +7,7 @@
 
     <ul id="authNav" class="navbar-nav justify-content-end">
         <li class='nav-item @Html.IfSelected("Create", "Notice")'>@Html.ActionLink(T("Add a notice").ToString(), "Create", new { area = "LETS", controller = "Notice" }, new { @class = "nav-link" })</li>
-        <li class='nav-item @Html.IfSelected("Member", "Notice")'>@Html.ActionLink(T("My Notices").ToString(), "Member", new { id = WorkContext.CurrentUser.Id, area = "LETS", Controller = "Notice" }, new { @class = "nav-link" })</li>
+        <li class='nav-item @Html.IfSelected("Own", "Notice")'>@Html.ActionLink(T("My Notices").ToString(), "Own", new { area = "LETS", Controller = "Notice" }, new { @class = "nav-link" })</li>
         <li class='nav-item @Html.IfSelected("Browse", "Notice")'>@Html.ActionLink(T("Categories").ToString(), "Browse", new { area = "LETS", controller = "Notice" }, new { @class = "nav-link" })</li>
         <li class='nav-item @Html.IfSelected("Index", "Member")'>@Html.ActionLink(T("Members").ToString(), "Index", new { area = "LETS", controller = "Member" }, new { @class = "nav-link" })</li>
         <li class='nav-item @Html.IfSelected("Index", "Transactions")'>@Html.ActionLink(T("Transactions").ToString(), "Index", new { area = "LETS", controller = "Transactions" }, new { @class = "nav-link" })</li>
