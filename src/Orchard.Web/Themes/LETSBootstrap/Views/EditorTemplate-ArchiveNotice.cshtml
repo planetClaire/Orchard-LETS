@@ -9,10 +9,10 @@
 
     var archiveLater = (ArchiveLaterViewModel)Model.Model;
     var maxDays = WorkContext.CurrentSite.As<LETSSettingsPart>().MaximumNoticeAgeDays;
-    var twoDays = DateTime.Now.AddDays(2).ToString("dd-MM-yyyy");
-    var sevenDays = DateTime.Now.AddDays(7).ToString("dd-MM-yyyy");
-    var maxDate = DateTime.Now.AddDays(maxDays).ToString("dd-MM-yyyy");
-    var today = DateTime.Now.ToString("dd-MM-yyyy");
+    var twoDays = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy");
+    var sevenDays = DateTime.Now.AddDays(7).ToString("dd/MM/yyyy");
+    var maxDate = DateTime.Now.AddDays(maxDays).ToString("dd/MM/yyyy");
+    var today = DateTime.Now.ToString("dd/MM/yyyy");
 }
 <div class="border p-3 border-top-0">
     <div class="form-group">

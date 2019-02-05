@@ -79,13 +79,13 @@ window.addEventListener('load', function () {
 $(".wrap-row").wrapAll("<div class='no-gutters row'/>");
 
 flatpickr(".transaction-datepicker", {
-    dateFormat: 'd-m-Y',
+    dateFormat: 'd/m/Y',
     maxDate: $("#today").val(),
     minDate: $("#minDate").val()
 });
 
 let archiveDatePicker = flatpickr(".archive-datepicker", {
-    dateFormat: 'd-m-Y',
+    dateFormat: 'd/m/Y',
     minDate: $("#today").val(),
     maxDate: $("#maxDate").val()
 });
@@ -95,7 +95,7 @@ $("#archiveQuickPick a.btn").click(function (event) {
     var days = $(this).children("input:hidden").val();
     var today = new Date();
     var pickedDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + parseInt(days));
-    $(".archive-datepicker").val(flatpickr.formatDate(pickedDay, 'd-m-Y'));
+    $(".archive-datepicker").val(flatpickr.formatDate(pickedDay, 'd/m/Y'));
     archiveDatePicker.setDate(pickedDay);
     $("#archiveQuickPick a.btn").each(function () {
         $(this).removeClass('active');

@@ -9,8 +9,8 @@
 
     var minTransactionDay = WorkContext.CurrentSite.As<LETSSettingsPart>().OldestRecordableTransactionDays * -1;
     var isAdmin = WorkContext.Resolve<IAuthorizationService>().TryCheckAccess(LETS.Permissions.AdminMemberContent, WorkContext.CurrentUser, WorkContext.Resolve<IContentManager>().New<TransactionPart>("Transaction"));
-    var today = DateTime.Now.ToString("dd-MM-yyyy");
-    var minDate = DateTime.Parse(Model.TransactionDate).AddDays(minTransactionDay).ToString("dd-MM-yyyy");
+    var today = DateTime.Now.ToString("dd/MM/yyyy");
+    var minDate = DateTime.Parse(Model.TransactionDate).AddDays(minTransactionDay).ToString("dd/MM/yyyy");
 }
 <table class="table table-striped table-bordered ">
     <thead>
