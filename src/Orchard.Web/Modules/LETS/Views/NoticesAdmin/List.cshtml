@@ -1,4 +1,5 @@
-﻿@model LETS.ViewModels.MemberNoticesViewModel
+﻿@using LETS.Helpers;
+@model LETS.ViewModels.MemberNoticesViewModel
 
 <h1>@string.Format("{0}'s {1}", @Model.Member.FirstLastName, T("notices"))</h1>
 @if (Model.Notices.Count().Equals(0))
@@ -7,7 +8,19 @@
 }
 @foreach (var notice in Model.Notices)
 {
+    var id = notice.ContentItem.Id;
     @Display(notice)
+    @Html.ActionLink(T("Edit").ToString(), "Edit", "Notice", new { area = "LETS", id = id }, new { @class = "edit" }) @:|
+    @Html.ActionLink(T("Delete").ToString(), "Delete", "Notice", new { area = "LETS", id = id }, new { @class = "edit", itemprop = "UnsafeUrl RemoveUrl" }) @:|
+    @*var published = Helpers.IsPublished(notice.ContentPart.Id);
+        if (published)
+        {
+            @Html.Link(T("Archive").Text, Url.Action("Unpublish", "Notice", new { area = "LETS", id = notice.Id }), new { @class = "edit", itemprop = "UnsafeUrl ArchiveUrl" })
+        }
+        else
+        {
+            @Html.ActionLink(T("Publish").ToString(), "Publish", "Notice", new { area = "LETS", id = notice.Id }, new { @class = "edit", itemprop = "UnsafeUrl" })
+        }*@
 }
 @{
     <div id="archivedNotices">
@@ -23,3 +36,5 @@
         }
     </div>
 }
+
+@Html.AntiForgeryTokenOrchard()
