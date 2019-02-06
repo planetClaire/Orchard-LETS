@@ -32,14 +32,14 @@ namespace LETS.Feeds
                 var title = string.Format("{0}: {1}", T("New member"), contentItem.As<MemberPart>().FirstLastName);
 
                 // add to known formats
-                var description = string.Format("<p>{0} {1} {2}<br /><em>{3}</em></p>", T("Please take the time to welcome"), contentItem.As<MemberPart>().FirstName, T("to our system."), T("Click the link for more details and contact details"));
+                var description = string.Format("<p>{0} {1} {2}<br /><em>{3}</em></p>", T("Please take the time to welcome"), contentItem.As<MemberPart>().FirstName, T("to our community."), T("Click the link for notices and contact details"));
                 if (context.Format == "rss")
                 {
                     var link = new XElement("link");
                     context.Response.Contextualize(requestContext =>
                     {
                         var urlHelper = new UrlHelper(requestContext);
-                        var uriBuilder = new UriBuilder(urlHelper.RequestContext.HttpContext.Request.ToRootUrlString()) { Path = urlHelper.RouteUrl(inspector.Link) };
+                        var uriBuilder = new UriBuilder(urlHelper.RequestContext.HttpContext.Request.ToRootUrlString()) { Path = urlHelper.Action("Member", "Notice", new { area = "LETS", id = contentItem.Id }) };
                         link.Add(uriBuilder.Uri.OriginalString);
                     });
 

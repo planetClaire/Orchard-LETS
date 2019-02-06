@@ -401,6 +401,10 @@
       <Project>{BB5C57F4-D9CB-4440-89A6-D9FF9F41E4E3}</Project>
       <Name>Contrib.Profile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DropzoneField\DropzoneField.csproj">
+      <Project>{74F46177-161D-4D40-9E37-A5A754C3DE21}</Project>
+      <Name>DropzoneField</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NogginBox.MailChimp\NogginBox.MailChimp.csproj">
       <Project>{1024F5BA-7E04-4E70-8D94-30584F09918E}</Project>
       <Name>NogginBox.MailChimp</Name>

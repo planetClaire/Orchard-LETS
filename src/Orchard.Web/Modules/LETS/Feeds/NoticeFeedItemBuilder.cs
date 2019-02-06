@@ -16,7 +16,6 @@ using Orchard.Core.Settings.Models;
 using Orchard.Fields.Fields;
 using Orchard.Localization;
 using Orchard.Utility.Extensions;
-//using So.ImageResizer.Helpers;
 
 namespace LETS.Feeds
 {
@@ -49,11 +48,6 @@ namespace LETS.Feeds
 
                 // add to known formats
                 var description = string.Format("<strong>{0} {1}</strong>", T("From"), notice.Member.FirstLastName);
-                var published = notice.As<CommonPart>().PublishedUtc.Value;
-                var created = notice.As<CommonPart>().CreatedUtc.Value;
-                if ((published - created).Days > 1) {
-                    description += string.Format("<br />This notice has been re-posted. It was first posted on {0}", notice.As<CommonPart>().CreatedUtc.Value.ToLongDateString());
-                }
                 var currencyUnit = _orchardServices.WorkContext.CurrentSite.As<LETSSettingsPart>().CurrencyUnit;
                 if (notice.Price > 0) {
                     var per = ((dynamic) notice).Per;
@@ -85,30 +79,24 @@ namespace LETS.Feeds
                 if (noticeDescription != null && !string.IsNullOrEmpty(((TextField)noticeDescription).Value)) {
                     description += string.Format("<p>{0}</p>", Helpers.Helpers.Linkify(((TextField)noticeDescription).Value.ReplaceNewLinesWith("<br />")));
                 }
-                //var photos = ((dynamic) notice).Photos;
-                //if (photos != null) {
-                //    var fileNames = ((AgileUploaderField.Fields.AgileUploaderField) photos).FileNames;
-                //    if (!string.IsNullOrEmpty(fileNames)) {
-                //        var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
-                //        var uriBuilder = new UriBuilder(urlHelper.RequestContext.HttpContext.Request.ToRootUrlString()) { Path = urlHelper.RouteUrl(inspector.Link) };
-                //        description += "<p>";
-                //        //foreach (var fileName in fileNames.Split(';')) {
-                //        //    description += string.Format("<a href='{5}'><img alt='Photo' src='{4}/resizedImage?url={0}&width=100&height=80&maxWidth=100&maxheight=80&cropMode={1}&scale={2}&stretchMode={3}' /></a>", fileName, ResizeSettingType.CropMode.Auto, ResizeSettingType.ScaleMode.DownscaleOnly, ResizeSettingType.StretchMode.Proportionally, _orchardServices.WorkContext.CurrentSite.As<SiteSettings2Part>().BaseUrl, uriBuilder.Uri.OriginalString);
-                //        //}
-                //        description += "</p>";
-                //    }
-                //}
+                var photos = ((dynamic)notice).Photos;
+                if (photos != null)
+                {
+                    var fileNames = ((DropzoneField.Fields.DropzoneField)photos).FileNames;
+                    if (!string.IsNullOrEmpty(fileNames))
+                    {
+                        var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
+                        var uriBuilder = new UriBuilder(urlHelper.RequestContext.HttpContext.Request.ToRootUrlString()) { Path = urlHelper.RouteUrl(inspector.Link) };
+                        description += "<p>";
+                        foreach (var fileName in fileNames.Split(';'))
+                        {
+                            description += string.Format("<a href='{2}'><img alt='Photo' src='{1}/{0}' /></a>", fileName, _orchardServices.WorkContext.CurrentSite.As<SiteSettingsPart>().BaseUrl, uriBuilder.Uri.OriginalString);
+                        }
+                        description += "</p>";
+                    }
+                }
                 var expiryDate = notice.As<ArchiveLaterPart>();
                 var currentTimeZone = _orchardServices.WorkContext.CurrentTimeZone;
-                if (expiryDate.ScheduledArchiveUtc.Value != null) {
-                    var dayLabel = "days";
-                    
-                    var days = Math.Ceiling(((DateTime)expiryDate.ScheduledArchiveUtc.Value - DateTime.UtcNow).TotalDays); 
-                    if (days.Equals(1)) {
-                        dayLabel = "day";
-                    }
-                    description += string.Format("<em>{0} {1} {2}</em>", T("This notice expires in"), days , T(dayLabel));
-                }
                 if (context.Format == "rss")
                 {
                     var link = new XElement("link");
