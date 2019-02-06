@@ -213,3 +213,8 @@ span.paymentTermsLabel {
 td.currency, th.currency {
     text-align: right;
 }
+.anchor:before {
+    height: 100px;
+    content: "";
+    display: block;
+}
