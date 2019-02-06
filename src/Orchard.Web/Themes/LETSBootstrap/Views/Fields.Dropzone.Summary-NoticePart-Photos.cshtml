@@ -8,18 +8,29 @@
             firstImage = images[0];
         }
     }
+    // var noticeType = Model.ContentItem.NoticePart.StrNoticeType; this causes an ObjectDisposedException
+    // to fix this HACK
+    var noticeType = "Offer";
+    var idNoticeType = Model.ContentItem.NoticePart.NoticeTypeId;
+    if (idNoticeType == 14)
+    {
+        noticeType = "Request";
+    }
+    else if (idNoticeType == 15) {
+        noticeType = "Announcement";
+    }
 }
 @if (!string.IsNullOrEmpty(firstImage))
 {
     <div class="placeholder">
         <img class="img-fluid dropzone-first" src="@firstImage?w=120&h=120&mode=crop" alt="" />
-        <span class="dropzone-text ">@Model.ContentItem.NoticePart.StrNoticeType</span>
+        <span class="dropzone-text ">@noticeType</span>
     </div>
 }
 else
 {
     <div class="placeholder">
-        <span class="dropzone-text noimg align-middle">@Model.ContentItem.NoticePart.StrNoticeType</span>
+        <span class="dropzone-text noimg align-middle">@noticeType</span>
     </div>
 
 }
