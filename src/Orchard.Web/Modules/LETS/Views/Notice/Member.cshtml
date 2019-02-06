@@ -5,37 +5,47 @@
     var isAdmin = Model.AdminIsViewing;
 }
 <h1>@string.Format("{0}'s {1}", @Model.Member.FirstLastName, T("notices"))</h1>
-@if (Model.Notices.Count().Equals(0)) {
-    <p>
-    @if (isOwner)
-    {
-        @T("You don't have any active notices")
-        <br />
-        @Html.ActionLink(T("Add a notice").ToString(), "Create", new {area = "LETS", controller = "Notice"})
-    }
-    else {
-        @T("This member doesn't have any active notices")
-    }
-    </p>
-}
-@foreach (var notice in Model.Notices)
-{
-    @Display(notice)
-}
-@{
-    if (isOwner || isAdmin)
-    {
-        <div id="archivedNotices">
-            <h2>@T("Archived notices")</h2>
-            <p><strong>@T("Expired notices will show up here until they are deleted or re-activated by publishing them.")</strong></p>
-            <p>@T("Notices can also be archived if you don't want to delete them yet")</p>
-            @if (Model.ArchivedNotices.Any())
-            {
-                foreach (var archivedNotice in Model.ArchivedNotices)
+<div class="row">
+    <div class="col-lg-8">
+        @if (Model.Notices.Count().Equals(0))
+        {
+            <p>
+                @if (isOwner)
                 {
-                    @Display(archivedNotice)
+                    @T("You don't have any active notices")
+                    <br />
+                    @Html.ActionLink(T("Add a notice").ToString(), "Create", new { area = "LETS", controller = "Notice" })
                 }
+                else
+                {
+                    @T("This member doesn't have any active notices")
+                }
+            </p>
+        }
+        @foreach (var notice in Model.Notices)
+        {
+            @Display(notice)
+        }
+        @{
+            if (isOwner || isAdmin)
+            {
+                <div id="archivedNotices">
+                    <h2>@T("Archived notices")</h2>
+                    <p><strong>@T("Expired notices will show up here until they are deleted or re-activated by publishing them.")</strong></p>
+                    <p>@T("Notices can also be archived if you don't want to delete them yet")</p>
+                    @if (Model.ArchivedNotices.Any())
+                    {
+                        foreach (var archivedNotice in Model.ArchivedNotices)
+                        {
+                            @Display(archivedNotice)
+                        }
+                    }
+                </div>
             }
-        </div>
-    }
-}
+        }
+    </div>
+    <div class="col-lg-4">
+        Click on a notice for contact details, or 
+        <p class=""><a href='@Url.Action("Index", "Home", new { area = "Contrib.Profile", username = Model.Member.User.UserName })'>here for @Model.Member.FirstName's profile.</a></p>
+    </div>
+</div>
