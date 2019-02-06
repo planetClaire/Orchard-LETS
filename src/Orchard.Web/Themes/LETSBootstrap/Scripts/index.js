@@ -10,6 +10,11 @@ require("../scss/app.scss");
 
 if (process.env.NODE_ENV !== 'production') {
     console.log('Looks like we are in development mode!');
+
+    $("#layout-wrapper").before('<div><p class="d-block d-sm-none">Extra small screen.</p><p class="d-none d-sm-block d-md-none">Small screen.</p><p class="d-none d-md-block d-lg-none">Medium screen.</p><p class="d-none d-lg-block d-xl-none">Large screen.</p><p class="d-none d-xl-block">Extra large screen.</p><p><strong>Width: <span id="browserWidth">' + $(window).width() + '</span></strong></p></div >');
+    $(window).resize(function () {
+        $("#browserWidth").html($(window).width().toString());
+    });
 }
 
 (function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);

@@ -10,71 +10,73 @@
 }
 @if (memberCount > 0)
 {
-<header class="page-header">
-    <h1>@Model.MemberType: @memberCount</h1>
-</header>
-    <table class="table table-striped table-bordered ">
-        <thead>
+    <header class="page-header">
+        <h1>@Model.MemberType: @memberCount</h1>
+    </header>
+    <div class="table-responsive-lg">
+        <table class="table table-striped table-bordered ">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Display.SortableColumnHeader(Query: "name", Label: @T("Name"), Default: true)
+                    </th>
+                    <th scope="col"></th>
+                    <th scope="col" class="currency">
+                        @Display.SortableColumnHeader(Query: "balance", Label: @T("Balance"))
+                    </th>
+                    <th scope="col" class="currency">
+                        @Display.SortableColumnHeader(Query: "turnover", Label: @T("Turnover <br /><small>last {0} days</small>", WorkContext.CurrentSite.As<LETSSettingsPart>().DefaultTurnoverDays))
+                    </th>
+                    <th scope="col">
+                        @Display.SortableColumnHeader(Query: "location", Label: @T("Location"))
+                    </th>
+                    <th scope="col"></th>
+                    <th scope="col">@T("Telephone")</th>
+                    <th scope="col">
+                        @Display.SortableColumnHeader(Query: "joined", Label: @T("Joined"))
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var member in Model.Members)
+            {
+                var noticeCount = ((IEnumerable<NoticePart>)noticeService.GetMemberNotices(member.Id, VersionOptions.Published)).Count();
+                var cssClass = "";
+                var noticesLabel = "Notices";
+                if (noticeCount == 0)
+                {
+                    cssClass = "inactive-member";
+                }
+                else
+                {
+                    noticesLabel += string.Format(" ({0})", noticeCount);
+                }
+                <tr class="@cssClass">
+                    <td>@Html.ActionLink(((MemberViewModel)member).LastFirstName, "Index", new { username = member.UserName, area = "Contrib.Profile", Controller = "Home" })</td>
+                    <td>
+                        @Html.ActionLink(noticesLabel, "Member", new { id = member.Id, area = "LETS", Controller = "Notice" })
+                    </td>
+                    <td class="currency">@member.Balance.ToString("n0")</td>
+                    <td class="currency">@member.Turnover.ToString("n0")</td>
+                    <td>
+                        @Html.ActionLink(((MemberViewModel)member).Locality, "Notices", new { area = "LETS", Controller = "Locality", id = member.IdLocality })
+                    </td>
+                    <td>
+                        <a rel="tooltip" href='@string.Format("mailto:{0}", member.UserName)' title='@T("Email {0}", member.FirstName)'>@member.UserName</a>
+                    </td>
+                    <td>
+                        @member.Telephone
+                    </td>
+                    <td>@member.JoinDate.ToString("Y")</td>
+                </tr>
+                runningBalance += member.Balance;
+                turnoverTotal += member.Turnover;
+            }
             <tr>
-                <th scope="col">
-                    @Display.SortableColumnHeader(Query: "name", Label: @T("Name"), Default: true)
-                </th>
-                <th scope="col"></th>
-                <th scope="col" class="currency">
-                    @Display.SortableColumnHeader(Query: "balance", Label: @T("Balance"))
-                </th>
-                <th scope="col" class="currency">
-                    @Display.SortableColumnHeader(Query: "turnover", Label: @T("Turnover <br /><small>last {0} days</small>", WorkContext.CurrentSite.As<LETSSettingsPart>().DefaultTurnoverDays))
-                </th>
-                <th scope="col" >
-                    @Display.SortableColumnHeader(Query: "location", Label: @T("Location"))
-                </th>
-                <th scope="col"></th>
-                <th scope="col">@T("Telephone")</th>
-                <th scope="col">
-                    @Display.SortableColumnHeader(Query: "joined", Label: @T("Joined"))
-                </th>
+                <td colspan="2"></td>
+                <td class="currency">@runningBalance.ToString("n0")</td>
+                <td class="currency">@turnoverTotal.ToString("n0")</td>
+                <td colspan="7"></td>
             </tr>
-        </thead>
-        @foreach (var member in Model.Members)
-        {
-            var noticeCount = ((IEnumerable<NoticePart>)noticeService.GetMemberNotices(member.Id, VersionOptions.Published)).Count();
-            var cssClass = "";
-            var noticesLabel = "Notices";
-            if (noticeCount == 0)
-            {
-                cssClass = "inactive-member";
-            }
-            else
-            {
-                noticesLabel += string.Format(" ({0})", noticeCount);
-            }
-            <tr class="@cssClass">
-                <td>@Html.ActionLink(((MemberViewModel)member).LastFirstName, "Index", new { username = member.UserName, area = "Contrib.Profile", Controller = "Home" })</td>
-                <td>
-                    @Html.ActionLink(noticesLabel, "Member", new { id = member.Id, area = "LETS", Controller = "Notice" })
-                </td>
-                <td class="currency">@member.Balance.ToString("n0")</td>
-                <td class="currency">@member.Turnover.ToString("n0")</td>
-                <td>
-                    @Html.ActionLink(((MemberViewModel)member).Locality, "Notices", new { area = "LETS", Controller = "Locality", id = member.IdLocality })
-                </td>
-                <td>
-                    <a rel="tooltip" href='@string.Format("mailto:{0}", member.UserName)' title='@T("Email {0}", member.FirstName)'>@member.UserName</a>
-                </td>
-                <td>
-                    @member.Telephone
-                </td>
-                <td>@member.JoinDate.ToString("Y")</td>
-            </tr>
-            runningBalance += member.Balance;
-            turnoverTotal += member.Turnover;
-        }
-        <tr>
-            <td colspan="2"></td>
-            <td class="currency">@runningBalance.ToString("n0")</td>
-            <td class="currency">@turnoverTotal.ToString("n0")</td>
-            <td colspan="7"></td>
-        </tr>
-    </table>
+        </table>
+    </div>
 }
